@@ -27,6 +27,7 @@ public class ImageViewModel : BaseNotify
         //_model.CurrentImage.CopyHash = new RelayCommand<object>(CopyHash);
         CopyOthersCommand = new RelayCommand<object>(ServiceLocator.ContextMenuService.CopyOthers);
         CopyParametersCommand = new RelayCommand<object>(ServiceLocator.ContextMenuService.CopyParameters);
+        ConvertPromptCommand = new RelayCommand<object>(ServiceLocator.ContextMenuService.OpenPromptConverter);
         //ShowInExplorerCommand = new RelayCommand<object>(ServiceLocator.ContextMenuService.ShowInExplorer);
     }
 
@@ -151,6 +152,12 @@ public class ImageViewModel : BaseNotify
     }
 
     public ICommand CopyParametersCommand
+    {
+        get;
+        set => SetField(ref field, value);
+    }
+
+    public ICommand ConvertPromptCommand
     {
         get;
         set => SetField(ref field, value);
@@ -294,6 +301,17 @@ public class ImageViewModel : BaseNotify
         set => SetField(ref field, value);
     }
 
+    public IReadOnlyCollection<PromptConversion>? PromptConversions
+    {
+        get;
+        set => SetField(ref field, value);
+    }
+
+    public PromptConversion? SelectedPromptConversion
+    {
+        get;
+        set => SetField(ref field, value);
+    }
 
     public string ErrorMessage
     {

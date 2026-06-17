@@ -127,7 +127,7 @@ namespace Diffusion.Toolkit.Pages
 
 
         private Random r = new Random();
-        private readonly string[] _searchHints = File.ReadAllLines("hints.txt").Where(s => !string.IsNullOrEmpty(s.Trim())).ToArray();
+        private readonly string[] _searchHints = File.ReadAllLines(Path.Combine(AppInfo.AppDir, "hints.txt")).Where(s => !string.IsNullOrEmpty(s.Trim())).ToArray();
 
         private void GetRandomHint()
         {
@@ -816,6 +816,7 @@ namespace Diffusion.Toolkit.Pages
                     _model.SearchSettings.SearchNodes = queryOptions.SearchNodes;
                     _model.SearchSettings.SearchAllProperties = queryOptions.SearchAllProperties;
                     _model.SearchSettings.SearchRawData = queryOptions.SearchRawData;
+                    _model.HasPromptConversions = queryOptions.HasPromptConversions;
 
                     if (queryOptions.ComfyQueryOptions.SearchProperties != null)
                     {
@@ -843,6 +844,7 @@ namespace Diffusion.Toolkit.Pages
                         SearchNodes = _model.SearchSettings.SearchNodes,
                         SearchAllProperties = _model.SearchSettings.SearchAllProperties,
                         SearchRawData = _model.SearchSettings.SearchRawData,
+                        HasPromptConversions = _model.HasPromptConversions,
                         HideNSFW = _model.MainModel.HideNSFW,
                         HideDeleted = _model.MainModel.HideDeleted,
                         HideUnavailable = _model.MainModel.HideUnavailable,
@@ -1007,6 +1009,12 @@ namespace Diffusion.Toolkit.Pages
                 QueryOptions.TagsMode = _model.TagsMode;
 
                 ReloadMatches(new ReloadOptions() { Focus = true });
+            }
+            else if (e.PropertyName == nameof(SearchModel.HasPromptConversions))
+            {
+                QueryOptions.HasPromptConversions = _model.HasPromptConversions;
+
+                SearchImages(null, true);
             }
             //else if (e.PropertyName == nameof(SearchModel.Page))
             //{
@@ -1402,6 +1410,7 @@ namespace Diffusion.Toolkit.Pages
                     NSFW = file.NSFW,
                     EntryType = EntryType.File,
                     AlbumCount = file.AlbumCount,
+                    HasPromptConversions = file.PromptConversionCount > 0,
                     Dispatcher = Dispatcher,
                     HasError = file.HasError,
                     Type = file.Type,
@@ -1502,6 +1511,7 @@ namespace Diffusion.Toolkit.Pages
                     dest.Path = src.Path;
                     dest.CreatedDate = src.CreatedDate;
                     dest.AlbumCount = src.AlbumCount;
+                    dest.HasPromptConversions = src.HasPromptConversions;
                     dest.Albums = src.Albums;
                     dest.HasError = src.HasError;
                     dest.Unavailable = src.Unavailable;
@@ -1559,6 +1569,7 @@ namespace Diffusion.Toolkit.Pages
                     dest.Path = "";
                     dest.CreatedDate = DateTime.MinValue;
                     dest.AlbumCount = 0;
+                    dest.HasPromptConversions = false;
                     dest.Albums = Enumerable.Empty<string>();
                     dest.HasError = false;
                     dest.Unavailable = false;
@@ -1600,6 +1611,7 @@ namespace Diffusion.Toolkit.Pages
                     dest.Path = src.Path;
                     dest.CreatedDate = src.CreatedDate;
                     dest.AlbumCount = src.AlbumCount;
+                    dest.HasPromptConversions = src.HasPromptConversions;
                     dest.Albums = src.Albums;
                     dest.HasError = src.HasError;
                     dest.Unavailable = !File.Exists(src.Path);
@@ -1985,6 +1997,7 @@ namespace Diffusion.Toolkit.Pages
                     if (imageLookup.TryGetValue(image.Id, out var img))
                     {
                         img.AlbumCount = image.AlbumCount;
+                        img.HasPromptConversions = image.PromptConversionCount > 0;
                     }
                 }
             }

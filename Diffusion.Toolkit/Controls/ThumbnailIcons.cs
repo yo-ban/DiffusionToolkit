@@ -43,6 +43,7 @@ public class ThumbnailIcons : FrameworkElement
                 {
                     case nameof(ImageEntry.NSFW):
                     case nameof(ImageEntry.AlbumCount):
+                    case nameof(ImageEntry.HasPromptConversions):
                     case nameof(ImageEntry.ForDeletion):
                     case nameof(ImageEntry.Favorite):
                     case nameof(ImageEntry.Rating):
@@ -169,6 +170,12 @@ public class ThumbnailIcons : FrameworkElement
             x += xOffset;
         }
 
+        if (Data.HasPromptConversions)
+        {
+            DrawPromptBadge(drawingContext, x, y);
+            x += xOffset;
+        }
+
         if (Data.Favorite)
         {
             drawingContext.DrawImage(_heartIcon, new Rect(new Point(x, y), new Size(24, 24)));
@@ -200,5 +207,21 @@ public class ThumbnailIcons : FrameworkElement
         }
 
 
+    }
+
+    private static void DrawPromptBadge(DrawingContext drawingContext, int x, int y)
+    {
+        var rect = new Rect(new Point(x + 2, y + 2), new Size(20, 20));
+        var background = new SolidColorBrush(Color.FromRgb(66, 133, 244));
+        background.Freeze();
+
+        drawingContext.DrawRoundedRectangle(background, new Pen(Brushes.White, 1), rect, 4, 4);
+
+        var formattedText = new FormattedText("P", CultureInfo.CurrentCulture, FlowDirection.LeftToRight, _typeFaceBoldCondensed, 14, Brushes.White, null, TextFormattingMode.Display, 92)
+        {
+            TextAlignment = TextAlignment.Center
+        };
+
+        drawingContext.DrawText(formattedText, new Point(rect.X + rect.Width / 2 - formattedText.WidthIncludingTrailingWhitespace / 2, rect.Y + 2));
     }
 }

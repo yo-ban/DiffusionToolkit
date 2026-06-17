@@ -65,6 +65,7 @@ namespace Diffusion.Toolkit.Controls
             Model.CopySeedCommand = new RelayCommand<object>(ServiceLocator.ContextMenuService.CopySeed);
             Model.CopyHashCommand = new RelayCommand<object>(ServiceLocator.ContextMenuService.CopyHash);
             Model.CopyParametersCommand = new RelayCommand<object>(ServiceLocator.ContextMenuService.CopyParameters);
+            Model.ConvertPromptCommand = new RelayCommand<object>(ServiceLocator.ContextMenuService.OpenPromptConverter);
             Model.ShowInExplorerCommand = new RelayCommand<object>(ShowInExplorer);
             Model.ExpandToFolderCommand = new RelayCommand<object>(ExpandToFolder);
             Model.DeleteCommand = new RelayCommand<object>(o => DeleteSelected());

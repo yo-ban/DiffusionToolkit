@@ -55,12 +55,14 @@ public partial class DataStore
 
         db.EnableLoadExtension(true);
 
-        if (!File.Exists("extensions\\path0.dll"))
+        var sqliteExtensionPath = Path.Combine(Diffusion.Common.AppInfo.AppDir, "extensions", "path0.dll");
+
+        if (!File.Exists(sqliteExtensionPath))
         {
-            throw new FileNotFoundException("Failed to load SQLite extensions", "path0.dll");
+            throw new FileNotFoundException("Failed to load SQLite extensions", sqliteExtensionPath);
         }
 
-        db.LoadExtension("extensions\\path0.dll");
+        db.LoadExtension(sqliteExtensionPath);
         
         var migrations = new Migrations(db);
 
@@ -174,6 +176,10 @@ public partial class DataStore
 
                 db.CreateTable<Query>();
                 db.CreateIndex<Query>(query => query.Name, true);
+
+                db.CreateTable<PromptConversion>();
+                db.CreateIndex<PromptConversion>(conversion => conversion.ImageId);
+                db.CreateIndex<PromptConversion>(conversion => conversion.CreatedAt);
 
             }
             finally

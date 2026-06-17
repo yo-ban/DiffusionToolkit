@@ -281,6 +281,22 @@
                     <TextBlock Foreground="{DynamicResource ForegroundBrush}" Margin="0,10,0,0" TextWrapping="Wrap" Text="{lex:Loc Settings.Metadata.Warning}"></TextBlock>
                 </StackPanel>
             </TabItem>
+            <TabItem Header="Prompt Converter">
+                <StackPanel Width="800" HorizontalAlignment="Left" Margin="10">
+                    <Label Content="OpenAI-compatible endpoint"></Label>
+                    <TextBox Height="26" VerticalContentAlignment="Center" Text="{Binding LlmBaseUrl, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10"></TextBox>
+
+                    <Label Content="Model"></Label>
+                    <TextBox Height="26" VerticalContentAlignment="Center" Text="{Binding LlmModel, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10"></TextBox>
+
+                    <Label Content="API key"></Label>
+                    <TextBox Height="26" VerticalContentAlignment="Center" Text="{Binding LlmApiKey, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10"></TextBox>
+
+                    <TextBlock Foreground="{DynamicResource ForegroundBrush}" Margin="0,10,0,0" TextWrapping="Wrap">
+                        API keys are protected with Windows DPAPI before they are written to settings. OpenRouter uses https://openrouter.ai/api/v1.
+                    </TextBlock>
+                </StackPanel>
+            </TabItem>
             <TabItem Header="{lex:Loc Settings.NSFW}">
                 <StackPanel Width="400" HorizontalAlignment="Left" Margin="10">
                     <Label Content="{lex:Loc Settings.NSFW.NSFWTags}"></Label>

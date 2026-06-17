@@ -137,6 +137,12 @@ public class ImageEntry : BaseNotify
         set => SetField(ref field, value);
     }
 
+    public bool HasPromptConversions
+    {
+        get;
+        set => SetField(ref field, value);
+    }
+
     public IEnumerable<string> Albums
     {
         get;
@@ -200,6 +206,7 @@ public class ImageEntry : BaseNotify
         Path = "";
         CreatedDate = DateTime.MinValue;
         AlbumCount = 0;
+        HasPromptConversions = false;
         Albums = Enumerable.Empty<string>();
         HasError = false;
         Unavailable = false;

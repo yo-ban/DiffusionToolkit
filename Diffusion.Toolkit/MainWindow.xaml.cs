@@ -89,7 +89,7 @@ namespace Diffusion.Toolkit
                 AppDomain currentDomain = AppDomain.CurrentDomain;
                 currentDomain.UnhandledException += new UnhandledExceptionEventHandler(GlobalExceptionHandler);
 
-                QueryBuilder.Samplers = File.ReadAllLines("samplers.txt").ToList();
+                QueryBuilder.Samplers = File.ReadAllLines(Path.Combine(AppInfo.AppDir, "samplers.txt")).ToList();
 
                 Logger.Log($"Creating Thumbnail loader");
 
@@ -164,7 +164,7 @@ namespace Diffusion.Toolkit
                 ServiceLocator.ToastService = new ToastService(ToastPopup);
 
                 var nodePropertyCache = new NodePropertyCache();
-                nodePropertyCache.Load("comfy-nodes.json");
+                nodePropertyCache.Load(Path.Combine(AppInfo.AppDir, "comfy-nodes.json"));
                 ServiceLocator.NodePropertyCache = nodePropertyCache;
 
                 PreviewMouseDown += (sender, args) =>
@@ -1109,9 +1109,10 @@ namespace Diffusion.Toolkit
 
             var otherModels = new List<Model>();
 
-            if (File.Exists("models.json"))
+            var modelsJsonPath = Path.Combine(AppInfo.AppDir, "models.json");
+            if (File.Exists(modelsJsonPath))
             {
-                var json = File.ReadAllText(Path.Combine(AppDir, "models.json"));
+                var json = File.ReadAllText(modelsJsonPath);
 
                 var options = new JsonSerializerOptions()
                 {

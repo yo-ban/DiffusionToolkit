@@ -76,6 +76,7 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal">
                     <Label VerticalAlignment="Center" FontSize="22" FontWeight="DemiBold" Content="{Binding ModeName}"></Label>
@@ -145,6 +146,8 @@
                 </ComboBox>
                 <ComboBox Height="28" Width="60" VerticalContentAlignment="Center" ItemsSource="{Binding SortOrderOptions}" DisplayMemberPath="Name" SelectedValue="{Binding SortDirection}" SelectedValuePath="Value" Grid.Column="5" Margin="0,0,10,0">
                 </ComboBox>
+                <CheckBox Grid.Column="6" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="0,0,10,0"
+                          IsChecked="{Binding HasPromptConversions}" Content="Has prompts"/>
 
             </Grid>
             <Grid Grid.Row="1" Margin="2" Visibility="Collapsed">

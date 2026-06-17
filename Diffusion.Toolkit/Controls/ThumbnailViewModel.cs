@@ -293,6 +293,12 @@ public class ThumbnailViewModel : BaseNotify
         set => SetField(ref field, value);
     }
 
+    public ICommand ConvertPromptCommand
+    {
+        get;
+        set => SetField(ref field, value);
+    }
+
     public long FileSize
     {
         get;

@@ -169,6 +169,8 @@ namespace Diffusion.Toolkit.Controls
 
         public ICommand CopyPathCommand { get; set; }
 
+        public ICommand ConvertPromptCommand { get; set; }
+
 
         private ScrollDragger? _scrollDragger = null;
 
@@ -185,6 +187,7 @@ namespace Diffusion.Toolkit.Controls
 
 
             CopyPathCommand = new RelayCommand<object>(ServiceLocator.ContextMenuService.CopyPath);
+            ConvertPromptCommand = new RelayCommand<object>(ServiceLocator.ContextMenuService.OpenPromptConverter);
 
             if (ServiceLocator.MainModel != null)
             {

@@ -445,4 +445,10 @@ public class SearchModel : BaseNotify
         get;
         set => SetField(ref field, value);
     }
+
+    public bool HasPromptConversions
+    {
+        get;
+        set => SetField(ref field, value);
+    }
 }

@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Interop;
 using Diffusion.Common.Query;
 using Diffusion.Toolkit.Controls;
+using Diffusion.Toolkit.Models;
 
 namespace Diffusion.Toolkit.Configuration;
 
@@ -74,6 +75,14 @@ public class Settings : SettingsContainer, IScanOptions
         //    RecurseFolders = true;
         //}
         Volume = 1.0f;
+        LlmBaseUrl = "https://openrouter.ai/api/v1";
+        LlmModel = "google/gemini-2.5-flash";
+        LlmIncludeImage = true;
+        LlmIncludeMetadata = true;
+        LlmDownscaleImage = true;
+        LlmMaxImageEdge = 1280;
+        LlmSystemPromptPresets = SystemPromptPreset.CreateDefaults();
+        LlmSelectedSystemPromptId = LlmSystemPromptPresets[0].Id;
         Instance = this;
     }
 
@@ -477,6 +486,60 @@ public class Settings : SettingsContainer, IScanOptions
     public TagsMode TagsMode
     {
         get; 
+        set => UpdateValue(ref field, value);
+    }
+
+    public string LlmBaseUrl
+    {
+        get;
+        set => UpdateValue(ref field, value);
+    }
+
+    public string LlmModel
+    {
+        get;
+        set => UpdateValue(ref field, value);
+    }
+
+    public string LlmApiKeyProtected
+    {
+        get;
+        set => UpdateValue(ref field, value);
+    }
+
+    public bool LlmIncludeImage
+    {
+        get;
+        set => UpdateValue(ref field, value);
+    }
+
+    public bool LlmIncludeMetadata
+    {
+        get;
+        set => UpdateValue(ref field, value);
+    }
+
+    public bool LlmDownscaleImage
+    {
+        get;
+        set => UpdateValue(ref field, value);
+    }
+
+    public int LlmMaxImageEdge
+    {
+        get;
+        set => UpdateValue(ref field, value);
+    }
+
+    public List<SystemPromptPreset> LlmSystemPromptPresets
+    {
+        get;
+        set => UpdateValue(ref field, value);
+    }
+
+    public string LlmSelectedSystemPromptId
+    {
+        get;
         set => UpdateValue(ref field, value);
     }
 }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Diffusion.Common;
 using Diffusion.Toolkit.Models;
 
 namespace Diffusion.Toolkit.Controls
@@ -70,7 +71,7 @@ namespace Diffusion.Toolkit.Controls
         }
 
         private Random r = new Random();
-        private readonly string[] _searchHints = File.ReadAllLines("hints.txt").Where(s => !string.IsNullOrEmpty(s.Trim())).ToArray();
+        private readonly string[] _searchHints = File.ReadAllLines(Path.Combine(AppInfo.AppDir, "hints.txt")).Where(s => !string.IsNullOrEmpty(s.Trim())).ToArray();
 
         private void GetRandomHint()
         {

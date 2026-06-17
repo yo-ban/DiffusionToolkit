@@ -224,7 +224,7 @@ namespace Diffusion.Database
 
             var selectedIds = InsertIds(db, "SelectedIds", ids);
 
-            return db.Query<ImageView>($"SELECT main.Id, Path, {columns}, (SELECT COUNT(1) FROM AlbumImage WHERE ImageId = main.Id) AS AlbumCount FROM Image main WHERE Id IN {selectedIds}");
+            return db.Query<ImageView>($"SELECT main.Id, Path, {columns}, (SELECT COUNT(1) FROM AlbumImage WHERE ImageId = main.Id) AS AlbumCount, {promptConversionCountColumn} FROM Image main WHERE Id IN {selectedIds}");
         }
 
         public IEnumerable<Album> GetImageAlbums(int id)
@@ -349,7 +349,7 @@ namespace Diffusion.Database
 
             var (sortField, sortDir) = sorting;
 
-            var images = db.Query<ImageView>($"SELECT main.Id, Path, {columns}, (SELECT COUNT(1) FROM AlbumImage WHERE ImageId = main.Id) AS AlbumCount FROM Image main {join} {where} ORDER BY {sortField} {sortDir} {page}", bindings.ToArray());
+            var images = db.Query<ImageView>($"SELECT main.Id, Path, {columns}, (SELECT COUNT(1) FROM AlbumImage WHERE ImageId = main.Id) AS AlbumCount, {promptConversionCountColumn} FROM Image main {join} {where} ORDER BY {sortField} {sortDir} {page}", bindings.ToArray());
 
             foreach (var image in images)
             {
@@ -366,6 +366,7 @@ namespace Diffusion.Database
                       "AestheticScore, HyperNetwork, HyperNetworkStrength, ClipSkip, ENSD, FileSize, NoMetadata, HasError, Type";
 
         const string columns = "Favorite, ForDeletion, Rating, AestheticScore, CreatedDate, NSFW, HasError, Type";
+        const string promptConversionCountColumn = "(SELECT COUNT(1) FROM PromptConversion WHERE ImageId = main.Id) AS PromptConversionCount";
 
         public IEnumerable<ImageView> SearchEx(QueryOptions options, Sorting sorting, Paging? paging = null)
         {
@@ -391,7 +392,7 @@ namespace Diffusion.Database
 
             var (sortField, sortDir) = sorting;
 
-            var images = db.Query<ImageView>($"SELECT main.Id, Path, {columns}, (SELECT COUNT(1) FROM AlbumImage WHERE ImageId = main.Id) AS AlbumCount FROM Image main {join} {where} ORDER BY {sortField} {sortDir} {page}", bindings.ToArray());
+            var images = db.Query<ImageView>($"SELECT main.Id, Path, {columns}, (SELECT COUNT(1) FROM AlbumImage WHERE ImageId = main.Id) AS AlbumCount, {promptConversionCountColumn} FROM Image main {join} {where} ORDER BY {sortField} {sortDir} {page}", bindings.ToArray());
 
             foreach (var image in images)
             {
@@ -425,7 +426,7 @@ namespace Diffusion.Database
 
             var (sortField, sortDir) = sorting;
 
-            var images = db.Query<ImageView>($"SELECT main.Id, Path, {columns}, (SELECT COUNT(1) FROM AlbumImage WHERE ImageId = main.Id) AS AlbumCount FROM Image main {join} {where} ORDER BY {sortField} {sortDir} {page}", bindings.ToArray());
+            var images = db.Query<ImageView>($"SELECT main.Id, Path, {columns}, (SELECT COUNT(1) FROM AlbumImage WHERE ImageId = main.Id) AS AlbumCount, {promptConversionCountColumn} FROM Image main {join} {where} ORDER BY {sortField} {sortDir} {page}", bindings.ToArray());
 
             foreach (var image in images)
             {

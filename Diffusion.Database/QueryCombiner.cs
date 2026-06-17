@@ -229,6 +229,11 @@ public static class QueryCombiner
             filters.Add($"SELECT Id FROM ({modelUnion})");
         }
 
+        if (options.HasPromptConversions)
+        {
+            filters.Add($"SELECT DISTINCT ImageId AS Id FROM PromptConversion");
+        }
+
         //if (options.FolderIds is { Count: > 0 })
         //{
         //    var folderIds = string.Join(",", options.FolderIds.Select(a => "?"));

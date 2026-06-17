@@ -7,7 +7,7 @@ public static class AppInfo
 {
     private const string AppName = "DiffusionToolkit";
     public static string AppDir { get; }
-    public static SemanticVersion Version => SemanticVersionHelper.GetLocalVersion();
+    public static SemanticVersion Version => SemanticVersionHelper.GetLocalVersion(AppDir);
     public static string AppDataPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "DiffusionToolkit");
 
     public static string DatabasePath { get; }

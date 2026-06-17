@@ -205,7 +205,18 @@
                       >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="{Binding DataContext.ThumbnailSize, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}" />
-                        <RowDefinition Height="40"/>
+                        <RowDefinition>
+                            <RowDefinition.Style>
+                                <Style TargetType="RowDefinition">
+                                    <Setter Property="Height" Value="40" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Model.MainModel.ShowFilenames, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Value="{StaticResource FalseValue}">
+                                            <Setter Property="Height" Value="0" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </RowDefinition.Style>
+                        </RowDefinition>
                     </Grid.RowDefinitions>
                     <local:Thumbnail 
                         Source="{Binding Thumbnail}" 
@@ -261,7 +272,18 @@
                       >
                     <Grid.RowDefinitions>
                         <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition>
+                            <RowDefinition.Style>
+                                <Style TargetType="RowDefinition">
+                                    <Setter Property="Height" Value="40" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Model.MainModel.ShowFilenames, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Value="{StaticResource FalseValue}">
+                                            <Setter Property="Height" Value="0" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </RowDefinition.Style>
+                        </RowDefinition>
                     </Grid.RowDefinitions>
                     <local:Thumbnail 
                         Source="{Binding Thumbnail}" 
@@ -561,6 +583,7 @@
                         <MenuItem Header="{lex:Loc Thumbnail.ContextMenu.Rate.Remove}" Click="Unrate_OnClick"></MenuItem>
                     </MenuItem>
                     <MenuItem Style="{StaticResource FileMenuItem}" Header="{lex:Loc Thumbnail.ContextMenu.NSFW}" ToolTip="N" InputGestureText="N" Command="{Binding NSFWCommand}"/>
+                    <MenuItem Style="{StaticResource FileMenuItem}" Header="Convert Prompt..." Command="{Binding ConvertPromptCommand}"/>
                     <Separator Style="{StaticResource FileSeparator}"/>
                     <MenuItem Style="{StaticResource FileMenuItem}" Header="{lex:Loc Thumbnail.ContextMenu.CopyParameter}">
                         <MenuItem Header="{lex:Loc Thumbnail.ContextMenu.CopyParameter.Prompt}" Command="{Binding CopyPromptCommand}"/>

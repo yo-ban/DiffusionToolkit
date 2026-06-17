@@ -79,6 +79,7 @@ public class ImageView
     public DateTime CreatedDate { get; set; }
     public bool NSFW { get; set; }
     public int  AlbumCount { get; set; }
+    public int PromptConversionCount { get; set; }
     public bool HasError { get; set; }
     public ImageType Type { get; set; }
 }

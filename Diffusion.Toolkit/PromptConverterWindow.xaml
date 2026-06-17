@@ -1,0 +1,157 @@
+<local:BorderlessWindow x:Class="Diffusion.Toolkit.PromptConverterWindow"
+                        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                        xmlns:local="clr-namespace:Diffusion.Toolkit"
+                        mc:Ignorable="d"
+                        WindowStartupLocation="CenterOwner"
+                        ShowInTaskbar="False"
+                        WindowStyle="ToolWindow"
+                        MenuWidth="0"
+                        TitleWidth="*"
+                        Style="{StaticResource BorderlessWindowStyle}"
+                        ResizeMode="CanResize"
+                        Title="Prompt Converter" Height="760" Width="1180"
+                        MinHeight="620" MinWidth="920">
+    <Grid Margin="12,34,12,12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="36"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.05*"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="1.45*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="250"/>
+                <RowDefinition Height="8"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Border BorderBrush="{DynamicResource SecondaryBrush}" BorderThickness="1" Background="{DynamicResource PreviewBackgroundBrush}">
+                <Image x:Name="PreviewImage" Stretch="Uniform"/>
+            </Border>
+
+            <TabControl Grid.Row="2" Background="{DynamicResource PrimaryBrush}">
+                <TabItem Header="Prompt">
+                    <TextBox x:Name="SourcePromptText" IsReadOnly="True" TextWrapping="Wrap" AcceptsReturn="True"
+                             VerticalScrollBarVisibility="Auto" Background="{DynamicResource PrimaryBrush}"
+                             Foreground="{DynamicResource ForegroundBrush}" BorderThickness="0" Padding="8"/>
+                </TabItem>
+                <TabItem Header="Negative">
+                    <TextBox x:Name="SourceNegativeText" IsReadOnly="True" TextWrapping="Wrap" AcceptsReturn="True"
+                             VerticalScrollBarVisibility="Auto" Background="{DynamicResource PrimaryBrush}"
+                             Foreground="{DynamicResource ForegroundBrush}" BorderThickness="0" Padding="8"/>
+                </TabItem>
+                <TabItem Header="Parameters">
+                    <TextBox x:Name="SourceParametersText" IsReadOnly="True" TextWrapping="Wrap" AcceptsReturn="True"
+                             VerticalScrollBarVisibility="Auto" Background="{DynamicResource PrimaryBrush}"
+                             Foreground="{DynamicResource ForegroundBrush}" BorderThickness="0" Padding="8"/>
+                </TabItem>
+                <TabItem Header="Raw">
+                    <TextBox x:Name="SourceRawText" IsReadOnly="True" TextWrapping="Wrap" AcceptsReturn="True"
+                             VerticalScrollBarVisibility="Auto" Background="{DynamicResource PrimaryBrush}"
+                             Foreground="{DynamicResource ForegroundBrush}" BorderThickness="0" Padding="8"/>
+                </TabItem>
+            </TabControl>
+        </Grid>
+
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="8"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Border BorderBrush="{DynamicResource SecondaryBrush}" BorderThickness="1" Padding="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="130"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="130"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="32"/>
+                        <RowDefinition Height="32"/>
+                        <RowDefinition Height="32"/>
+                        <RowDefinition Height="76"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Content="Model" VerticalContentAlignment="Center"/>
+                    <TextBox x:Name="ModelText" Grid.Column="1" Grid.ColumnSpan="3" VerticalContentAlignment="Center" LostFocus="ModelText_OnLostFocus"/>
+
+                    <Label Grid.Row="1" Content="Target" VerticalContentAlignment="Center"/>
+                    <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="8"/>
+                            <ColumnDefinition Width="90"/>
+                        </Grid.ColumnDefinitions>
+                        <ComboBox x:Name="SystemPromptBox" DisplayMemberPath="Name"/>
+                        <Button Grid.Column="2" Click="EditPromptsButton_OnClick" Content="Edit..."/>
+                    </Grid>
+
+                    <CheckBox x:Name="IncludeImageCheck" Grid.Row="2" Grid.Column="1" Content="Include image" VerticalContentAlignment="Center"/>
+                    <CheckBox x:Name="IncludeMetadataCheck" Grid.Row="2" Grid.Column="2" Content="Include metadata" VerticalContentAlignment="Center"/>
+                    <StackPanel Grid.Row="2" Grid.Column="3" Orientation="Horizontal">
+                        <CheckBox x:Name="DownscaleCheck" Content="Downscale" VerticalContentAlignment="Center"/>
+                        <TextBox x:Name="MaxEdgeText" Width="58" Margin="8,0,0,0" VerticalContentAlignment="Center"/>
+                    </StackPanel>
+
+                    <Label Grid.Row="3" Content="Additional Request" VerticalContentAlignment="Top"/>
+                    <TextBox x:Name="AdditionalRequestText" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3"
+                             TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
+                </Grid>
+            </Border>
+
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="28"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="28"/>
+                </Grid.RowDefinitions>
+                <TextBlock x:Name="StatusText" Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center"/>
+                <TabControl Grid.Row="1" Background="{DynamicResource PrimaryBrush}">
+                    <TabItem Header="Positive">
+                        <TextBox x:Name="PositivePromptText" TextWrapping="Wrap" IsReadOnly="True" IsReadOnlyCaretVisible="False"
+                                 VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                                 BorderThickness="0" Background="{DynamicResource PrimaryBrush}" Foreground="{DynamicResource ForegroundBrush}"
+                                 FontFamily="Consolas" FontSize="13" Padding="8"/>
+                    </TabItem>
+                    <TabItem Header="Negative">
+                        <TextBox x:Name="NegativePromptText" TextWrapping="Wrap" IsReadOnly="True" IsReadOnlyCaretVisible="False"
+                                 VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                                 BorderThickness="0" Background="{DynamicResource PrimaryBrush}" Foreground="{DynamicResource ForegroundBrush}"
+                                 FontFamily="Consolas" FontSize="13" Padding="8"/>
+                    </TabItem>
+                    <TabItem Header="Notes">
+                        <TextBox x:Name="NotesText" TextWrapping="Wrap" IsReadOnly="True" IsReadOnlyCaretVisible="False"
+                                 VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                                 BorderThickness="0" Background="{DynamicResource PrimaryBrush}" Foreground="{DynamicResource ForegroundBrush}"
+                                 FontFamily="Consolas" FontSize="13" Padding="8"/>
+                    </TabItem>
+                    <TabItem Header="Raw">
+                        <TextBox x:Name="RawResponseText" TextWrapping="Wrap" IsReadOnly="True" IsReadOnlyCaretVisible="False"
+                                 VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                                 BorderThickness="0" Background="{DynamicResource PrimaryBrush}" Foreground="{DynamicResource ForegroundBrush}"
+                                 FontFamily="Consolas" FontSize="13" Padding="8"/>
+                    </TabItem>
+                </TabControl>
+                <TextBlock Grid.Row="2" Foreground="{DynamicResource DisabledForegroundBrush}" VerticalAlignment="Center"
+                           Text="Images and metadata are sent to the configured API only when Generate is clicked."/>
+            </Grid>
+        </Grid>
+
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Button x:Name="GenerateButton" Width="120" Height="28" Margin="0,0,8,0" Click="GenerateButton_OnClick" Content="Generate"/>
+            <Button Width="120" Height="28" Margin="0,0,8,0" Click="CopyPositiveButton_OnClick" Content="Copy Positive"/>
+            <Button Width="90" Height="28" Margin="0,0,8,0" Click="CopyButton_OnClick" Content="Copy All"/>
+            <Button Width="90" Height="28" Click="CloseButton_OnClick" Content="Close"/>
+        </StackPanel>
+    </Grid>
+</local:BorderlessWindow>

@@ -123,6 +123,7 @@
                     <MenuItem Header="Fit to Preview" InputGestureText="CTRL+Shift+F" Command="{Binding MainModel.ToggleFitToPreview}" IsChecked="{Binding MainModel.FitToPreview}"></MenuItem>
                     <MenuItem Header="Actual Size" InputGestureText="CTRL+Shift+A" Command="{Binding MainModel.ToggleActualSize}" IsChecked="{Binding MainModel.ActualSize}"></MenuItem>
                     <Separator></Separator>
+                    <MenuItem Header="Convert Prompt..." Command="{Binding ConvertPromptCommand}"></MenuItem>
                     <MenuItem Header="Copy Path" Command="{Binding CopyPathCommand}"></MenuItem>
                 </ContextMenu>
 

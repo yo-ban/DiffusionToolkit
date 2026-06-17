@@ -4,7 +4,12 @@ using Diffusion.Database.Models;
 using Diffusion.Toolkit.Configuration;
 using Diffusion.Toolkit.Models;
 using Diffusion.Toolkit.Services;
+using Microsoft.Win32;
+using System;
+using System.IO;
 using System.Linq;
+using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -29,13 +34,17 @@ namespace Diffusion.Toolkit.Controls
         {
             if (d is MetadataPanel panel)
             {
-                panel.CurrentImage.PropertyChanged += (sender, args) =>
+                if (e.OldValue is ImageViewModel oldImage)
                 {
-                    if (args.PropertyName == nameof(ImageViewModel.ImageTags))
-                    {
-                        panel.UpdateFilter();
-                    }
-                };
+                    oldImage.PropertyChanged -= panel.CurrentImageOnPropertyChanged;
+                }
+
+                if (e.NewValue is ImageViewModel newImage)
+                {
+                    newImage.PropertyChanged += panel.CurrentImageOnPropertyChanged;
+                }
+
+                panel.LoadPromptConversions();
                 panel.UpdateFilter();
             }
         }
@@ -62,6 +71,14 @@ namespace Diffusion.Toolkit.Controls
         public MetadataPanel()
         {
             InitializeComponent();
+        }
+
+        private void CurrentImageOnPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs args)
+        {
+            if (args.PropertyName == nameof(ImageViewModel.ImageTags))
+            {
+                UpdateFilter();
+            }
         }
 
         private void CollapseAll_Click(object sender, RoutedEventArgs e)
@@ -126,6 +143,11 @@ namespace Diffusion.Toolkit.Controls
 
         private void UpdateFilter()
         {
+            if (CurrentImage == null)
+            {
+                return;
+            }
+
             if (CurrentImage.ImageTags == null)
             {
                 CurrentImage.FilteredTags = null;
@@ -141,6 +163,110 @@ namespace Diffusion.Toolkit.Controls
             {
                 CurrentImage.FilteredTags = CurrentImage.ImageTags.ToList();
             }
+        }
+
+        private void LoadPromptConversions()
+        {
+            if (CurrentImage == null || CurrentImage.Id <= 0 || ServiceLocator.DataStore == null)
+            {
+                return;
+            }
+
+            var conversions = ServiceLocator.DataStore.GetPromptConversions(CurrentImage.Id);
+            CurrentImage.PromptConversions = conversions;
+            CurrentImage.SelectedPromptConversion = conversions.FirstOrDefault();
+        }
+
+        private void CopyConversionPositive_OnClick(object sender, RoutedEventArgs e)
+        {
+            var conversion = CurrentImage?.SelectedPromptConversion;
+            if (string.IsNullOrWhiteSpace(conversion?.PositivePrompt)) return;
+            Clipboard.SetDataObject(conversion.PositivePrompt, true);
+        }
+
+        private void CopyConversionAll_OnClick(object sender, RoutedEventArgs e)
+        {
+            var text = BuildConversionText(CurrentImage?.SelectedPromptConversion);
+            if (string.IsNullOrWhiteSpace(text)) return;
+            Clipboard.SetDataObject(text, true);
+        }
+
+        private void ExportConversionText_OnClick(object sender, RoutedEventArgs e)
+        {
+            var text = BuildConversionText(CurrentImage?.SelectedPromptConversion);
+            if (string.IsNullOrWhiteSpace(text)) return;
+
+            var dialog = CreateExportDialog("Text files (*.txt)|*.txt|All files (*.*)|*.*", "prompt-conversion.txt");
+            if (dialog.ShowDialog(Window.GetWindow(this)) == true)
+            {
+                File.WriteAllText(dialog.FileName, text);
+            }
+        }
+
+        private void ExportConversionJson_OnClick(object sender, RoutedEventArgs e)
+        {
+            var conversion = CurrentImage?.SelectedPromptConversion;
+            if (conversion == null) return;
+
+            var dialog = CreateExportDialog("JSON files (*.json)|*.json|All files (*.*)|*.*", "prompt-conversion.json");
+            if (dialog.ShowDialog(Window.GetWindow(this)) == true)
+            {
+                File.WriteAllText(dialog.FileName, JsonSerializer.Serialize(conversion, new JsonSerializerOptions
+                {
+                    WriteIndented = true
+                }));
+            }
+        }
+
+        private SaveFileDialog CreateExportDialog(string filter, string suffix)
+        {
+            var imageName = CurrentImage?.Path != null ? Path.GetFileNameWithoutExtension(CurrentImage.Path) : "image";
+            return new SaveFileDialog
+            {
+                Title = "Export prompt conversion",
+                Filter = filter,
+                FileName = $"{imageName}.{suffix}"
+            };
+        }
+
+        private static string BuildConversionText(PromptConversion? conversion)
+        {
+            if (conversion == null) return "";
+
+            var builder = new StringBuilder();
+            builder.AppendLine($"Created: {conversion.CreatedAt:yyyy-MM-dd HH:mm:ss}");
+            builder.AppendLine($"Target: {conversion.SystemPromptPresetName}");
+            builder.AppendLine($"Model: {conversion.Model}");
+
+            if (!string.IsNullOrWhiteSpace(conversion.AdditionalRequest))
+            {
+                builder.AppendLine();
+                builder.AppendLine("[Additional Request]");
+                builder.AppendLine(conversion.AdditionalRequest);
+            }
+
+            if (!string.IsNullOrWhiteSpace(conversion.PositivePrompt))
+            {
+                builder.AppendLine();
+                builder.AppendLine("[Positive]");
+                builder.AppendLine(conversion.PositivePrompt);
+            }
+
+            if (!string.IsNullOrWhiteSpace(conversion.NegativePrompt))
+            {
+                builder.AppendLine();
+                builder.AppendLine("[Negative]");
+                builder.AppendLine(conversion.NegativePrompt);
+            }
+
+            if (!string.IsNullOrWhiteSpace(conversion.Notes))
+            {
+                builder.AppendLine();
+                builder.AppendLine("[Notes]");
+                builder.AppendLine(conversion.Notes);
+            }
+
+            return builder.ToString().TrimEnd();
         }
 
         private void ClearFilter_OnClick(object sender, RoutedEventArgs e)

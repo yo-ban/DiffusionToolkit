@@ -37,6 +37,7 @@ public class QueryOptions
     public string? Folder { get; set; }
     public bool SearchRawData { get; set; }
     public bool SearchAllProperties { get; set; }
+    public bool HasPromptConversions { get; set; }
 
     [JsonIgnore]
     public bool IsEmpty => Filter.IsEmpty && string.IsNullOrEmpty(Query);

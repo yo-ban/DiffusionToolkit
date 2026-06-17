@@ -154,4 +154,16 @@ public class ContextMenuService
         ServiceLocator.ToastService.Toast("Copied other parameters to clipboard", "");
     }
 
+    public void OpenPromptConverter(object obj)
+    {
+        if (CurrentImage?.Path == null || !File.Exists(CurrentImage.Path)) return;
+
+        var window = new PromptConverterWindow(CurrentImage)
+        {
+            Owner = ServiceLocator.WindowService.CurrentWindow
+        };
+
+        window.Show();
+    }
+
 }

@@ -39,11 +39,13 @@
                                 <Grid Background="{x:Null}">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
+                                        <ColumnDefinition Width="110"/>
                                         <ColumnDefinition Width="80"/>
                                         <ColumnDefinition Width="80"/>
                                     </Grid.ColumnDefinitions>
-                                    <Button Style="{DynamicResource BorderlessButton}" Grid.Column="1" Command="{Binding CopyPromptCommand}" Content="{lex:Loc Metadata.Buttons.Copy}"/>
-                                    <Button Style="{DynamicResource BorderlessButton}" Grid.Column="2" Command="{Binding CopyParametersCommand}" Content="{lex:Loc Metadata.Buttons.CopyAll}"/>
+                                    <Button Style="{DynamicResource BorderlessButton}" Grid.Column="1" Command="{Binding ConvertPromptCommand}" Content="Convert..."/>
+                                    <Button Style="{DynamicResource BorderlessButton}" Grid.Column="2" Command="{Binding CopyPromptCommand}" Content="{lex:Loc Metadata.Buttons.Copy}"/>
+                                    <Button Style="{DynamicResource BorderlessButton}" Grid.Column="3" Command="{Binding CopyParametersCommand}" Content="{lex:Loc Metadata.Buttons.CopyAll}"/>
                                 </Grid>
                             </local:AccordionControl.ButtonAreaContent>
                             <TextBox Background="#00000000" FontSize="14" BorderThickness="0"
@@ -288,6 +290,66 @@
                               VerticalScrollBarVisibility="Auto">
                     <TextBox FontFamily="Consolas" Padding="5" TextWrapping="Wrap" IsReadOnly="True" Margin="5" Text="{Binding Workflow}" Foreground="{StaticResource ForegroundBrush}"></TextBox>
                 </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Prompt Conversions" Background="Transparent" HorizontalContentAlignment="Stretch">
+                <Grid Background="Transparent" Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="270"/>
+                        <ColumnDefinition Width="8"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="34"/>
+                    </Grid.RowDefinitions>
+
+                    <ListBox ItemsSource="{Binding PromptConversions}" SelectedItem="{Binding SelectedPromptConversion}" BorderBrush="{DynamicResource SecondaryBrush}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="3">
+                                    <TextBlock Foreground="{DynamicResource ForegroundBrush}" FontWeight="SemiBold" Text="{Binding SystemPromptPresetName}"/>
+                                    <TextBlock Foreground="{DynamicResource DisabledForegroundBrush}" Text="{Binding Model}"/>
+                                    <TextBlock Foreground="{DynamicResource DisabledForegroundBrush}" Text="{Binding CreatedAt, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}"/>
+                                    <TextBlock Foreground="{DynamicResource DisabledForegroundBrush}" Text="{Binding AdditionalRequest}" TextTrimming="CharacterEllipsis"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <TabControl Grid.Column="2" Background="{DynamicResource PrimaryBrush}">
+                        <TabItem Header="Positive">
+                            <TextBox Text="{Binding SelectedPromptConversion.PositivePrompt}" TextWrapping="Wrap" IsReadOnly="True" IsReadOnlyCaretVisible="False"
+                                     VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                                     BorderThickness="0" Background="{DynamicResource PrimaryBrush}" Foreground="{DynamicResource ForegroundBrush}"
+                                     FontFamily="Consolas" FontSize="13" Padding="8"/>
+                        </TabItem>
+                        <TabItem Header="Negative">
+                            <TextBox Text="{Binding SelectedPromptConversion.NegativePrompt}" TextWrapping="Wrap" IsReadOnly="True" IsReadOnlyCaretVisible="False"
+                                     VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                                     BorderThickness="0" Background="{DynamicResource PrimaryBrush}" Foreground="{DynamicResource ForegroundBrush}"
+                                     FontFamily="Consolas" FontSize="13" Padding="8"/>
+                        </TabItem>
+                        <TabItem Header="Notes">
+                            <TextBox Text="{Binding SelectedPromptConversion.Notes}" TextWrapping="Wrap" IsReadOnly="True" IsReadOnlyCaretVisible="False"
+                                     VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                                     BorderThickness="0" Background="{DynamicResource PrimaryBrush}" Foreground="{DynamicResource ForegroundBrush}"
+                                     FontFamily="Consolas" FontSize="13" Padding="8"/>
+                        </TabItem>
+                        <TabItem Header="Raw">
+                            <TextBox Text="{Binding SelectedPromptConversion.RawResponse}" TextWrapping="Wrap" IsReadOnly="True" IsReadOnlyCaretVisible="False"
+                                     VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                                     BorderThickness="0" Background="{DynamicResource PrimaryBrush}" Foreground="{DynamicResource ForegroundBrush}"
+                                     FontFamily="Consolas" FontSize="13" Padding="8"/>
+                        </TabItem>
+                    </TabControl>
+
+                    <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                        <Button Width="120" Height="26" Margin="0,0,8,0" Click="CopyConversionPositive_OnClick" Content="Copy Positive"/>
+                        <Button Width="90" Height="26" Margin="0,0,8,0" Click="CopyConversionAll_OnClick" Content="Copy All"/>
+                        <Button Width="90" Height="26" Margin="0,0,8,0" Click="ExportConversionText_OnClick" Content="Export TXT"/>
+                        <Button Width="90" Height="26" Click="ExportConversionJson_OnClick" Content="Export JSON"/>
+                    </StackPanel>
+                </Grid>
             </TabItem>
             <TabItem Visibility="{Binding HasError, Converter={StaticResource boolToVis}}" Header="Errors" Background="Transparent" HorizontalContentAlignment="Stretch">
                 <Grid>

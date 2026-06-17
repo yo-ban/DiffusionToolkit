@@ -139,6 +139,24 @@ public class SettingsModel : BaseNotify
         set => SetField(ref field, value);
     }
 
+    public string LlmBaseUrl
+    {
+        get;
+        set => SetField(ref field, value);
+    }
+
+    public string LlmModel
+    {
+        get;
+        set => SetField(ref field, value);
+    }
+
+    public string LlmApiKey
+    {
+        get;
+        set => SetField(ref field, value);
+    }
+
     public ICommand Escape
     {
         get;

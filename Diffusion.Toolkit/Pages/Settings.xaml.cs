@@ -98,6 +98,9 @@ namespace Diffusion.Toolkit.Pages
 
             _model.HashCache = _settings.HashCache;
             _model.PortableMode = _settings.PortableMode;
+            _model.LlmBaseUrl = _settings.LlmBaseUrl;
+            _model.LlmModel = _settings.LlmModel;
+            _model.LlmApiKey = LlmApiKeyProtector.Unprotect(_settings.LlmApiKeyProtected);
 
             _model.StoreMetadata = _settings.StoreMetadata;
             _model.StoreWorkflow = _settings.StoreWorkflow;
@@ -372,6 +375,9 @@ namespace Diffusion.Toolkit.Pages
                 _settings.NSFWTags = _model.NSFWTags.Split("\r\n", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToList();
                 _settings.HashCache = _model.HashCache;
                 _settings.PortableMode = _model.PortableMode;
+                _settings.LlmBaseUrl = _model.LlmBaseUrl;
+                _settings.LlmModel = _model.LlmModel;
+                _settings.LlmApiKeyProtected = LlmApiKeyProtector.Protect(_model.LlmApiKey);
                 _settings.RenderMode = _model.SoftwareOnly ? RenderMode.SoftwareOnly : RenderMode.Default;
                 
                 _settings.UseBuiltInViewer = _model.UseBuiltInViewer;

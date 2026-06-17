@@ -10,9 +10,9 @@ public class SemanticVersionHelper
 
         var versionPath = path == null? "version.txt" : Path.Combine(path, "version.txt");
 
-        if (File.Exists("version.txt"))
+        if (File.Exists(versionPath))
         {
-            SemanticVersion.TryParse(File.ReadAllText("version.txt"), out localVersion);
+            SemanticVersion.TryParse(File.ReadAllText(versionPath), out localVersion);
         }
 
         return localVersion;
