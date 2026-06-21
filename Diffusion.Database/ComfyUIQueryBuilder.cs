@@ -28,11 +28,19 @@ public static class ComfyUIQueryBuilder
         }).Where(o => o != null);
 
         string? properties = null;
+        var propertyBindings = new List<object>();
 
         if (options.SearchNodes)
         {
             var searchProperties = options.ComfyQueryOptions.SearchProperties;
-            properties = searchProperties != null && searchProperties.Any() ? string.Join(" OR ", searchProperties.Select(p => $"(cmfyp.Name = '{p}')")) : "";
+            if (searchProperties != null && searchProperties.Any())
+            {
+                properties = string.Join(" OR ", searchProperties.Select(p =>
+                {
+                    propertyBindings.Add(p);
+                    return "(cmfyp.Name = ?)";
+                }));
+            }
         }
 
         return (
@@ -41,7 +49,7 @@ public static class ComfyUIQueryBuilder
             "WHERE " +
             (properties is { Length: > 0 } ? $"( {properties} ) AND " : "") +
             $"{whereClause}",
-            bindings
+            propertyBindings.Concat(bindings)
         );
     }
 
@@ -145,9 +153,9 @@ public static class ComfyUIQueryBuilder
             "SELECT DISTINCT cmfyn.ImageId AS Id FROM Node cmfyn  " +
             "INNER JOIN NodeProperty cmfyp ON cmfyp.NodeId = cmfyn.Id " +
             "WHERE " +
-            $"cmfyp.Name {oper} '{prop}' " +
+            $"cmfyp.Name {oper} ? " +
             $"AND ({whereClause})",
-            bindings
+            new[] { (object)prop }.Concat(bindings)
         );
     }
 }
