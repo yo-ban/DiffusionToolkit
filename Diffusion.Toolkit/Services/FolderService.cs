@@ -895,7 +895,7 @@ namespace Diffusion.Toolkit.Services
         {
             foreach (var watcher in _watchers)
             {
-                watcher.EnableRaisingEvents = false;
+                watcher.EnableRaisingEvents = true;
             }
         }
 
