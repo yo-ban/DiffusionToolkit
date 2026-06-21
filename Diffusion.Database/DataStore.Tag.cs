@@ -199,7 +199,7 @@ namespace Diffusion.Database
         {
             using var db = OpenConnection();
 
-            var command = db.CreateCommand("DELETE FROM ImageTag SET WHERE ImageId = ?", id);
+            var command = db.CreateCommand("DELETE FROM ImageTag WHERE ImageId = ?", id);
 
             lock (_lock)
             {

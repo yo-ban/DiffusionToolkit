@@ -83,7 +83,7 @@ namespace Diffusion.Database
         {
             using var db = OpenConnection();
 
-            var command = db.CreateCommand("DELETE FROM Query SET WHERE Id = ?", id);
+            var command = db.CreateCommand("DELETE FROM Query WHERE Id = ?", id);
 
             lock (_lock)
             {

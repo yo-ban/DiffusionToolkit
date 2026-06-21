@@ -502,7 +502,7 @@ namespace Diffusion.Database
 
                         if (QueryBuilder.HideNSFW)
                         {
-                            query += " WHERE (NSFW = 0 OR NSFW IS NULL)";
+                            query += " AND (NSFW = 0 OR NSFW IS NULL)";
                         }
 
                         query += " GROUP BY Prompt ORDER BY Usage DESC";
