@@ -1695,7 +1695,7 @@ namespace SQLite
 #elif SILVERLIGHT
 						_transactionDepth = depth;
 #else
-                        Thread.VolatileWrite(ref _transactionDepth, depth);
+                        Volatile.Write(ref _transactionDepth, depth);
 #endif
                         Execute(cmd + savepoint);
                         return;
@@ -2196,7 +2196,7 @@ namespace SQLite
                     throw NotNullConstraintViolationException.New(ex, map, obj);
                 }
 
-                throw ex;
+                throw;
             }
 
             if (rowsAffected > 0)
