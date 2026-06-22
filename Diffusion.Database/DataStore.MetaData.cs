@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using Diffusion.Database.Models;
 using Microsoft.VisualBasic;
 using SQLite;
@@ -168,8 +168,6 @@ namespace Diffusion.Database
             {
                 yield return image;
             }
-
-            db.Close();
         }
 
 

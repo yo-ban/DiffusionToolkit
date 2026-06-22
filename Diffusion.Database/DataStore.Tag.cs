@@ -1,4 +1,4 @@
-﻿using Diffusion.Common;
+using Diffusion.Common;
 using Diffusion.Common.Query;
 using Diffusion.Database.Models;
 using System;
@@ -18,9 +18,6 @@ namespace Diffusion.Database
             var query = $"SELECT Id, Name FROM Tag ORDER BY Name";
 
             var models = db.Query<Tag>(query);
-
-            db.Close();
-
             return models;
         }
 
@@ -31,9 +28,6 @@ namespace Diffusion.Database
             var query = $"SELECT Id, Name, (SELECT COUNT(1) FROM {nameof(ImageTag)} IT WHERE T.Id = IT.TagId) AS [Count] FROM Tag T ORDER BY Name";
 
             var models = db.Query<TagCount>(query);
-
-            db.Close();
-
             return models;
         }
 
@@ -48,8 +42,6 @@ namespace Diffusion.Database
             {
                 command.ExecuteNonQuery();
             }
-
-            db.Close();
         }
 
         public void CreateTags(IEnumerable<string> names)
@@ -75,8 +67,6 @@ namespace Diffusion.Database
                     throw;
                 }
             }
-
-            db.Close();
         }
 
         public void UpdateTag(int id, string name)
@@ -89,8 +79,6 @@ namespace Diffusion.Database
             {
                 command.ExecuteNonQuery();
             }
-
-            db.Close();
         }
 
         public void RemoveTag(int id)
@@ -103,8 +91,6 @@ namespace Diffusion.Database
             {
                 command.ExecuteNonQuery();
             }
-
-            db.Close();
         }
 
         private class TagIdTemp
@@ -119,9 +105,6 @@ namespace Diffusion.Database
             var query = $"SELECT TagId FROM ImageTag WHERE ImageId = ?";
 
             var results = db.Query<TagIdTemp>(query, id);
-
-            db.Close();
-
             return results.Select(d => d.TagId).ToList();
         }
 
@@ -135,8 +118,6 @@ namespace Diffusion.Database
             {
                 command.ExecuteNonQuery();
             }
-
-            db.Close();
         }
 
         public void RemoveImageTag(int id, int tagId)
@@ -149,8 +130,6 @@ namespace Diffusion.Database
             {
                 command.ExecuteNonQuery();
             }
-
-            db.Close();
         }
 
         public void AddImagesTag(IEnumerable<int> ids, int tagId)
@@ -170,8 +149,6 @@ namespace Diffusion.Database
             {
                 command.ExecuteNonQuery();
             }
-
-            db.Close();
         }
 
         public void RemoveImagesTag(IEnumerable<int> ids, int tagId)
@@ -191,8 +168,6 @@ namespace Diffusion.Database
             {
                 command.ExecuteNonQuery();
             }
-
-            db.Close();
         }
 
         public void RemoveImageTags(int id)
@@ -205,8 +180,6 @@ namespace Diffusion.Database
             {
                 command.ExecuteNonQuery();
             }
-
-            db.Close();
         }
     }
 }

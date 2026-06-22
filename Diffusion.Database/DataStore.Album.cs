@@ -1,4 +1,4 @@
-﻿using Diffusion.Database.Models;
+using Diffusion.Database.Models;
 
 namespace Diffusion.Database
 {
@@ -10,9 +10,6 @@ namespace Diffusion.Database
             using var db = OpenConnection();
 
             var lists = db.Query<AlbumListItem>($"SELECT A.Id, A.Name, A.[Order], A.LastUpdated, (SELECT COUNT(1) FROM {nameof(AlbumImage)} AI WHERE A.Id = AI.AlbumId) AS ImageCount FROM {nameof(Album)} A");
-
-            db.Close();
-
             return lists;
         }
 
@@ -21,9 +18,6 @@ namespace Diffusion.Database
             using var db = OpenConnection();
 
             var lists = db.Query<AlbumListItem>($"SELECT A.Id, A.Name, A.[Order], A.LastUpdated, (SELECT COUNT(1) FROM {nameof(AlbumImage)} AI WHERE A.Id = AI.AlbumId) AS ImageCount FROM {nameof(Album)} A WHERE A.Id = ?", id);
-
-            db.Close();
-
             return lists[0];
         }
 
@@ -32,9 +26,6 @@ namespace Diffusion.Database
             using var db = OpenConnection();
 
             var lists = db.Query<Album>($"SELECT Id, Name, [Order], LastUpdated FROM {nameof(Album)}");
-
-            db.Close();
-
             return lists;
         }
 
@@ -43,9 +34,6 @@ namespace Diffusion.Database
             using var db = OpenConnection();
 
             var lists = db.Query<Album>($"SELECT Id, Name, [Order], LastUpdated FROM {nameof(Album)} ORDER BY LastUpdated DESC LIMIT ?", limit);
-
-            db.Close();
-
             return lists;
         }
 
@@ -54,9 +42,6 @@ namespace Diffusion.Database
             using var db = OpenConnection();
 
             var lists = db.Query<Album>($"SELECT Id, Name, [Order], LastUpdated FROM {nameof(Album)} ORDER BY Name");
-
-            db.Close();
-
             return lists;
         }
 
@@ -75,8 +60,6 @@ namespace Diffusion.Database
             {
                 command.ExecuteNonQuery();
             }
-
-            db.Close();
         }
 
         public Album? GetAlbum(int id)
@@ -90,9 +73,6 @@ namespace Diffusion.Database
             command.Bind("@Id", id);
 
             var album = command.ExecuteQuery<Album>();
-
-            db.Close();
-
             if (album.Count < 1)
                 return null;
 
@@ -257,8 +237,6 @@ namespace Diffusion.Database
             {
                 yield return image;
             }
-
-            db.Close();
         }
 
         public void UpdateAlbumsOrder(IEnumerable<Album> albums)

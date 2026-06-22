@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using SQLite;
 using System.Text;
 using Diffusion.Common;
@@ -211,8 +211,6 @@ namespace Diffusion.Database
             {
                 yield return image;
             }
-
-            db.Close();
         }
 
         public IEnumerable<ImagePath> GetAllPathImages(string path)
@@ -501,8 +499,6 @@ namespace Diffusion.Database
             {
                 db.Execute("UPDATE Image SET FolderId = ? WHERE Id = ?", folderId, id);
             }
-
-            db.Close();
         }
 
         public void MoveImage(int id, string newPath, Dictionary<string, Folder> folderCache)
@@ -520,8 +516,6 @@ namespace Diffusion.Database
             {
                 db.Execute("UPDATE Image SET Path = ?, FolderId = ? WHERE Id = ?", newPath, folderId, id);
             }
-
-            db.Close();
         }
 
         public SQLiteConnection Open()

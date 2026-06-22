@@ -1,4 +1,4 @@
-﻿using System.Net.Sockets;
+using System.Net.Sockets;
 using SQLite;
 using System.Text;
 using Diffusion.Common;
@@ -45,9 +45,6 @@ namespace Diffusion.Database
 
                 db.Execute(query, excluded, folderId);
             }
-
-            db.Close();
-
         }
 
 
@@ -63,8 +60,6 @@ namespace Diffusion.Database
             {
                 db.Execute(query, excluded, id);
             }
-
-            db.Close();
         }
 
         public void SetFolderUnavailable(int id, bool unavailable, bool recursive)
@@ -101,8 +96,6 @@ namespace Diffusion.Database
             {
                 db.Execute(query, archived, id);
             }
-
-            db.Close();
         }
 
         public void SetFolderWatched(int id, bool watched)
@@ -115,8 +108,6 @@ namespace Diffusion.Database
             {
                 db.Execute(query, watched, id);
             }
-
-            db.Close();
         }
 
 
@@ -130,8 +121,6 @@ namespace Diffusion.Database
             {
                 db.Execute(query, recursive, id);
             }
-
-            db.Close();
         }
 
         public int AddRootFolder(string path, bool watched, bool recursive)
@@ -144,9 +133,6 @@ namespace Diffusion.Database
             {
                 id = db.ExecuteScalar<int>($"INSERT INTO Folder (ParentId, Path, ImageCount, ScannedDate, Unavailable, Archived, Excluded, IsRoot, Recursive, Watched) VALUES (0, ?, 0, NULL, 0, 0, 0, 1, ?, ?) ON CONFLICT (Path) DO UPDATE SET ParentId = 0, Excluded = 0, IsRoot = 1, Recursive = ?, Watched = ? RETURNING Id", path, recursive, watched, recursive, watched);
             }
-
-            db.Close();
-
             return id;
         }
 
@@ -161,9 +147,6 @@ namespace Diffusion.Database
             {
                 id = db.ExecuteScalar<int>($"INSERT INTO Folder (ParentId, Path, ImageCount, ScannedDate, Unavailable, Archived, Excluded, IsRoot) VALUES (0, ?, 0, NULL, 0, 0, 1, 0) ON CONFLICT (Path) DO UPDATE SET ParentId = 0, Excluded = 1, IsRoot = 0 RETURNING Id", path);
             }
-
-            db.Close();
-
             return id;
         }
 
@@ -172,8 +155,6 @@ namespace Diffusion.Database
             using var db = OpenConnection();
 
             db.Execute("DELETE FROM Folder WHERE Id = ?", id);
-
-            db.Close();
         }
 
         public static bool EnsureFolderExistsExt(SQLiteConnection db, string path, Dictionary<string, Folder>? folderCache,
@@ -321,8 +302,6 @@ WHERE t.RootId = ? AND t.Depth = 1
             {
                 yield return folder;
             }
-
-            db.Close();
         }
 
         public IEnumerable<Folder> GetRootExcludedFolders()
@@ -335,8 +314,6 @@ WHERE t.RootId = ? AND t.Depth = 1
             {
                 yield return folder;
             }
-
-            db.Close();
         }
 
         public IEnumerable<Folder> GetExcludedFolders()
@@ -349,8 +326,6 @@ WHERE t.RootId = ? AND t.Depth = 1
             {
                 yield return folder;
             }
-
-            db.Close();
         }
 
         public IEnumerable<Folder> GetArchivedFolders(bool archived = true)
@@ -363,8 +338,6 @@ WHERE t.RootId = ? AND t.Depth = 1
             {
                 yield return folder;
             }
-
-            db.Close();
         }
 
         public IEnumerable<Folder> GetRootFolders()
@@ -377,8 +350,6 @@ WHERE t.RootId = ? AND t.Depth = 1
             {
                 yield return folder;
             }
-
-            db.Close();
         }
 
         private static string FolderColumns = "Id, ParentId, Path, ImageCount, ScannedDate, Unavailable, Archived, Excluded, IsRoot, Recursive, Watched";
@@ -407,8 +378,6 @@ LEFT JOIN (SELECT RootId, COUNT(*) AS Children FROM directoryTree WHERE Depth = 
             {
                 yield return folder;
             }
-
-            db.Close();
         }
 
         public IEnumerable<Folder> GetFolders()
@@ -423,8 +392,6 @@ LEFT JOIN (SELECT RootId, COUNT(*) AS Children FROM directoryTree WHERE Depth = 
             {
                 yield return folder;
             }
-
-            db.Close();
         }
 
         public Folder? GetFolder(string path)
@@ -531,8 +498,6 @@ LEFT JOIN (SELECT RootId, COUNT(*) AS Children FROM directoryTree WHERE Depth = 
                 updateFolderCommand.ExecuteNonQuery();
 
                 db.Commit();
-
-                db.Close();
             }
 
             return imagesUpdated;
@@ -580,9 +545,6 @@ LEFT JOIN (SELECT RootId, COUNT(*) AS Children FROM directoryTree WHERE Depth = 
 
                 db.Commit();
             }
-
-            db.Close();
-
             return images;
         }
 
@@ -623,9 +585,6 @@ LEFT JOIN (SELECT RootId, COUNT(*) AS Children FROM directoryTree WHERE Depth = 
 
 
             }
-
-            db.Close();
-
             return images;
         }
 

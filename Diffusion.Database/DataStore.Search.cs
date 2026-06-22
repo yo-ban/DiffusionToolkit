@@ -1,4 +1,4 @@
-﻿using Diffusion.Common;
+using Diffusion.Common;
 using Diffusion.Common.Query;
 using Diffusion.Database.Models;
 using System;
@@ -59,9 +59,6 @@ namespace Diffusion.Database
             var query = $"SELECT Model AS Name, ModelHash AS Hash, COUNT(*) AS ImageCount FROM Image {whereClause} GROUP BY Model, ModelHash";
 
             var models = db.Query<ModelView>(query);
-
-            db.Close();
-
             return models;
         }
 
@@ -72,9 +69,6 @@ namespace Diffusion.Database
             var query = "SELECT COUNT(*) FROM Image";
 
             var count = db.ExecuteScalar<int>(query + GetInitialWhereClause());
-
-            db.Close();
-
             return count;
         }
 
@@ -85,9 +79,6 @@ namespace Diffusion.Database
             var q = QueryCombiner.Parse(queryOptions);
 
             var size = db.ExecuteScalar<long>($"SELECT SUM(FileSize) FROM Image main INNER JOIN ({q.Query}) sub on sub.Id = main.Id", q.Bindings.ToArray());
-
-            db.Close();
-
             return size;
         }
 
@@ -111,9 +102,6 @@ namespace Diffusion.Database
             var q = QueryBuilder.QueryPrompt(prompt);
 
             var size = db.ExecuteScalar<long>($"SELECT SUM(FileSize) FROM Image m1 {string.Join(' ', q.Joins)} WHERE {q.WhereClause}", q.Bindings.ToArray());
-
-            db.Close();
-
             return size;
         }
 
@@ -186,9 +174,6 @@ namespace Diffusion.Database
             var q = QueryBuilder.QueryPrompt(prompt);
 
             var count = db.ExecuteScalar<int>($"SELECT COUNT(*) FROM Image m1 {string.Join(' ', q.Joins)} WHERE {q.WhereClause}", q.Bindings.ToArray());
-
-            db.Close();
-
             return count;
         }
 
@@ -321,8 +306,6 @@ namespace Diffusion.Database
             {
                 yield return image;
             }
-
-            db.Close();
         }
 
         public IEnumerable<ImageView> Search(QueryOptions queryOptions, Sorting sorting, Paging? paging = null)
@@ -541,9 +524,6 @@ namespace Diffusion.Database
 
 
             lastPrompt = prompt;
-
-            db.Close();
-
         }
 
         public IEnumerable<UsedPrompt> SearchNegativePrompts(string prompt, bool fullText, int distance)
@@ -612,8 +592,6 @@ namespace Diffusion.Database
 
 
             lastPrompt = prompt;
-
-            db.Close();
         }
 
 

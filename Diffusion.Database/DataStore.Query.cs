@@ -1,4 +1,4 @@
-﻿using Diffusion.Database.Models;
+using Diffusion.Database.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +17,6 @@ namespace Diffusion.Database
             using var db = OpenConnection();
 
             var count = db.ExecuteScalar<int>("SELECT COUNT(1) FROM Query WHERE Name = ?", name);
-
-            db.Close();
-
             return count == 1;
         }
 
@@ -35,8 +32,6 @@ namespace Diffusion.Database
             {
                 command.ExecuteNonQuery();
             }
-
-            db.Close();
         }
 
 
@@ -45,9 +40,6 @@ namespace Diffusion.Database
             using var db = OpenConnection();
 
             var items = db.Query<QueryItem>("SELECT Id, Name, CreatedDate FROM Query ORDER BY Name DESC");
-
-            db.Close();
-
             return items;
         }
 
@@ -59,9 +51,6 @@ namespace Diffusion.Database
             var queries = db.Query<Query>("SELECT Name, QueryJson, CreatedDate FROM Query WHERE Id = @Id", id);
 
             var options = JsonSerializer.Deserialize<QueryOptions>(queries[0].QueryJson);
-
-            db.Close();
-
             return options;
         }
 
@@ -75,8 +64,6 @@ namespace Diffusion.Database
             {
                 command.ExecuteNonQuery();
             }
-
-            db.Close();
         }
 
         public void RemoveQuery(int id)
@@ -89,8 +76,6 @@ namespace Diffusion.Database
             {
                 command.ExecuteNonQuery();
             }
-
-            db.Close();
         }
 
     }

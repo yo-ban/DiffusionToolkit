@@ -4,7 +4,7 @@ using SQLite;
 
 namespace Diffusion.Database;
 
-public partial class DataStore
+public partial class DataStore : IDisposable
 {
     private readonly object _lock = new object();
     public static int _instances;
@@ -209,7 +209,6 @@ public partial class DataStore
         }
 
 
-        db.Close();
     }
 
     void CreateAlbumImageTable(SQLiteConnection db)
@@ -228,7 +227,13 @@ public partial class DataStore
 
     public void Close()
     {
-        _readOnlyConnection?.Close();
+        _readOnlyConnection?.Dispose();
+        _readOnlyConnection = null;
+    }
+
+    public void Dispose()
+    {
+        Close();
     }
 
     public void RebuildIndexes()
@@ -268,8 +273,6 @@ public partial class DataStore
         db.CreateIndex<Image>(image => image.HyperNetwork);
         db.CreateIndex<Image>(image => image.HyperNetworkStrength);
         db.CreateIndex<Image>(image => image.FileSize);
-        db.Close();
-
     }
 
 
