@@ -55,7 +55,25 @@ public static class QueryCombiner
 
             foreach (var token in tokens)
             {
-                conditions.Add(new KeyValuePair<string, object>("(Workflow LIKE ?)", $"%{token.Trim()}%"));
+                var term = token.Trim();
+                if (string.IsNullOrWhiteSpace(term))
+                {
+                    continue;
+                }
+
+                if (term.StartsWith("-") && term.Length > 1)
+                {
+                    conditions.Add(new KeyValuePair<string, object>("(Workflow NOT LIKE ? OR Workflow IS NULL)", $"%{term[1..].Trim()}%"));
+                }
+                else
+                {
+                    conditions.Add(new KeyValuePair<string, object>("(Workflow LIKE ?)", $"%{term}%"));
+                }
+            }
+
+            if (!conditions.Any())
+            {
+                return (query, bindings);
             }
 
             var whereClause = string.Join(" AND ", conditions.Select(c => c.Key));
