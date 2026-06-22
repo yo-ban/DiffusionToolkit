@@ -105,7 +105,7 @@ public class Filter
                             UseInAlbum ||
                             UseUnavailable ||
                             NodeFilters != null && NodeFilters.Any(d => d.IsActive) ||
-                            AlbumIds != null && AlbumIds.Count >= 0
+                            AlbumIds != null && AlbumIds.Count > 0
                             );
 
     public bool UseFolder => !string.IsNullOrEmpty(Folder);

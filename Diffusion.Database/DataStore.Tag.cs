@@ -116,9 +116,9 @@ namespace Diffusion.Database
         {
             using var db = OpenConnection();
 
-            var query = $"SELECT TagId FROM ImageTag WHERE ImageId = {id}";
+            var query = $"SELECT TagId FROM ImageTag WHERE ImageId = ?";
 
-            var results = db.Query<TagIdTemp>(query);
+            var results = db.Query<TagIdTemp>(query, id);
 
             db.Close();
 
