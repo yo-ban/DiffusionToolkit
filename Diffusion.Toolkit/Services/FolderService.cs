@@ -1165,7 +1165,7 @@ namespace Diffusion.Toolkit.Services
                 catch (Exception ex)
                 {
                     Logger.Log(ex);
-                    MessageBox.Show(ServiceLocator.WindowService.CurrentWindow, ex.Message, "Error moving folder",
+                    MessageBox.Show(ServiceLocator.WindowService.CurrentWindow, ex.Message, GetLocalizedText("Messages.Captions.ErrorMovingFolder"),
                         MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 finally

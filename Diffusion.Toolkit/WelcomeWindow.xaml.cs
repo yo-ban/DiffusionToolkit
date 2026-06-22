@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Diffusion.Toolkit.Configuration;
+using Diffusion.Toolkit.Localization;
 using Diffusion.Toolkit.Models;
 using Diffusion.Toolkit.Services;
 using Microsoft.WindowsAPICodePack.Dialogs;
@@ -185,6 +186,11 @@ namespace Diffusion.Toolkit
         //}
 
 
+        private string GetLocalizedText(string key)
+        {
+            return (string)JsonLocalizationProvider.Instance.GetLocalizedObject(key, null, CultureInfo.InvariantCulture);
+        }
+
         private void AddFolder_OnClick(object sender, RoutedEventArgs e)
         {
             using var dialog = new CommonOpenFileDialog();
@@ -194,16 +200,16 @@ namespace Diffusion.Toolkit
                 if (_model.ImagePaths.Any(d => dialog.FileName.StartsWith(d + "\\")))
                 {
                     MessageBox.Show(this,
-                        "The selected folder is already on the path of one of the included folders",
-                        "Add folder", MessageBoxButton.OK,
+                        GetLocalizedText("Messages.FolderAlreadyIncluded"),
+                        GetLocalizedText("Messages.Captions.AddFolder"), MessageBoxButton.OK,
                         MessageBoxImage.Information);
                     return;
                 }
                 else if (_model.ImagePaths.Any(d => d.StartsWith(dialog.FileName)))
                 {
                     MessageBox.Show(this,
-                        "One of the included folders is on the path of the selected folder! It is recommended that you remove it.",
-                        "Add folder", MessageBoxButton.OK,
+                        GetLocalizedText("Messages.FolderOverlapRecommendRemove"),
+                        GetLocalizedText("Messages.Captions.AddFolder"), MessageBoxButton.OK,
                         MessageBoxImage.Warning);
                 }
 

@@ -55,11 +55,11 @@ namespace Diffusion.Toolkit
             }
             else
             {
-                var existsDialogResult = MessageBox.Show(this, $"A configuration or database file was found in the {target} folder. Do you want to use it?", "Diffusion Toolkit", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning, MessageBoxResult.Cancel);
+                var existsDialogResult = MessageBox.Show(this, GetLocalizedText("Messages.PortableConfigFound").Replace("{target}", target), "Diffusion Toolkit", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning, MessageBoxResult.Cancel);
 
                 if (existsDialogResult == MessageBoxResult.No)
                 {
-                    var confirmResult = MessageBox.Show(this, $"Are you sure you want to overwrite the files in the {target} folder?", "Diffusion Toolkit", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                    var confirmResult = MessageBox.Show(this, GetLocalizedText("Messages.PortableOverwriteConfirm").Replace("{target}", target), "Diffusion Toolkit", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                     if (confirmResult == MessageBoxResult.Yes)
                     {
@@ -106,7 +106,7 @@ namespace Diffusion.Toolkit
 
                         if (moved)
                         {
-                            MessageBox.Show(this, "Your portable files have been renamed to .backup", "Diffusion Toolkit", MessageBoxButton.OK);
+                            MessageBox.Show(this, GetLocalizedText("Messages.PortableRenamedBackup"), "Diffusion Toolkit", MessageBoxButton.OK);
                         }
                     }
 

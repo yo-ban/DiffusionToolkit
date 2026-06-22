@@ -1884,7 +1884,7 @@ namespace Diffusion.Toolkit.Pages
                 catch (Exception exception)
                 {
                     Logger.Log(exception);
-                    MessageBox.Show(exception.Message, "Error loading image", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(exception.Message, GetLocalizedText("Messages.Captions.ErrorLoadingImage"), MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
 

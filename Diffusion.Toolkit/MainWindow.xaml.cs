@@ -445,7 +445,7 @@ namespace Diffusion.Toolkit
 
             Logger.Log($"An unhandled exception occured: {exception.Message}\r\n\r\n{exception.StackTrace}");
 
-            MessageBox.Show(this, exception.Message, "An unhandled exception occured", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            MessageBox.Show(this, exception.Message, GetLocalizedText("Messages.Captions.UnhandledException"), MessageBoxButton.OK, MessageBoxImage.Exclamation);
 
         }
 
@@ -549,7 +549,7 @@ namespace Diffusion.Toolkit
                 }
                 catch (Exception exception)
                 {
-                    MessageBox.Show(this, "An error occured while loading configuration settings. The application will exit", "Startup failed!", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(this, GetLocalizedText("Messages.ConfigLoadError"), GetLocalizedText("Messages.Captions.StartupFailed"), MessageBoxButton.OK, MessageBoxImage.Error);
                     throw;
                 }
 
@@ -974,7 +974,7 @@ namespace Diffusion.Toolkit
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(this, ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(this, ex.Message, GetLocalizedText("Messages.Captions.Error"), MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
             }
@@ -989,14 +989,14 @@ namespace Diffusion.Toolkit
 
                 if (string.IsNullOrEmpty(_settings.CustomCommandLine))
                 {
-                    MessageBox.Show(this, "No custom viewer set. Please check Settings", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(this, GetLocalizedText("Messages.NoCustomViewer"), GetLocalizedText("Messages.Captions.Error"), MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
 
                 if (!File.Exists(_settings.CustomCommandLine))
                 {
-                    MessageBox.Show(this, "The specified application does not exist", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(this, GetLocalizedText("Messages.AppDoesNotExist"), GetLocalizedText("Messages.Captions.Error"), MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
@@ -1013,7 +1013,7 @@ namespace Diffusion.Toolkit
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(this, ex.Message + "\r\n\r\nPlease check that the path to your custom viewer is valid and that the arguments are correct", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(this, ex.Message + "\r\n\r\n" + GetLocalizedText("Messages.CustomViewerArgsInvalid"), GetLocalizedText("Messages.Captions.Error"), MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
             }
@@ -1097,7 +1097,7 @@ namespace Diffusion.Toolkit
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show($"Error loading JSON file '{_settings.HashCache}':\n{e.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show(GetLocalizedText("Messages.HashCacheLoadError").Replace("{file}", _settings.HashCache).Replace("{error}", e.Message), GetLocalizedText("Messages.Captions.Error"), MessageBoxButton.OK, MessageBoxImage.Information);
                 }
 
                 //foreach (var model in _modelsCollection.ToList())

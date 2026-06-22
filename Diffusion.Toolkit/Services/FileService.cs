@@ -221,7 +221,7 @@ public class FileService
 
         if (files.Count == 0)
         {
-            var noFilesMessage = GetLocalizedText("Actions.Delete.NoFiles.Caption");
+            var noFilesMessage = GetLocalizedText("Actions.Delete.Nofiles.Message");
             await ServiceLocator.MessageService.Show(noFilesMessage, title);
             return;
         }
@@ -346,12 +346,12 @@ public class FileService
                 catch (Exception e)
                 {
                     Logger.Log(e);
-                    var message = $"An error occured while moving files: {e.Message}";
+                    var message = GetLocalizedText("Messages.MovingFilesError").Replace("{error}", e.Message);
                     // This catch runs on a thread-pool thread (Task.Run). MessageBox.Show
                     // must be shown on the UI thread so it parented to the main window.
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        MessageBox.Show(ServiceLocator.WindowService.CurrentWindow, message, "Moving Files", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show(ServiceLocator.WindowService.CurrentWindow, message, GetLocalizedText("Messages.Captions.MovingFiles"), MessageBoxButton.OK, MessageBoxImage.Error);
                     });
                 }
                 finally

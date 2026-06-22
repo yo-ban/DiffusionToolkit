@@ -47,7 +47,7 @@ namespace Diffusion.Toolkit
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message, "Updater Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show(e.Message, GetLocalizedText("Messages.Captions.UpdaterError"), MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
 

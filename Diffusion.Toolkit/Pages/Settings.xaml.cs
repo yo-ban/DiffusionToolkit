@@ -208,8 +208,8 @@ namespace Diffusion.Toolkit.Pages
             _dataStore.CreateBackup();
 
             var result = MessageBox.Show(this._window,
-                "A database backup has been created.",
-                "Backup Database", MessageBoxButton.OK,
+                GetLocalizedText("Messages.DatabaseBackupCreated"),
+                GetLocalizedText("Messages.Captions.BackupDatabase"), MessageBoxButton.OK,
                 MessageBoxImage.Information);
         }
 
@@ -224,16 +224,16 @@ namespace Diffusion.Toolkit.Pages
                 if (dialog.FileName == _dataStore.DatabasePath)
                 {
                     MessageBox.Show(this._window,
-                    "The selected file is the current database. Please try another file.",
-                    "Restore Database", MessageBoxButton.OK,
+                    GetLocalizedText("Messages.DatabaseBackupCurrent"),
+                    GetLocalizedText("Messages.Captions.RestoreDatabase"), MessageBoxButton.OK,
                     MessageBoxImage.Exclamation);
 
                     return;
                 }
 
                 var result = MessageBox.Show(this._window,
-                    $"Are you sure you want to restore the file {dialog.FileName}? Your current database will be overwritten!",
-                "Restore Database", MessageBoxButton.YesNo,
+                    GetLocalizedText("Messages.DatabaseRestoreConfirm").Replace("{file}", dialog.FileName),
+                GetLocalizedText("Messages.Captions.RestoreDatabase"), MessageBoxButton.YesNo,
                     MessageBoxImage.Exclamation, MessageBoxResult.No);
 
                 if (result == MessageBoxResult.Yes)
@@ -241,16 +241,16 @@ namespace Diffusion.Toolkit.Pages
                     if (!_dataStore.TryRestoreBackup(dialog.FileName))
                     {
                         MessageBox.Show(this._window,
-                            "The database backup is not a Diffusion Toolkit database.",
-                            "Restore Database", MessageBoxButton.OK,
+                            GetLocalizedText("Messages.DatabaseBackupInvalid"),
+                            GetLocalizedText("Messages.Captions.RestoreDatabase"), MessageBoxButton.OK,
                             MessageBoxImage.Error);
                         return;
                     }
                 }
 
                 MessageBox.Show(this._window,
-                    "The database backup has been restored.",
-                    "Restore Database", MessageBoxButton.OK,
+                    GetLocalizedText("Messages.DatabaseBackupRestored"),
+                    GetLocalizedText("Messages.Captions.RestoreDatabase"), MessageBoxButton.OK,
                     MessageBoxImage.Information);
             }
         }
@@ -297,8 +297,8 @@ namespace Diffusion.Toolkit.Pages
             if (_model.SelectedApplication != null)
             {
                 var result = MessageBox.Show(this._window,
-                $"Are you sure you want to remove \"{_model.SelectedApplication.Name}\"?",
-                "Remove Application", MessageBoxButton.YesNo,
+                GetLocalizedText("Messages.RemoveApplicationConfirm").Replace("{name}", _model.SelectedApplication.Name),
+                GetLocalizedText("Messages.Captions.RemoveApplication"), MessageBoxButton.YesNo,
                 MessageBoxImage.Question, MessageBoxResult.No);
 
                 if (result == MessageBoxResult.Yes)

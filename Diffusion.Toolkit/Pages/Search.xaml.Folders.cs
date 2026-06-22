@@ -573,8 +573,8 @@ namespace Diffusion.Toolkit.Pages
                 if (ServiceLocator.FolderService.RootFolders.Any(d => path.StartsWith(d.Path + "\\", StringComparison.OrdinalIgnoreCase)))
                 {
                     MessageBox.Show(window,
-                        "The selected folder is already included in the path of one of the existing folders",
-                        "Add folder", MessageBoxButton.OK,
+                        GetLocalizedText("Messages.FolderAlreadyIncluded"),
+                        GetLocalizedText("Messages.Captions.AddFolder"), MessageBoxButton.OK,
                         MessageBoxImage.Information);
                     return;
                 }
@@ -585,15 +585,15 @@ namespace Diffusion.Toolkit.Pages
                 else if (ServiceLocator.FolderService.RootFolders.Any(d => d.Path.StartsWith(path, StringComparison.OrdinalIgnoreCase)))
                 {
                     MessageBox.Show(window,
-                        "One or more of the existing folders is included the path of the selected folder",
-                        "Add folder", MessageBoxButton.OK,
+                        GetLocalizedText("Messages.FolderIncludedExisting"),
+                        GetLocalizedText("Messages.Captions.AddFolder"), MessageBoxButton.OK,
                         MessageBoxImage.Warning);
                     return;
                 }
 
                 var recursiveScan = MessageBox.Show(window,
-                    "Do you want this folder to be scanned recursively?",
-                    "Add folder", MessageBoxButton.YesNo,
+                    GetLocalizedText("Messages.ScanRecursively"),
+                    GetLocalizedText("Messages.Captions.AddFolder"), MessageBoxButton.YesNo,
                     MessageBoxImage.Information);
 
                 _ = ServiceLocator.FolderService.ApplyFolderChanges(new[]

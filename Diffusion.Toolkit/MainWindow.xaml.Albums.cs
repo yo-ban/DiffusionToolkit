@@ -78,7 +78,7 @@ namespace Diffusion.Toolkit
                     //_search.ReloadMatches(null);
                 }
                 else
-                    MessageBox.Show("Album not found, please refresh and try again", "No Album");
+                    MessageBox.Show(GetLocalizedText("Messages.AlbumNotFound"), GetLocalizedText("Messages.Captions.NoAlbum"));
             });
 
             _model.RenameAlbumCommand = new AsyncCommand<AlbumModel>(async (album) =>
@@ -278,7 +278,7 @@ namespace Diffusion.Toolkit
                     //_search.ReloadMatches(null);
                 }
                 else
-                    MessageBox.Show("Album not found, please refresh and try again", "No Album");
+                    MessageBox.Show(GetLocalizedText("Messages.AlbumNotFound"), GetLocalizedText("Messages.Captions.NoAlbum"));
             }
         }
 
