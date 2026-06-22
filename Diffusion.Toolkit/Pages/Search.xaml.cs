@@ -303,10 +303,10 @@ namespace Diffusion.Toolkit.Pages
                         settings.SearchNodes = _model.SearchSettings.SearchNodes;
                         break;
                     case nameof(SearchSettings.SearchAllProperties):
-                        settings.SearchNodes = _model.SearchSettings.SearchAllProperties;
+                        settings.SearchAllProperties = _model.SearchSettings.SearchAllProperties;
                         break;
                     case nameof(SearchSettings.SearchRawData):
-                        settings.SearchNodes = _model.SearchSettings.SearchRawData;
+                        settings.SearchRawData = _model.SearchSettings.SearchRawData;
                         break;
                     case nameof(SearchSettings.IncludeNodeProperties):
                         settings.IncludeNodeProperties = _model.SearchSettings.GetNodePropertiesList().ToList();
