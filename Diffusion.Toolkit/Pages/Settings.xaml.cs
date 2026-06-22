@@ -101,6 +101,7 @@ namespace Diffusion.Toolkit.Pages
             _model.LlmBaseUrl = _settings.LlmBaseUrl;
             _model.LlmModel = _settings.LlmModel;
             _model.LlmApiKey = LlmApiKeyProtector.Unprotect(_settings.LlmApiKeyProtected);
+            LlmApiKeyBox.Password = _model.LlmApiKey;
 
             _model.StoreMetadata = _settings.StoreMetadata;
             _model.StoreWorkflow = _settings.StoreWorkflow;
@@ -377,7 +378,7 @@ namespace Diffusion.Toolkit.Pages
                 _settings.PortableMode = _model.PortableMode;
                 _settings.LlmBaseUrl = _model.LlmBaseUrl;
                 _settings.LlmModel = _model.LlmModel;
-                _settings.LlmApiKeyProtected = LlmApiKeyProtector.Protect(_model.LlmApiKey);
+                _settings.LlmApiKeyProtected = LlmApiKeyProtector.Protect(LlmApiKeyBox.Password);
                 _settings.RenderMode = _model.SoftwareOnly ? RenderMode.SoftwareOnly : RenderMode.Default;
                 
                 _settings.UseBuiltInViewer = _model.UseBuiltInViewer;
@@ -407,6 +408,11 @@ namespace Diffusion.Toolkit.Pages
                 _settings.Culture = _model.Culture;
 
             }
+        }
+
+        private void LlmApiKeyBox_OnPasswordChanged(object sender, RoutedEventArgs e)
+        {
+            _model.LlmApiKey = LlmApiKeyBox.Password;
         }
 
 

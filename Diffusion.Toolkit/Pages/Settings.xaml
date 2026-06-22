@@ -290,7 +290,7 @@
                     <TextBox Height="26" VerticalContentAlignment="Center" Text="{Binding LlmModel, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10"></TextBox>
 
                     <Label Content="API key"></Label>
-                    <TextBox Height="26" VerticalContentAlignment="Center" Text="{Binding LlmApiKey, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10"></TextBox>
+                    <PasswordBox x:Name="LlmApiKeyBox" Height="26" VerticalContentAlignment="Center" PasswordChanged="LlmApiKeyBox_OnPasswordChanged" Margin="0,0,0,10"></PasswordBox>
 
                     <TextBlock Foreground="{DynamicResource ForegroundBrush}" Margin="0,10,0,0" TextWrapping="Wrap">
                         API keys are protected with Windows DPAPI before they are written to settings. OpenRouter uses https://openrouter.ai/api/v1.
