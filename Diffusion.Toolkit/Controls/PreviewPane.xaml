@@ -1,10 +1,10 @@
-﻿<UserControl x:Class="Diffusion.Toolkit.Controls.PreviewPane"
+<UserControl x:Class="Diffusion.Toolkit.Controls.PreviewPane"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Diffusion.Toolkit.Controls"
-             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:fa="http://schemas.fontawesome.com/icons/"
              xmlns:classes="clr-namespace:Diffusion.Toolkit.Classes"
              xmlns:behaviors="clr-namespace:Diffusion.Toolkit.Behaviors"
              xmlns:converters="clr-namespace:Diffusion.Toolkit.Converters"
@@ -78,7 +78,7 @@
     <Grid x:Name="PreviewGrid" DataContext="{Binding ., RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Background="Transparent">
 
         <Grid  Background="{x:Null}" Visibility="{Binding IsLoading, Converter={StaticResource boolToVis}}">
-            <fa:ImageAwesome Opacity="0.5" Icon="CircleOutlineNotch" Height="60" Spin="True" SpinDuration="1" Foreground="{StaticResource ForegroundBrush}" />
+            <fa:ImageAwesome Opacity="0.5" Icon="Solid_CircleNotch" Height="60" Spin="True" SpinDuration="1" Foreground="{StaticResource ForegroundBrush}" />
         </Grid>
 
 
@@ -166,7 +166,7 @@
             <Grid Grid.Row="0" RowSpan="3" Background="Transparent" IsHitTestVisible="False"
                   DataContext="{Binding Image, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
                   >
-                <fa:ImageAwesome VerticalAlignment="Center" Height="64" Width="64" Icon="EyeSlash" Foreground="{DynamicResource ForegroundBrush}">
+                <fa:ImageAwesome VerticalAlignment="Center" Height="64" Width="64" Icon="Solid_EyeSlash" Foreground="{DynamicResource ForegroundBrush}">
                     <fa:ImageAwesome.Visibility>
                         <MultiBinding Converter="{StaticResource boolToVisMulti}" ConverterParameter="20">
                             <Binding Path="NSFW"></Binding>
@@ -203,7 +203,7 @@
         <!--<Grid  Background="{x:Null}" Visibility="{Binding Image.ForDeletion, Converter={StaticResource boolToVis}}" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Border BorderBrush="White" BorderThickness="2" Background="#FF000000" CornerRadius="5">
                 <StackPanel Orientation="Horizontal" Margin="35,15,35,15">
-                    <fa:FontAwesome Icon="Trash" FontSize="30" Foreground="White" Margin="0,0,0,0" ></fa:FontAwesome>
+                    <fa:FontAwesome Icon="Solid_Trash" FontSize="30" Foreground="White" Margin="0,0,0,0" ></fa:FontAwesome>
                 </StackPanel>
             </Border>
         </Grid>-->
@@ -220,7 +220,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Button Grid.Row="1" Grid.Column="1" Style="{StaticResource StaticButton}" HorizontalAlignment="Left" PreviewMouseDown="NavigatePrevious_OnPreviewMouseDown">
-                <fa:ImageAwesome Margin="0,4,0,0" Height="18" Icon="ArrowLeft" Foreground="{DynamicResource ForegroundBrush}">
+                <fa:ImageAwesome Margin="0,4,0,0" Height="18" Icon="Solid_ArrowLeft" Foreground="{DynamicResource ForegroundBrush}">
                     <fa:ImageAwesome.Resources>
                         <Style TargetType="fa:ImageAwesome">
                             <Setter Property="Opacity" Value="0.5"></Setter>
@@ -246,7 +246,7 @@
                 </local:StarRating.Style>
             </local:StarRating>
             <Button Grid.Row="1" Grid.Column="3" Style="{StaticResource StaticButton}" HorizontalAlignment="Right" PreviewMouseDown="NavigateNext_OnPreviewMouseDown">
-                <fa:ImageAwesome Margin="0,4,0,0" Height="18" Icon="ArrowRight" Foreground="{DynamicResource ForegroundBrush}">
+                <fa:ImageAwesome Margin="0,4,0,0" Height="18" Icon="Solid_ArrowRight" Foreground="{DynamicResource ForegroundBrush}">
                     <fa:ImageAwesome.Resources>
                         <Style TargetType="fa:ImageAwesome">
                             <Setter Property="Opacity" Value="0.5"></Setter>
@@ -306,7 +306,7 @@
                         </Style.Triggers>
                     </Style>
                 </Button.Style>
-                <fa:ImageAwesome Margin="0,4,0,0" Height="18" Icon="Repeat" Foreground="{DynamicResource ForegroundBrush}">
+                <fa:ImageAwesome Margin="0,4,0,0" Height="18" Icon="Solid_Redo" Foreground="{DynamicResource ForegroundBrush}">
                     <fa:ImageAwesome.Resources>
                         <Style TargetType="fa:ImageAwesome">
                             <Setter Property="Opacity" Value="0.5"></Setter>
@@ -336,7 +336,7 @@
                         </Style.Triggers>
                     </Style>
                 </Button.Style>
-                <fa:ImageAwesome Margin="0,4,0,0" Height="18" Icon="VolumeOff" Foreground="{DynamicResource ForegroundBrush}">
+                <fa:ImageAwesome Margin="0,4,0,0" Height="18" Icon="Solid_VolumeOff" Foreground="{DynamicResource ForegroundBrush}">
                     <fa:ImageAwesome.Resources>
                         <Style TargetType="fa:ImageAwesome">
                             <Setter Property="Opacity" Value="0.5"></Setter>

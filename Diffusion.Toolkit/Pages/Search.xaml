@@ -1,4 +1,4 @@
-﻿<local:NavigationPage x:Class="Diffusion.Toolkit.Pages.Search"
+<local:NavigationPage x:Class="Diffusion.Toolkit.Pages.Search"
                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -9,7 +9,7 @@
                 xmlns:classes="clr-namespace:Diffusion.Toolkit.Classes"
                 xmlns:controls="clr-namespace:Diffusion.Toolkit.Controls"
                 xmlns:converters="clr-namespace:Diffusion.Toolkit.Converters"
-                xmlns:fa="http://schemas.fontawesome.io/icons/"
+                xmlns:fa="http://schemas.fontawesome.com/icons/"
                 xmlns:common="clr-namespace:Diffusion.Toolkit.Common"
                 xmlns:lex="http://wpflocalizeextension.codeplex.com"
                 xmlns:behaviors="clr-namespace:Diffusion.Toolkit.Behaviors"
@@ -117,7 +117,7 @@
                             <Label FontSize="10" Content="{lex:Loc Search.Navigation.Models}"></Label>
                             <Label FontSize="12" Content="{Binding MainModel.SelectedModelsCount}"></Label>
                             <Button Style="{StaticResource StaticButton}" Command="{Binding MainModel.ClearModelsCommand}">
-                                <fa:FontAwesome FontSize="10" Icon="Close"></fa:FontAwesome>
+                                <fa:FontAwesome FontSize="10" Icon="Solid_Times"></fa:FontAwesome>
                             </Button>
                         </StackPanel>
                     </Border>
@@ -126,7 +126,7 @@
                             <Label FontSize="10">Albums:</Label>
                             <Label FontSize="12" Content="{Binding MainModel.SelectedAlbumsCount}"></Label>
                             <Button Style="{StaticResource StaticButton}" Command="{Binding MainModel.ClearAlbumsCommand}">
-                                <fa:FontAwesome FontSize="10" Icon="Close"></fa:FontAwesome>
+                                <fa:FontAwesome FontSize="10" Icon="Solid_Times"></fa:FontAwesome>
                             </Button>
                         </StackPanel>
                     </Border>
@@ -135,7 +135,7 @@
                             <Label FontSize="10">Tags:</Label>
                             <Label FontSize="12" Content="{Binding MainModel.SelectedTagsCount}"></Label>
                             <Button Style="{StaticResource StaticButton}" Command="{Binding MainModel.ClearTagsCommand}">
-                                <fa:FontAwesome FontSize="10" Icon="Close"></fa:FontAwesome>
+                                <fa:FontAwesome FontSize="10" Icon="Solid_Times"></fa:FontAwesome>
                             </Button>
                         </StackPanel>
                     </Border>
@@ -161,7 +161,7 @@
                 </Grid.ColumnDefinitions>
 
                 <!--<Button DockPanel.Dock="Left" Width="28" Command="{Binding ClearFilter}" >
-                        <fa:ImageAwesome ToolTip="Help" Icon="QuestionCircleOutline" Width="16" Margin="2"  Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <fa:ImageAwesome ToolTip="Help" Icon="Regular_QuestionCircle" Width="16" Margin="2"  Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
                         </fa:ImageAwesome>
                     </Button>-->
                 <Grid Grid.Column="0">
@@ -198,23 +198,23 @@
                     </TextBlock>
                 </Grid>
                 <Button Style="{DynamicResource BorderlessButton}" ToolTip="{lex:Loc Search.Buttons.ShowSearchHelp.ToolTip}" Grid.Column="1" Command="{Binding ShowSearchHelp}">
-                    <fa:ImageAwesome Icon="Question" Height="16" Margin="2"  Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <fa:ImageAwesome Icon="Solid_Question" Height="16" Margin="2"  Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
                     </fa:ImageAwesome>
                 </Button>
                 <Button Style="{DynamicResource BorderlessButton}" ToolTip="{lex:Loc Search.Buttons.ShowSearchSettings.ToolTip}" Grid.Column="2" Command="{Binding ShowSearchSettings}">
-                    <fa:ImageAwesome Icon="Sliders" Height="16" Margin="2"  Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <fa:ImageAwesome Icon="Solid_SlidersH" Height="16" Margin="2"  Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
                     </fa:ImageAwesome>
                 </Button>
                 <Button Style="{DynamicResource BorderlessButton}" ToolTip="{lex:Loc Search.Buttons.Refresh.ToolTip}" Grid.Column="3" Width="28" Command="{Binding Refresh}" >
-                    <fa:ImageAwesome Icon="Refresh" Height="16" Margin="2"  Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <fa:ImageAwesome Icon="Solid_Sync" Height="16" Margin="2"  Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
                     </fa:ImageAwesome>
                 </Button>
                 <Button Style="{DynamicResource BorderlessButton}" ToolTip="{lex:Loc Search.Buttons.Clear.ToolTip}" Grid.Column="4" Width="28" Command="{Binding ClearSearch}" >
-                    <fa:ImageAwesome Icon="Close" Height="16" Margin="2"  Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <fa:ImageAwesome Icon="Solid_Times" Height="16" Margin="2"  Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
                     </fa:ImageAwesome>
                 </Button>
                 <Button Style="{DynamicResource BorderlessButton}" ToolTip="{lex:Loc Search.Buttons.ShowFilter.ToolTip}" Grid.Column="5" Command="{Binding ShowFilter}" Background="{Binding Filter.IsActive, Converter={StaticResource FilterActiveConverter}}">
-                    <fa:ImageAwesome Icon="Filter" Height="16" Margin="2"  Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <fa:ImageAwesome Icon="Solid_Filter" Height="16" Margin="2"  Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
                     </fa:ImageAwesome>
                 </Button>
             </Grid>
@@ -222,7 +222,7 @@
                 <DockPanel>
                     <!--<DockPanel Margin="0,0,0,5" Visibility="{Binding CurrentViewMode, Converter={StaticResource albVis}}" DockPanel.Dock="Top">
                         <Button ToolTip="{lex:Loc Search.AddressBar.Buttons.Home.ToolTop}" DockPanel.Dock="Left" Width="28" Command="{Binding GoHome}">
-                            <fa:ImageAwesome Icon="Home" Width="16" Margin="2"  Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <fa:ImageAwesome Icon="Solid_Home" Width="16" Margin="2"  Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
                             </fa:ImageAwesome>
                         </Button>
                         <Label  Height="24"
@@ -266,7 +266,7 @@
                                                     <ColumnDefinition Width="20"></ColumnDefinition>
                                                     <ColumnDefinition></ColumnDefinition>
                                                 </Grid.ColumnDefinitions>
-                                                <fa:FontAwesome Icon="Filter" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource DisabledForegroundBrush}">
+                                                <fa:FontAwesome Icon="Solid_Filter" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource DisabledForegroundBrush}">
                                                 </fa:FontAwesome>
                                                 <DatePicker Grid.Column="1"></DatePicker>
                                                 <CheckBox VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="2"></CheckBox>
@@ -279,13 +279,13 @@
                                                     <ColumnDefinition></ColumnDefinition>
                                                 </Grid.ColumnDefinitions>
                                                 <Button Grid.Column="0" Style="{StaticResource BorderlessButton}">
-                                                    <fa:FontAwesome Icon="Backward"></fa:FontAwesome>
+                                                    <fa:FontAwesome Icon="Solid_Backward"></fa:FontAwesome>
                                                 </Button>
                                                 <Button Grid.Column="1" Style="{StaticResource BorderlessButton}">
-                                                    <fa:FontAwesome Icon="Stop"></fa:FontAwesome>
+                                                    <fa:FontAwesome Icon="Solid_Stop"></fa:FontAwesome>
                                                 </Button>
                                                 <Button Grid.Column="2" Style="{StaticResource BorderlessButton}">
-                                                    <fa:FontAwesome Icon="Forward"></fa:FontAwesome>
+                                                    <fa:FontAwesome Icon="Solid_Forward"></fa:FontAwesome>
                                                 </Button>
                                             </Grid>
                                         </Grid>
@@ -306,20 +306,20 @@
                                                     <ColumnDefinition Width="26"/>
                                                 </Grid.ColumnDefinitions>
                                                 <Button Grid.Column="1" Style="{StaticResource BorderlessButton}" ToolTip="{lex:Loc Search.Folders.Buttons.Home.ToolTip}" Command="{Binding GoHome}">
-                                                    <fa:FontAwesome Icon="Home"></fa:FontAwesome>
+                                                    <fa:FontAwesome Icon="Solid_Home"></fa:FontAwesome>
                                                 </Button>
                                                 <Button Grid.Column="2" Style="{StaticResource BorderlessButton}" ToolTip="{lex:Loc Search.Folders.Buttons.CreateRootFolder.ToolTip}" Click="AddRootFolder_OnClick">
-                                                    <fa:FontAwesome Icon="Plus"></fa:FontAwesome>
+                                                    <fa:FontAwesome Icon="Solid_Plus"></fa:FontAwesome>
                                                 </Button>
                                                 <Button Grid.Column="3" Style="{StaticResource BorderlessButton}" 
                                                         ToolTip="{lex:Loc Search.Folders.Buttons.Refresh.ToolTip}" 
                                                         Command="{Binding MainModel.ReloadFoldersCommand}"
                                                         IsEnabled="{Binding MainModel.FoldersBusy, Converter={StaticResource InvertBoolConverter}}"
                                                         >
-                                                    <fa:FontAwesome Icon="Refresh"></fa:FontAwesome>
+                                                    <fa:FontAwesome Icon="Solid_Sync"></fa:FontAwesome>
                                                 </Button>
                                                 <!--<Button Grid.Column="2" Style="{StaticResource BorderlessButton}" ToolTip="{lex:Loc Search.Folders.Buttons.Manage.ToopTip}" Command="{Binding MainModel.ManageFoldersCommand}">
-                                                    <fa:FontAwesome Icon="Gear"></fa:FontAwesome>
+                                                    <fa:FontAwesome Icon="Solid_Cog"></fa:FontAwesome>
                                                 </Button>-->
                                             </Grid>
                                         </controls:AccordionControl.ButtonAreaContent>
@@ -452,7 +452,7 @@
                                                                 <ColumnDefinition Width="15"/>
                                                             </Grid.ColumnDefinitions>
                                                             <Grid Grid.Column="1" Background="Transparent"  PreviewMouseLeftButtonDown="Expander_OnMouseDown">
-                                                                <fa:ImageAwesome  Rotation="{Binding State, Converter={StaticResource FolderStateConverter}}" Visibility="{Binding HasChildren, Converter={StaticResource boolToVis}}" Icon="AngleRight" Height="8" Foreground="{DynamicResource ForegroundBrush}"  />
+                                                                <fa:ImageAwesome  Rotation="{Binding State, Converter={StaticResource FolderStateConverter}}" Visibility="{Binding HasChildren, Converter={StaticResource boolToVis}}" Icon="Solid_AngleRight" Height="8" Foreground="{DynamicResource ForegroundBrush}"  />
                                                             </Grid>
                                                             <TextBlock Grid.Column="2" HorizontalAlignment="Left" 
                                                                        FontFamily="Calibri" FontWeight="Light" FontSize="16" Padding="4" 
@@ -487,7 +487,7 @@
                                                                 </TextBlock.Resources>
 
                                                             </TextBlock>
-                                                            <fa:FontAwesome Grid.Column="3" Icon="Lock" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                                            <fa:FontAwesome Grid.Column="3" Icon="Solid_Lock" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Center" 
                                                                             Visibility="{Binding IsBusy, Converter={StaticResource invBoolToVis}}">
                                                                 <fa:FontAwesome.Resources>
                                                                     <Style TargetType="fa:FontAwesome">
@@ -502,7 +502,7 @@
                                                                 </fa:FontAwesome.Resources>
 
                                                             </fa:FontAwesome>
-                                                            <fa:FontAwesome Grid.Column="4" Icon="Spinner" Spin="True" SpinDuration="1" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                                            <fa:FontAwesome Grid.Column="4" Icon="Solid_Spinner" Spin="True" SpinDuration="1" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center" 
                                                                             Visibility="{Binding IsBusy, Converter={StaticResource boolToVis}}"
                                                                             >
                                                                 <fa:FontAwesome.Resources>
@@ -518,7 +518,7 @@
                                                                 </fa:FontAwesome.Resources>
 
                                                             </fa:FontAwesome>
-                                                            <!--<fa:FontAwesome Grid.Column="5" Icon="Ban" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Opacity="{Binding IsExcluded, Converter={StaticResource InvBoolToOpacityConverter}, Mode=OneWay}" Foreground="{DynamicResource ForegroundBrush}"></fa:FontAwesome>-->
+                                                            <!--<fa:FontAwesome Grid.Column="5" Icon="Solid_Ban" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Opacity="{Binding IsExcluded, Converter={StaticResource InvBoolToOpacityConverter}, Mode=OneWay}" Foreground="{DynamicResource ForegroundBrush}"></fa:FontAwesome>-->
                                                         </Grid>
                                                     </DataTemplate>
                                                 </ItemsControl.ItemTemplate>
@@ -550,13 +550,13 @@
                                                     <ColumnDefinition Width="26"/>
                                                 </Grid.ColumnDefinitions>
                                                 <Button Grid.Column="3" Style="{StaticResource BorderlessButton}" Visibility="{Binding MainModel.HasSelectedModels, Converter={StaticResource boolToVis}}" ToolTip="{lex:Loc Search.Albums.Buttons.ClearModels.ToolTip}" Command="{Binding MainModel.ClearModelsCommand}">
-                                                    <fa:FontAwesome Icon="SquareOutline"></fa:FontAwesome>
+                                                    <fa:FontAwesome Icon="Regular_Square"></fa:FontAwesome>
                                                 </Button>
                                                 <!--<Button Grid.Column="2" Style="{StaticResource BorderlessButton}" ToolTip="{lex:Loc Search.Albums.Buttons.SortAlbums.ToolTip}" Command="{Binding MainModel.SortAlbumCommand}">
-                                                    <fa:FontAwesome Icon="Sort"></fa:FontAwesome>
+                                                    <fa:FontAwesome Icon="Solid_Sort"></fa:FontAwesome>
                                                 </Button>
                                                 <Button Grid.Column="3" Style="{StaticResource BorderlessButton}" ToolTip="{lex:Loc Search.Albums.Buttons.CreateAlbum.ToolTip}" Command="{Binding MainModel.CreateAlbumCommand}">
-                                                    <fa:FontAwesome Icon="Plus"></fa:FontAwesome>
+                                                    <fa:FontAwesome Icon="Solid_Plus"></fa:FontAwesome>
                                                 </Button>-->
                                             </Grid>
                                         </controls:AccordionControl.ButtonAreaContent>
@@ -581,7 +581,7 @@
                                                                             <ColumnDefinition Width="*"/>
                                                                             <ColumnDefinition Width="70"/>
                                                                         </Grid.ColumnDefinitions>
-                                                                        <fa:FontAwesome Icon="Filter" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource DisabledForegroundBrush}"></fa:FontAwesome>
+                                                                        <fa:FontAwesome Icon="Solid_Filter" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource DisabledForegroundBrush}"></fa:FontAwesome>
                                                                         <Label FontFamily="Calibri" FontWeight="Light" FontSize="16" Padding="4" Grid.Column="1"  Content="{Binding Name}"></Label>
                                                                         <Label FontFamily="Calibri" FontWeight="Light" FontSize="16"  Padding="4" Grid.Column="2" Content="{Binding ImageCount, Converter={StaticResource NumberFormatConverter}}" HorizontalAlignment="Right"></Label>
                                                                     </Grid>
@@ -611,13 +611,13 @@
                                                     <ColumnDefinition Width="26"/>
                                                 </Grid.ColumnDefinitions>
                                                 <Button Grid.Column="1" Style="{StaticResource BorderlessButton}" Visibility="{Binding MainModel.HasSelectedAlbums, Converter={StaticResource boolToVis}}" ToolTip="{lex:Loc Search.Albums.Buttons.ClearAlbums.ToolTip}" Command="{Binding MainModel.ClearAlbumsCommand}">
-                                                    <fa:FontAwesome Icon="SquareOutline"></fa:FontAwesome>
+                                                    <fa:FontAwesome Icon="Regular_Square"></fa:FontAwesome>
                                                 </Button>
                                                 <Button Grid.Column="2" Style="{StaticResource BorderlessButton}" ToolTip="{lex:Loc Search.Albums.Buttons.SortAlbums.ToolTip}" Command="{Binding MainModel.SortAlbumCommand}">
-                                                    <fa:FontAwesome Icon="Sort"></fa:FontAwesome>
+                                                    <fa:FontAwesome Icon="Solid_Sort"></fa:FontAwesome>
                                                 </Button>
                                                 <Button Grid.Column="3" Style="{StaticResource BorderlessButton}" ToolTip="{lex:Loc Search.Albums.Buttons.CreateAlbum.ToolTip}" Command="{Binding MainModel.CreateAlbumCommand}">
-                                                    <fa:FontAwesome Icon="Plus"></fa:FontAwesome>
+                                                    <fa:FontAwesome Icon="Solid_Plus"></fa:FontAwesome>
                                                 </Button>
                                             </Grid>
                                         </controls:AccordionControl.ButtonAreaContent>
@@ -662,7 +662,7 @@
                                                                             <ColumnDefinition Width="*"/>
                                                                             <ColumnDefinition Width="70"/>
                                                                         </Grid.ColumnDefinitions>
-                                                                        <fa:FontAwesome Icon="Filter" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource DisabledForegroundBrush}"></fa:FontAwesome>
+                                                                        <fa:FontAwesome Icon="Solid_Filter" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource DisabledForegroundBrush}"></fa:FontAwesome>
                                                                         <Label FontFamily="Calibri" FontWeight="Light" FontSize="16" Padding="4" Grid.Column="1"  Content="{Binding Name, Converter={StaticResource UnderlineConverter}}"></Label>
                                                                         <Label FontFamily="Calibri" FontWeight="Light" FontSize="16"  Padding="4" Grid.Column="2" Content="{Binding ImageCount, Converter={StaticResource NumberFormatConverter}}" HorizontalAlignment="Right"></Label>
                                                                     </Grid>
@@ -694,7 +694,7 @@
                                                     <ColumnDefinition Width="26"/>
                                                 </Grid.ColumnDefinitions>
                                                 <Button Grid.Column="1" Style="{StaticResource BorderlessButton}" ToolTip="{lex:Loc Search.Tags.Buttons.CreateTag.ToolTip}" Command="{Binding MainModel.CreateTagCommand}">
-                                                    <fa:FontAwesome Icon="Plus"></fa:FontAwesome>
+                                                    <fa:FontAwesome Icon="Solid_Plus"></fa:FontAwesome>
                                                 </Button>
                                             </Grid>
                                         </controls:AccordionControl.ButtonAreaContent>
@@ -746,7 +746,7 @@
                                                                                 <ColumnDefinition Width="*"/>
                                                                                 <ColumnDefinition Width="70"/>
                                                                             </Grid.ColumnDefinitions>
-                                                                            <fa:FontAwesome Icon="Filter" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource DisabledForegroundBrush}"></fa:FontAwesome>
+                                                                            <fa:FontAwesome Icon="Solid_Filter" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource DisabledForegroundBrush}"></fa:FontAwesome>
                                                                             <Label FontFamily="Calibri" FontWeight="Light" FontSize="16" Padding="4" Grid.Column="1"  Content="{Binding Name, Converter={StaticResource UnderlineConverter}}"></Label>
                                                                             <Label FontFamily="Calibri" FontWeight="Light" FontSize="16"  Padding="4" Grid.Column="2" Content="{Binding TagCount, Converter={StaticResource NumberFormatConverter}}" HorizontalAlignment="Right"></Label>
                                                                         </Grid>
@@ -779,7 +779,7 @@
                                                     <ColumnDefinition Width="26"/>
                                                 </Grid.ColumnDefinitions>
                                                 <!--<Button Grid.Column="1" Style="{StaticResource BorderlessButton}" ToolTip="{lex:Loc Search.Albums.Buttons.SortQueries.ToolTip}" Command="{Binding MainModel.SortAlbumCommand}">
-                                                    <fa:FontAwesome Icon="Sort"></fa:FontAwesome>
+                                                    <fa:FontAwesome Icon="Solid_Sort"></fa:FontAwesome>
                                                 </Button>-->
                                             </Grid>
                                         </controls:AccordionControl.ButtonAreaContent>
@@ -818,7 +818,7 @@
                                                                             <ColumnDefinition Width="0"></ColumnDefinition>
                                                                             <ColumnDefinition Width="*"/>
                                                                         </Grid.ColumnDefinitions>
-                                                                        <fa:FontAwesome Icon="Filter" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource DisabledForegroundBrush}"></fa:FontAwesome>
+                                                                        <fa:FontAwesome Icon="Solid_Filter" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource DisabledForegroundBrush}"></fa:FontAwesome>
                                                                         <Label FontFamily="Calibri" FontWeight="Light" FontSize="16" Padding="4" Grid.Column="1"  Content="{Binding Name, Converter={StaticResource UnderlineConverter}}"></Label>
                                                                     </Grid>
                                                                 </ControlTemplate>
@@ -857,7 +857,7 @@
                                                     <Setter Property="Foreground" Value="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" />
                                                 </Style>
                                             </Button.Resources>
-                                            <fa:ImageAwesome Icon="Home" Width="16" Margin="2"  Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <fa:ImageAwesome Icon="Solid_Home" Width="16" Margin="2"  Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
                                             </fa:ImageAwesome>
                                             <Button.Style>
                                                 <Style TargetType="Button" BasedOn="{StaticResource BorderlessButton}">
@@ -876,7 +876,7 @@
                                                     <Setter Property="Foreground" Value="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" />
                                                 </Style>
                                             </Button.Resources>
-                                            <fa:ImageAwesome Icon="ArrowUp" Width="16" Margin="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <fa:ImageAwesome Icon="Solid_ArrowUp" Width="16" Margin="2" VerticalAlignment="Center" HorizontalAlignment="Center">
                                             </fa:ImageAwesome>
                                             <Button.Style>
                                                 <Style TargetType="Button" BasedOn="{StaticResource BorderlessButton}">

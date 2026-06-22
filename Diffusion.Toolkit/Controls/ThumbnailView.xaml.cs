@@ -21,7 +21,7 @@ using Diffusion.Toolkit.Localization;
 using Settings = Diffusion.Toolkit.Configuration.Settings;
 using Diffusion.Database.Models;
 using System.Reflection;
-using FontAwesome.WPF;
+using FontAwesome5;
 
 namespace Diffusion.Toolkit.Controls
 {

@@ -1,9 +1,9 @@
-﻿<ResourceDictionary  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                          xmlns:system="clr-namespace:System;assembly=System.Runtime"
                          xmlns:themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2"
                          xmlns:behaviors="clr-namespace:Diffusion.Toolkit.Behaviors"
-                         xmlns:fa="http://schemas.fontawesome.io/icons/">
+                         xmlns:fa="http://schemas.fontawesome.com/icons/">
 
     <SolidColorBrush x:Key="ControlBackgroundBrush" Color="{DynamicResource ControlBackground}"/>
     <SolidColorBrush x:Key="PrimaryBrush" Color="{DynamicResource Background}"/>

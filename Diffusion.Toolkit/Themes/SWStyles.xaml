@@ -1,6 +1,6 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:fa="http://schemas.fontawesome.io/icons/"
+                    xmlns:fa="http://schemas.fontawesome.com/icons/"
                     xmlns:local="clr-namespace:Diffusion.Toolkit"
                     xmlns:converters="clr-namespace:Diffusion.Toolkit.Converters">
     <converters:IfLessThanConverter x:Key="IfLessThanConverter"></converters:IfLessThanConverter>
@@ -89,32 +89,32 @@
 
                                     <Button x:Name="MinimizeButton" 
                                             Style="{StaticResource WindowButtonStyle}" 
-                                            fa:Awesome.Content="WindowMinimize" 
+                                            fa:Awesome.Content="Solid_WindowMinimize" 
                                             TextElement.FontFamily="pack://application:,,,
-                                                 /FontAwesome.WPF;component/#FontAwesome"
+                                                 /FontAwesome5.Net;component/fonts/#Font Awesome 5 Free Solid"
                                             Grid.Column="0"/>
 
                                     <Button x:Name="MaximizeButton" 
                                             Style="{StaticResource WindowButtonStyle}" 
-                                            fa:Awesome.Content="WindowMaximize" 
+                                            fa:Awesome.Content="Solid_WindowMaximize" 
                                             TextElement.FontFamily="pack://application:,,,
-                                               /FontAwesome.WPF;component/#FontAwesome"
+                                               /FontAwesome5.Net;component/fonts/#Font Awesome 5 Free Solid"
                                             Grid.Column="1"/>
 
                                     <Button x:Name="RestoreButton" 
                                             Style="{StaticResource WindowButtonStyle}" 
-                                            fa:Awesome.Content="WindowRestore"
+                                            fa:Awesome.Content="Solid_WindowRestore"
                                             Visibility="Collapsed"
                                             TextElement.FontFamily=
-                                                 "pack://application:,,,/FontAwesome.WPF;
-                                                  component/#FontAwesome"
+                                                 "pack://application:,,,/FontAwesome5.Net;
+                                                  component/#Font Awesome 5 Free Solid"
                                             Grid.Column="1"/>
 
                                     <Button x:Name="CloseButton" 
                                             Style="{StaticResource WindowButtonStyle}" 
-                                            fa:Awesome.Content="Times" 
+                                            fa:Awesome.Content="Solid_Times" 
                                             TextElement.FontFamily="pack://application:,,,
-                                            /FontAwesome.WPF;component/#FontAwesome"
+                                            /FontAwesome5.Net;component/fonts/#Font Awesome 5 Free Solid"
                                             TextElement.FontSize="24"
                                             Grid.Column="2"/>
                                 </Grid>

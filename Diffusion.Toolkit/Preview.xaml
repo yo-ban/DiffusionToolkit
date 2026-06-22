@@ -1,11 +1,11 @@
-﻿<local:BorderlessWindow x:Class="Diffusion.Toolkit.PreviewWindow"
+<local:BorderlessWindow x:Class="Diffusion.Toolkit.PreviewWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Diffusion.Toolkit"
         xmlns:controls="clr-namespace:Diffusion.Toolkit.Controls"
-        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:fa="http://schemas.fontawesome.com/icons/"
         xmlns:converters="clr-namespace:Diffusion.Toolkit.Converters"
         xmlns:lex="http://wpflocalizeextension.codeplex.com"
         xmlns:system="clr-namespace:System;assembly=System.Runtime"
@@ -82,7 +82,7 @@
 
             <Grid Grid.Column="1" Grid.RowSpan="3" Background="{x:Null}">
                 <!--<Grid Background="{x:Null}" IsHitTestVisible="False" DataContext="{Binding CurrentImage}">
-                    <fa:ImageAwesome VerticalAlignment="Center" Height="64" Width="64" Icon="EyeSlash" Foreground="{DynamicResource ForegroundBrush}">
+                    <fa:ImageAwesome VerticalAlignment="Center" Height="64" Width="64" Icon="Solid_EyeSlash" Foreground="{DynamicResource ForegroundBrush}">
                         <fa:ImageAwesome.Visibility>
                             <MultiBinding Converter="{StaticResource boolToVisMulti}" ConverterParameter="20">
                                 <Binding Path="NSFW" ></Binding>
@@ -140,7 +140,7 @@
                     </Grid.RowDefinitions>
 
                     <Button Style="{DynamicResource BorderlessButton}" Grid.Row="1" Grid.Column="1" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Command="{Binding CurrentImage.ToggleParameters}">
-                        <fa:ImageAwesome ToolTip="{lex:Loc Metadata.ShowInfo}" Icon="InfoCircle" Width="24"  Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <fa:ImageAwesome ToolTip="{lex:Loc Metadata.ShowInfo}" Icon="Solid_InfoCircle" Width="24"  Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <fa:ImageAwesome.Effect>
                                 <DropShadowEffect BlurRadius="4" Opacity="0.8" ShadowDepth="3" Direction="-90"></DropShadowEffect>
                             </fa:ImageAwesome.Effect>
@@ -165,7 +165,7 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Orientation="Horizontal"  Grid.Row="0" Grid.Column="0" Margin="10">
-                        <fa:ImageAwesome Icon="Play" ToolTip="{lex:Loc Preview.Controls.Slideshow}" Width="20"  Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" MouseDown="Play_OnMouseDown">
+                        <fa:ImageAwesome Icon="Solid_Play" ToolTip="{lex:Loc Preview.Controls.Slideshow}" Width="20"  Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" MouseDown="Play_OnMouseDown">
                             <fa:ImageAwesome.Resources>
                                 <Style TargetType="fa:ImageAwesome">
                                     <Setter Property="Opacity" Value="0.25"></Setter>
@@ -183,7 +183,7 @@
                                 <DropShadowEffect BlurRadius="4" Opacity="0.8" ShadowDepth="3" Direction="-90"></DropShadowEffect>
                             </fa:ImageAwesome.Effect>
                         </fa:ImageAwesome>
-                        <fa:ImageAwesome Margin="10,0,0,0" Icon="Star" ToolTip="{lex:Loc Preview.Controls.ShowTags}" Width="20"  Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" MouseDown="Star_OnMouseDown">
+                        <fa:ImageAwesome Margin="10,0,0,0" Icon="Solid_Star" ToolTip="{lex:Loc Preview.Controls.ShowTags}" Width="20"  Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" MouseDown="Star_OnMouseDown">
                             <fa:ImageAwesome.Resources>
                                 <Style TargetType="fa:ImageAwesome">
                                     <Setter Property="Opacity" Value="0.25"></Setter>
@@ -201,7 +201,7 @@
                                 <DropShadowEffect BlurRadius="4" Opacity="0.8" ShadowDepth="3" Direction="-90"></DropShadowEffect>
                             </fa:ImageAwesome.Effect>
                         </fa:ImageAwesome>
-                        <fa:ImageAwesome Margin="10,0,0,0" Icon="ArrowRight" ToolTip="{lex:Loc Common.Controls.AutoAdvance}" Width="20"  Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" MouseDown="AutoAdvance_OnMouseDown">
+                        <fa:ImageAwesome Margin="10,0,0,0" Icon="Solid_ArrowRight" ToolTip="{lex:Loc Common.Controls.AutoAdvance}" Width="20"  Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" MouseDown="AutoAdvance_OnMouseDown">
                             <fa:ImageAwesome.Resources>
                                 <Style TargetType="fa:ImageAwesome">
                                     <Setter Property="Opacity" Value="0.25"></Setter>
