@@ -95,11 +95,13 @@ public class SemanticVersion : IComparable<SemanticVersion>
 
     public static bool operator >(SemanticVersion a, SemanticVersion b)
     {
+        if (a is null) return false;
         return a.CompareTo(b) > 0;
     }
 
     public static bool operator <(SemanticVersion a, SemanticVersion b)
     {
+        if (a is null) return b is not null;
         return a.CompareTo(b) < 0;
     }
 }

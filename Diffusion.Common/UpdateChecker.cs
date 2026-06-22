@@ -40,7 +40,10 @@ public class UpdateChecker
 
         var localVersion = SemanticVersionHelper.GetLocalVersion(path);
 
-        SemanticVersion.TryParse(LatestRelease.tag_name, out var releaseVersion);
+        if (!SemanticVersion.TryParse(LatestRelease.tag_name, out var releaseVersion))
+        {
+            return false;
+        }
 
         return releaseVersion > localVersion;
     }

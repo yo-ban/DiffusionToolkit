@@ -22,7 +22,7 @@ public class AnimatedWebPWorkflowParser : IWorkflowParser
             var id = node.GetProperty("id").GetInt32().ToString();
             var name = node.GetProperty("type").GetString();
 
-            if (_propertiesLookup.TryGetValue(name, out var properties))
+            if (name != null && _propertiesLookup.TryGetValue(name, out var properties))
             {
                 var values = node.GetProperty("widgets_values").EnumerateArray()
                     .Select(d =>
