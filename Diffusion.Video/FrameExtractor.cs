@@ -16,11 +16,11 @@ public class FrameExtractor
 
             //capture.Set(CapProp.PosFrames, middleFrameIndex);
 
-            Mat middleFrame = new Mat();
+            using Mat middleFrame = new Mat();
 
             capture.Read(middleFrame);
 
-            var buffer = new VectorOfByte();
+            using var buffer = new VectorOfByte();
 
             // Encode as PNG into buffer
             CvInvoke.Imencode(".png", middleFrame, buffer);
