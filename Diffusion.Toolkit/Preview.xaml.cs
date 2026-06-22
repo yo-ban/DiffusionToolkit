@@ -24,7 +24,7 @@ namespace Diffusion.Toolkit
         private PreviewModel _model;
         private Action _onNext;
 
-        public Action<string> OnDrop { get; set; }
+        public new Action<string> OnDrop { get; set; }
 
         //public Action<int> Changed { get; set; }
         public Action AdvanceSlideShow { get; set; }
