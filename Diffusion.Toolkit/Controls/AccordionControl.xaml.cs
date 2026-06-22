@@ -164,7 +164,8 @@ namespace Diffusion.Toolkit.Controls
             ContentVisibility = State switch
             {
                 AccordionState.Collapsed => Visibility.Collapsed,
-                AccordionState.Expanded => Visibility.Visible
+                AccordionState.Expanded => Visibility.Visible,
+                _ => Visibility.Collapsed
             };
         }
 
@@ -261,7 +262,8 @@ namespace Diffusion.Toolkit.Controls
                 State = State switch
                 {
                     AccordionState.Collapsed => AccordionState.Expanded,
-                    AccordionState.Expanded => AccordionState.Collapsed
+                    AccordionState.Expanded => AccordionState.Collapsed,
+                    _ => State
                 };
 
                 SetState();

@@ -430,6 +430,7 @@ namespace Diffusion.Toolkit.Controls
                             Key.D8 => 8,
                             Key.D9 => 9,
                             Key.D0 => 10,
+                            _ => null,
                         };
 
                         if (Image.Rating == rating)

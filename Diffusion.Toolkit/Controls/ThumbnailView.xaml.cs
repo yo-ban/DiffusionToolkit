@@ -256,6 +256,7 @@ namespace Diffusion.Toolkit.Controls
                             Key.D8 => 8,
                             Key.D9 => 9,
                             Key.D0 => 10,
+                            _ => 0,
                         };
                         RateSelected(rating);
                     }
@@ -275,6 +276,7 @@ namespace Diffusion.Toolkit.Controls
                             Key.NumPad8 => 8,
                             Key.NumPad9 => 9,
                             Key.NumPad0 => 10,
+                            _ => 0,
                         };
                         RateSelected(rating);
                     }
