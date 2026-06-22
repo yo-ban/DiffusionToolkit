@@ -159,11 +159,26 @@ public class FileService
             {
                 var newFilename = $"{newName}{extension}";
                 var newPath = Path.Combine(oldPath, newFilename);
+                var oldTextPath = Path.Combine(oldPath, $"{oldFilename}.txt");
+                var newTextPath = Path.Combine(oldPath, $"{newName}.txt");
 
                 try
                 {
+                    var shouldRenameTextFile = File.Exists(oldTextPath) &&
+                                               !oldTextPath.Equals(newTextPath, StringComparison.OrdinalIgnoreCase);
+
+                    if (shouldRenameTextFile && File.Exists(newTextPath))
+                    {
+                        throw new IOException($"The metadata sidecar file already exists: {newTextPath}");
+                    }
+
                     ServiceLocator.FolderService.DisableWatchers();
                     File.Move(path, newPath);
+
+                    if (shouldRenameTextFile)
+                    {
+                        File.Move(oldTextPath, newTextPath);
+                    }
 
                     ServiceLocator.DataStore.UpdateImageFilename(imageId, newPath, newFilename);
 
