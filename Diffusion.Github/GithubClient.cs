@@ -60,8 +60,18 @@ public class GithubClient : IDisposable
         return JsonSerializer.Deserialize<IEnumerable<Tag>>(json);
     }
 
-    public async Task<Stream> DownloadAsync(string url, CancellationToken token)
+    public Task<Stream> DownloadAsync(string url, CancellationToken token)
     {
+        return DownloadAsync(url, token, maxRedirects: 10);
+    }
+
+    private async Task<Stream> DownloadAsync(string url, CancellationToken token, int maxRedirects)
+    {
+        if (maxRedirects < 0)
+        {
+            throw new InvalidOperationException("Too many redirects while downloading.");
+        }
+
         var request = new HttpRequestMessage(HttpMethod.Get, new Uri(url, UriKind.Absolute));
         request.Headers.Add("Accept", "application/octet-stream");
         request.Headers.Add("User-Agent", _userAgent);
@@ -71,22 +81,30 @@ public class GithubClient : IDisposable
         switch (response.StatusCode)
         {
             case HttpStatusCode.Moved:
-            {
-                var redirect = response.Headers.GetValues("Location").First();
-                response.Dispose();
-                return await DownloadAsync(redirect, token);
-            }
             case HttpStatusCode.Found:
             {
-                var redirect = response.Headers.GetValues("Location").First();
+                // The response stream is not used for redirects; dispose before recursing.
+                string? redirect = null;
+                if (response.Headers.TryGetValues("Location", out var locations))
+                {
+                    redirect = locations.FirstOrDefault();
+                }
                 response.Dispose();
-                return await DownloadAsync(redirect, token);
+
+                if (string.IsNullOrEmpty(redirect))
+                {
+                    throw new InvalidOperationException("Redirect response is missing a valid Location header.");
+                }
+
+                return await DownloadAsync(redirect, token, maxRedirects - 1);
             }
             case HttpStatusCode.OK:
+                // The returned stream is backed by this response; the caller owns it and
+                // disposal of the stream returns the underlying connection to the pool.
                 return await response.Content.ReadAsStreamAsync(token);
             default:
                 response.Dispose();
-                throw new Exception("");
+                throw new Exception($"Unexpected status code when downloading: {response.StatusCode}");
         }
     }
 

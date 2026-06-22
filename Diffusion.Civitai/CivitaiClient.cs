@@ -123,7 +123,17 @@ public class CivitaiClient : IDisposable
         }
         catch (TaskCanceledException ex)
         {
-            System.Diagnostics.Debug.WriteLine($"CivitaiClient request canceled: {ex.Message}");
+            // TaskCanceledException covers both caller cancellation and HttpClient timeout.
+            // Distinguish them: if the token was canceled, the caller requested it (null is expected);
+            // otherwise the HttpClient.Timeout elapsed, which is a genuine failure worth logging.
+            if (token.IsCancellationRequested)
+            {
+                System.Diagnostics.Debug.WriteLine("CivitaiClient request canceled by caller.");
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine($"CivitaiClient request timed out: {ex.Message}");
+            }
         }
 
         return results;

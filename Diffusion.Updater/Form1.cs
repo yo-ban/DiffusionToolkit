@@ -49,7 +49,7 @@ namespace Diffusion.Updater
 
                 if (await _updateChecker.CheckForUpdate(_targetPath))
                 {
-                    _selectedRelease = _updateChecker.LatestRelease;
+                    _selectedRelease = _updateChecker.LatestRelease!;
 
                     textBoxNotes.Text = $"A new version is available. Do you want to update?\r\n\r\n{_selectedRelease.name}\r\n{new string('=', _selectedRelease.name.Length)}\r\n\r\n{_selectedRelease.body}\r\n\r\n";
                     buttonOK.Enabled = true;
@@ -90,7 +90,9 @@ namespace Diffusion.Updater
 
             Log($"Downloading {url}...");
 
-            var stream = await _updateChecker.Client.DownloadAsync(url, token);
+            // DownloadAsync returns a Stream backed by the HTTP response; the caller
+            // owns it and must dispose it so the underlying connection returns to the pool.
+            using var stream = await _updateChecker.Client.DownloadAsync(url, token);
 
             var tempFile = Path.GetTempFileName();
 
@@ -146,7 +148,7 @@ namespace Diffusion.Updater
                 Close();
                 if (_updateSuccessful)
                 {
-                    Process.Start(_exePath);
+                    Process.Start(_exePath)?.Dispose();
                 }
             }
             else
