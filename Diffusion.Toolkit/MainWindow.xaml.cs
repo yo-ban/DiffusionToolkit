@@ -726,6 +726,7 @@ namespace Diffusion.Toolkit
                     throw new NotImplementedException("Too Lazy to fix");
 
                     // Check if the target path is in the list of selected diffusion folders
+#pragma warning disable CS0162
 
                     //if (_settings.RecurseFolders.GetValueOrDefault(true))
                     //{
@@ -772,6 +773,7 @@ namespace Diffusion.Toolkit
                             _search.SearchImages();
                         }
                     });
+#pragma warning restore CS0162
 
                 }
 
