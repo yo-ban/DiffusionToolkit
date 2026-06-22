@@ -74,16 +74,16 @@ namespace Diffusion.Toolkit
 
             _model.ResetLayout = new RelayCommand<object>((o) => ResetLayout());
 
-            _model.RescanResults = new RelayCommand<object>((o) => RescanResults());
-            _model.AddAllToAlbum = new RelayCommand<object>((o) => AddAllToAlbum());
-            _model.MarkAllForDeletion = new RelayCommand<object>((o) => MarkAllForDeletion());
-            _model.UnmarkAllForDeletion = new RelayCommand<object>((o) => UnmarkAllForDeletion());
-            _model.RemoveMatching = new RelayCommand<object>((o) => RemoveFromDatabase());
-            _model.AutoTagNSFW = new RelayCommand<object>((o) => AutoTagNSFW());
-            _model.DownloadCivitai = new RelayCommand<object>((o) => DownloadCivitaiModels());
+            _model.RescanResults = new AsyncCommand<object>(o => RescanResultsAsync());
+            _model.AddAllToAlbum = new AsyncCommand<object>(o => AddAllToAlbumAsync());
+            _model.MarkAllForDeletion = new AsyncCommand<object>(o => MarkAllForDeletionAsync());
+            _model.UnmarkAllForDeletion = new AsyncCommand<object>(o => UnmarkAllForDeletionAsync());
+            _model.RemoveMatching = new AsyncCommand<object>(o => RemoveFromDatabaseAsync());
+            _model.AutoTagNSFW = new AsyncCommand<object>(o => AutoTagNSFWAsync());
+            _model.DownloadCivitai = new AsyncCommand<object>(o => DownloadCivitaiModelsAsync());
 
-            _model.FixFoldersCommand = new RelayCommand<object>((o) => FixFolders());
-            _model.RemoveExcludedImagesCommand = new RelayCommand<object>((o) => CleanExcludedPaths());
+            _model.FixFoldersCommand = new AsyncCommand<object>(o => FixFoldersAsync());
+            _model.RemoveExcludedImagesCommand = new AsyncCommand<object>(o => CleanExcludedPathsAsync());
             _model.CleanRemovedFoldersCommand = new AsyncCommand<object>(CleanRemovedFolders);
 
             _model.UnavailableFilesCommand = new AsyncCommand<object>(UnavailableFiles);

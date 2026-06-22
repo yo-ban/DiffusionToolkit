@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Diffusion.Common;
 
 namespace Diffusion.Toolkit.Classes;
 
@@ -16,6 +17,10 @@ public static class TaskUtilities
         catch (Exception ex)
         {
             handler?.HandleError(ex);
+            if (handler == null)
+            {
+                Logger.Log(ex);
+            }
         }
     }
 }

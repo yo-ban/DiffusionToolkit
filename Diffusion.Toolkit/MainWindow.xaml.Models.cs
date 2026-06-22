@@ -72,7 +72,7 @@ namespace Diffusion.Toolkit
             }
         }
 
-        public async void DownloadCivitaiModels()
+        public async Task DownloadCivitaiModelsAsync()
         {
             if (_model.IsBusy)
             {

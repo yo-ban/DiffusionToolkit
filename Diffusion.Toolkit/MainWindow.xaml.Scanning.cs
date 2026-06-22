@@ -76,7 +76,7 @@ namespace Diffusion.Toolkit
             });
         }
 
-        private async void FixFolders()
+        private async Task FixFoldersAsync()
         {
             var message = "This will fix scanned images missing in folders\r\n\r\n" +
                           "Are you sure you want to continue?";
@@ -155,7 +155,7 @@ namespace Diffusion.Toolkit
         
 
         // TODO: When will this be called?
-        private async void CleanExcludedPaths()
+        private async Task CleanExcludedPathsAsync()
         {
             var message = "This will remove any remaining images in excluded folders from the database. The images on disk will not be deleted.\r\n\r\n" +
                           "Are you sure you want to continue?";

@@ -330,7 +330,7 @@ namespace Diffusion.Toolkit.Controls
                         break;
                     case nameof(CurrentImage):
                         thumbnailView.Model.CurrentImage = (ImageViewModel)e.NewValue;
-                        thumbnailView.Model.CurrentImage.SearchModelCommand = new RelayCommand<object>(thumbnailView.SearchModel);
+                        thumbnailView.Model.CurrentImage.SearchModelCommand = new AsyncCommand<object>(thumbnailView.SearchModelAsync);
                         //_model.CurrentImage.ShowInThumbnails = new RelayCommand<object>(ShowInThumbnails);
                         thumbnailView.Model.CurrentImage.DeleteCommand = new RelayCommand<object>(o => thumbnailView.DeleteSelected());
                         thumbnailView.Model.CurrentImage.FavoriteCommand = new RelayCommand<object>(o => thumbnailView.FavoriteSelected());

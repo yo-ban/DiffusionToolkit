@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Security.Policy;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using Diffusion.Civitai;
 using Diffusion.Civitai.Models;
@@ -13,7 +14,7 @@ namespace Diffusion.Toolkit.Controls
 {
     public partial class ThumbnailView
     {
-        private async void SearchModel(object obj)
+        private async Task SearchModelAsync(object obj)
         {
             if (Model.CurrentImage?.ModelHash == null) return;
             

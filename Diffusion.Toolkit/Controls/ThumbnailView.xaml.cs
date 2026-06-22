@@ -73,7 +73,7 @@ namespace Diffusion.Toolkit.Controls
             Model.FavoriteCommand = new RelayCommand<object>(o => FavoriteSelected());
             Model.NSFWCommand = new RelayCommand<object>(o => NSFWSelected());
             Model.RatingCommand = new RelayCommand<object>(o => RateSelected(int.Parse((string)o)));
-            Model.RemoveEntryCommand = new RelayCommand<object>(o => RemoveEntry());
+            Model.RemoveEntryCommand = new AsyncCommand<object>(o => RemoveEntryAsync());
             Model.CopyCommand = new RelayCommand<object>(o => CopySelected());
             Model.MoveCommand = new RelayCommand<object>(o => MoveSelected());
             Model.RescanCommand = new AsyncCommand<object>(o => RescanSelected());
@@ -217,7 +217,7 @@ namespace Diffusion.Toolkit.Controls
                         switch (e.KeyboardDevice.Modifiers)
                         {
                             case ModifierKeys.Control:
-                                RemoveEntry();
+                                RemoveEntryAsync().FireAndForgetSafeAsync();
                                 break;
                             case ModifierKeys.None:
                                 DeleteSelected();
@@ -628,7 +628,7 @@ namespace Diffusion.Toolkit.Controls
 
         public Action<IEnumerable<ImageEntry>> OnRemoveEntries { get; set; }
 
-        private async void RemoveEntry()
+        private async Task RemoveEntryAsync()
         {
             if (ThumbnailListView.SelectedItems != null)
             {

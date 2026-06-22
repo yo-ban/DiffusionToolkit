@@ -21,7 +21,7 @@ namespace Diffusion.Toolkit
             return true;
         }
 
-        private async void RescanResults()
+        private async Task RescanResultsAsync()
         {
             if (!await CheckIfQueryEmpty("Rescan results"))
             {
@@ -63,7 +63,7 @@ namespace Diffusion.Toolkit
             return !_search.Filter.IsEmpty ? _dataStore.Search(_search.Filter, _search.QueryOptions, _search.Sorting) : _dataStore.Search(_search.QueryOptions, _search.Sorting);
         }
 
-        private async void RemoveFromDatabase()
+        private async Task RemoveFromDatabaseAsync()
         {
             if (!await CheckIfQueryEmpty("Remove images from Database"))
             {
@@ -92,7 +92,7 @@ namespace Diffusion.Toolkit
             }
         }
 
-        private async void MarkAllForDeletion()
+        private async Task MarkAllForDeletionAsync()
         {
             if (!await CheckIfQueryEmpty("Mark images for deletion"))
             {
@@ -115,7 +115,7 @@ namespace Diffusion.Toolkit
             }
         }
 
-        private async void UnmarkAllForDeletion()
+        private async Task UnmarkAllForDeletionAsync()
         {
             if (!await CheckIfQueryEmpty("Unmark images for deletion"))
             {
@@ -138,7 +138,7 @@ namespace Diffusion.Toolkit
             }
         }
 
-        private async void AutoTagNSFW()
+        private async Task AutoTagNSFWAsync()
         {
             if (!await CheckIfQueryEmpty("Auto Tag NSFW"))
             {
@@ -202,7 +202,7 @@ namespace Diffusion.Toolkit
         }
 
 
-        private async void AddAllToAlbum()
+        private async Task AddAllToAlbumAsync()
         {
             if (!await CheckIfQueryEmpty("Add images to album"))
             {
