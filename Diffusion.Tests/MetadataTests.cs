@@ -8,6 +8,64 @@ namespace Diffusion.Tests;
 public class MetadataTests
 {
     [Fact]
+    public void GetDirectoryTextFileCache_RemovesDeletedFiles()
+    {
+        // Regression test for bug #52: deleted .txt files must not persist in the cache.
+        var dir = Path.Combine(Path.GetTempPath(), "DiffusionTests_" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(dir);
+        try
+        {
+            var fileA = Path.Combine(dir, "alpha.txt");
+            var fileB = Path.Combine(dir, "beta.txt");
+            File.WriteAllText(fileA, "a");
+            File.WriteAllText(fileB, "b");
+
+            var first = Metadata.GetDirectoryTextFileCache(dir);
+            Assert.Contains(fileA, first);
+            Assert.Contains(fileB, first);
+
+            // Act: delete one file and refresh the cache.
+            File.Delete(fileB);
+            var second = Metadata.GetDirectoryTextFileCache(dir);
+
+            // Assert: the remaining file is still present and the deleted one is gone.
+            Assert.Contains(fileA, second);
+            Assert.DoesNotContain(fileB, second);
+        }
+        finally
+        {
+            try { Directory.Delete(dir, recursive: true); } catch { }
+        }
+    }
+
+    [Fact]
+    public void GetDirectoryTextFileCache_IncludesNewlyAddedFiles()
+    {
+        var dir = Path.Combine(Path.GetTempPath(), "DiffusionTests_" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(dir);
+        try
+        {
+            var fileA = Path.Combine(dir, "alpha.txt");
+            File.WriteAllText(fileA, "a");
+
+            var first = Metadata.GetDirectoryTextFileCache(dir);
+            Assert.Contains(fileA, first);
+
+            // Act: add a new file and refresh the cache.
+            var fileB = Path.Combine(dir, "beta.txt");
+            File.WriteAllText(fileB, "b");
+            var second = Metadata.GetDirectoryTextFileCache(dir);
+
+            Assert.Contains(fileA, second);
+            Assert.Contains(fileB, second);
+        }
+        finally
+        {
+            try { Directory.Delete(dir, recursive: true); } catch { }
+        }
+    }
+
+    [Fact]
     public void GetImageSize_InvalidStream_Throws()
     {
         using var stream = new MemoryStream(new byte[] { 0, 1, 2, 3, 4, 5, 6, 7 });
