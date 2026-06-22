@@ -658,7 +658,7 @@ public class ScanningService
                     if (restoredImages.Any())
                     {
                         var restored = GetLocalizedText("UnavailableFiles.Results.Restored");
-                        updated += " " + restored.Replace("{count}", $"{candidateImages.Count:#,###,##0}");
+                        updated += " " + restored.Replace("{count}", $"{restoredImages.Count:#,###,##0}");
                     }
 
                     await ServiceLocator.MessageService.Show(updated, unavailableFiles, PopupButtons.OK);
@@ -677,7 +677,7 @@ public class ScanningService
                     if (restoredImages.Any())
                     {
                         var restored = GetLocalizedText("UnavailableFiles.Results.Restored");
-                        marked += " " + restored.Replace("{count}", $"{candidateImages.Count:#,###,##0}");
+                        marked += " " + restored.Replace("{count}", $"{restoredImages.Count:#,###,##0}");
                     }
 
                     await ServiceLocator.MessageService.Show(marked, unavailableFiles, PopupButtons.OK);
@@ -692,7 +692,7 @@ public class ScanningService
                     if (restoredImages.Any())
                     {
                         var restored = GetLocalizedText("UnavailableFiles.Results.Restored");
-                        removed += " " + restored.Replace("{count}", $"{candidateImages.Count:#,###,##0}");
+                        removed += " " + restored.Replace("{count}", $"{restoredImages.Count:#,###,##0}");
                     }
 
 
