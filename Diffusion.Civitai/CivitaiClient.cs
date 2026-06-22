@@ -10,13 +10,15 @@ public class CivitaiClient : IDisposable
 {
     private readonly string _baseUrl = "https://civitai.com/api/v1";
 
+    private static readonly HttpClient _sharedHttpClient = new HttpClient();
+
     private readonly HttpClient _httpClient;
 
     public string BaseUrl => _baseUrl;
 
     public CivitaiClient()
     {
-        _httpClient = new HttpClient();
+        _httpClient = _sharedHttpClient;
     }
 
     public async Task<Results<LiteModel>?> GetLiteModelsAsync(ModelSearchParameters searchParameters, CancellationToken token)
@@ -208,7 +210,6 @@ public class CivitaiClient : IDisposable
 
     public void Dispose()
     {
-        _httpClient.Dispose();
     }
 
 }
