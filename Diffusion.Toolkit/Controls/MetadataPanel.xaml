@@ -25,7 +25,7 @@
         </Grid.ContextMenu>
 
         <TabControl Background="Transparent" BorderBrush="{DynamicResource SecondaryBrush}">
-            <TabItem Header="{lex:Loc Filter.Metadata}" Background="Transparent" HorizontalContentAlignment="Stretch">
+            <TabItem Header="Metadata" Background="Transparent" HorizontalContentAlignment="Stretch">
                 <ScrollViewer Background="Transparent" VerticalScrollBarVisibility="Auto">
                     <StackPanel Background="Transparent">
 
