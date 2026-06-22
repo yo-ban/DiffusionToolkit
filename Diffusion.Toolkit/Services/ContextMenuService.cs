@@ -118,7 +118,7 @@ public class ContextMenuService
 
     public void CopySeed(object obj)
     {
-        if (CurrentImage.Seed == null) return;
+        if (CurrentImage.Seed == 0) return;
         var p = CurrentImage.Seed.ToString();
         Clipboard.SetDataObject(p, true);
         ServiceLocator.ToastService.Toast("Copied seed to clipboard", "");
