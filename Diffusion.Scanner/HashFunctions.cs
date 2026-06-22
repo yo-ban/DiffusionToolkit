@@ -7,14 +7,20 @@ public static class HashFunctions
     public static string CalculateHash(string file)
     {
         var buffer = new byte[0x10000];
+        int bytesRead;
         using (var f = File.Open(file, FileMode.Open, FileAccess.Read))
         {
             f.Seek(0x100000, SeekOrigin.Begin);
-            f.Read(buffer, 0, 0x10000);
+            bytesRead = f.Read(buffer, 0, 0x10000);
+            if (bytesRead == 0)
+            {
+                f.Seek(0, SeekOrigin.Begin);
+                bytesRead = f.Read(buffer, 0, 0x10000);
+            }
         }
 
-        using var hashstring = HashAlgorithm.Create("SHA256");
-        byte[] hash = hashstring.ComputeHash(buffer);
+        using var hashstring = SHA256.Create();
+        byte[] hash = hashstring.ComputeHash(buffer, 0, bytesRead);
 
         return Convert.ToHexString(hash).ToLower().Substring(0, 8);
     }
@@ -23,7 +29,7 @@ public static class HashFunctions
     {
         byte[] sha256;
 
-        using var sha = HashAlgorithm.Create("SHA256");
+        using var sha = SHA256.Create();
 
         using (var f = File.Open(file, FileMode.Open, FileAccess.Read))
         {

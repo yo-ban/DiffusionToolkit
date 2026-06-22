@@ -67,23 +67,23 @@ public class Metadata
     {
         var buffer = new byte[12];
 
-        stream.Read(buffer, 0, 12);
+        int bytesRead = stream.Read(buffer, 0, 12);
 
-        var span = buffer.AsSpan();
+        var span = buffer.AsSpan(0, bytesRead);
 
-        if (span.Slice(0, 4).SequenceEqual(PNGMagic))
+        if (span.Length >= 4 && span.Slice(0, 4).SequenceEqual(PNGMagic))
         {
             return FileType.PNG;
         }
-        if (span.Slice(0, 3).SequenceEqual(JPEGMagic) && ((span[3] & 0xE0) == 0xE0))
+        if (span.Length >= 4 && span.Slice(0, 3).SequenceEqual(JPEGMagic) && ((span[3] & 0xE0) == 0xE0))
         {
             return FileType.JPEG;
         }
-        if (span.Slice(0, 4).SequenceEqual(RIFFMagic) && span.Slice(8, 4).SequenceEqual(WebPMagic))
+        if (span.Length >= 12 && span.Slice(0, 4).SequenceEqual(RIFFMagic) && span.Slice(8, 4).SequenceEqual(WebPMagic))
         {
             return FileType.WebP;
         }
-        if (span.Slice(0, 4).SequenceEqual(WebMMagic))
+        if (span.Length >= 4 && span.Slice(0, 4).SequenceEqual(WebMMagic))
         {
             return FileType.WebM;
         }
