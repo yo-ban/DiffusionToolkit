@@ -4,6 +4,10 @@
                         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                         xmlns:local="clr-namespace:Diffusion.Toolkit"
+                        xmlns:lex="http://wpflocalizeextension.codeplex.com"
+                        lex:LocalizeDictionary.Provider="{StaticResource LocalizationProvider}"
+                        lex:LocalizeDictionary.Separation="."
+                        lex:LocalizeDictionary.DefaultProvider="{StaticResource LocalizationProvider}"
                         mc:Ignorable="d"
                         WindowStartupLocation="CenterOwner"
                         ShowInTaskbar="False"
@@ -12,7 +16,7 @@
                         TitleWidth="*"
                         Style="{StaticResource BorderlessWindowStyle}"
                         ResizeMode="CanResize"
-                        Title="Prompt Converter" Height="760" Width="1180"
+                        Title="{lex:Loc Windows.PromptConverter.Title}" Height="760" Width="1180"
                         MinHeight="620" MinWidth="920">
     <Grid Margin="12,34,12,12">
         <Grid.RowDefinitions>
@@ -37,22 +41,22 @@
             </Border>
 
             <TabControl Grid.Row="2" Background="{DynamicResource PrimaryBrush}">
-                <TabItem Header="Prompt">
+                <TabItem Header="{lex:Loc PromptConverter.Tabs.Prompt}">
                     <TextBox x:Name="SourcePromptText" IsReadOnly="True" TextWrapping="Wrap" AcceptsReturn="True"
                              VerticalScrollBarVisibility="Auto" Background="{DynamicResource PrimaryBrush}"
                              Foreground="{DynamicResource ForegroundBrush}" BorderThickness="0" Padding="8"/>
                 </TabItem>
-                <TabItem Header="Negative">
+                <TabItem Header="{lex:Loc PromptConverter.Tabs.Negative}">
                     <TextBox x:Name="SourceNegativeText" IsReadOnly="True" TextWrapping="Wrap" AcceptsReturn="True"
                              VerticalScrollBarVisibility="Auto" Background="{DynamicResource PrimaryBrush}"
                              Foreground="{DynamicResource ForegroundBrush}" BorderThickness="0" Padding="8"/>
                 </TabItem>
-                <TabItem Header="Parameters">
+                <TabItem Header="{lex:Loc PromptConverter.Tabs.Parameters}">
                     <TextBox x:Name="SourceParametersText" IsReadOnly="True" TextWrapping="Wrap" AcceptsReturn="True"
                              VerticalScrollBarVisibility="Auto" Background="{DynamicResource PrimaryBrush}"
                              Foreground="{DynamicResource ForegroundBrush}" BorderThickness="0" Padding="8"/>
                 </TabItem>
-                <TabItem Header="Raw">
+                <TabItem Header="{lex:Loc MetadataPanel.Tabs.Raw}">
                     <TextBox x:Name="SourceRawText" IsReadOnly="True" TextWrapping="Wrap" AcceptsReturn="True"
                              VerticalScrollBarVisibility="Auto" Background="{DynamicResource PrimaryBrush}"
                              Foreground="{DynamicResource ForegroundBrush}" BorderThickness="0" Padding="8"/>
@@ -82,10 +86,10 @@
                         <RowDefinition Height="76"/>
                     </Grid.RowDefinitions>
 
-                    <Label Content="Model" VerticalContentAlignment="Center"/>
+                    <Label Content="{lex:Loc Settings.PromptConverter.Model}" VerticalContentAlignment="Center"/>
                     <TextBox x:Name="ModelText" Grid.Column="1" Grid.ColumnSpan="3" VerticalContentAlignment="Center" LostFocus="ModelText_OnLostFocus"/>
 
-                    <Label Grid.Row="1" Content="Target" VerticalContentAlignment="Center"/>
+                    <Label Grid.Row="1" Content="{lex:Loc PromptConverter.Target}" VerticalContentAlignment="Center"/>
                     <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -93,17 +97,17 @@
                             <ColumnDefinition Width="90"/>
                         </Grid.ColumnDefinitions>
                         <ComboBox x:Name="SystemPromptBox" DisplayMemberPath="Name"/>
-                        <Button Grid.Column="2" Click="EditPromptsButton_OnClick" Content="Edit..."/>
+                        <Button Grid.Column="2" Click="EditPromptsButton_OnClick" Content="{lex:Loc PromptConverter.Buttons.Edit}"/>
                     </Grid>
 
-                    <CheckBox x:Name="IncludeImageCheck" Grid.Row="2" Grid.Column="1" Content="Include image" VerticalContentAlignment="Center"/>
-                    <CheckBox x:Name="IncludeMetadataCheck" Grid.Row="2" Grid.Column="2" Content="Include metadata" VerticalContentAlignment="Center"/>
+                    <CheckBox x:Name="IncludeImageCheck" Grid.Row="2" Grid.Column="1" Content="{lex:Loc PromptConverter.IncludeImage}" VerticalContentAlignment="Center"/>
+                    <CheckBox x:Name="IncludeMetadataCheck" Grid.Row="2" Grid.Column="2" Content="{lex:Loc PromptConverter.IncludeMetadata}" VerticalContentAlignment="Center"/>
                     <StackPanel Grid.Row="2" Grid.Column="3" Orientation="Horizontal">
-                        <CheckBox x:Name="DownscaleCheck" Content="Downscale" VerticalContentAlignment="Center"/>
+                        <CheckBox x:Name="DownscaleCheck" Content="{lex:Loc PromptConverter.Downscale}" VerticalContentAlignment="Center"/>
                         <TextBox x:Name="MaxEdgeText" Width="58" Margin="8,0,0,0" VerticalContentAlignment="Center"/>
                     </StackPanel>
 
-                    <Label Grid.Row="3" Content="Additional Request" VerticalContentAlignment="Top"/>
+                    <Label Grid.Row="3" Content="{lex:Loc PromptConverter.AdditionalRequest}" VerticalContentAlignment="Top"/>
                     <TextBox x:Name="AdditionalRequestText" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3"
                              TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
                 </Grid>
@@ -117,25 +121,25 @@
                 </Grid.RowDefinitions>
                 <TextBlock x:Name="StatusText" Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center"/>
                 <TabControl Grid.Row="1" Background="{DynamicResource PrimaryBrush}">
-                    <TabItem Header="Positive">
+                    <TabItem Header="{lex:Loc PromptConverter.Tabs.Positive}">
                         <TextBox x:Name="PositivePromptText" TextWrapping="Wrap" IsReadOnly="True" IsReadOnlyCaretVisible="False"
                                  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
                                  BorderThickness="0" Background="{DynamicResource PrimaryBrush}" Foreground="{DynamicResource ForegroundBrush}"
                                  FontFamily="Consolas" FontSize="13" Padding="8"/>
                     </TabItem>
-                    <TabItem Header="Negative">
+                    <TabItem Header="{lex:Loc PromptConverter.Tabs.Negative}">
                         <TextBox x:Name="NegativePromptText" TextWrapping="Wrap" IsReadOnly="True" IsReadOnlyCaretVisible="False"
                                  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
                                  BorderThickness="0" Background="{DynamicResource PrimaryBrush}" Foreground="{DynamicResource ForegroundBrush}"
                                  FontFamily="Consolas" FontSize="13" Padding="8"/>
                     </TabItem>
-                    <TabItem Header="Notes">
+                    <TabItem Header="{lex:Loc MetadataPanel.Tabs.Notes}">
                         <TextBox x:Name="NotesText" TextWrapping="Wrap" IsReadOnly="True" IsReadOnlyCaretVisible="False"
                                  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
                                  BorderThickness="0" Background="{DynamicResource PrimaryBrush}" Foreground="{DynamicResource ForegroundBrush}"
                                  FontFamily="Consolas" FontSize="13" Padding="8"/>
                     </TabItem>
-                    <TabItem Header="Raw">
+                    <TabItem Header="{lex:Loc MetadataPanel.Tabs.Raw}">
                         <TextBox x:Name="RawResponseText" TextWrapping="Wrap" IsReadOnly="True" IsReadOnlyCaretVisible="False"
                                  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
                                  BorderThickness="0" Background="{DynamicResource PrimaryBrush}" Foreground="{DynamicResource ForegroundBrush}"
@@ -143,15 +147,15 @@
                     </TabItem>
                 </TabControl>
                 <TextBlock Grid.Row="2" Foreground="{DynamicResource DisabledForegroundBrush}" VerticalAlignment="Center"
-                           Text="Images and metadata are sent to the configured API only when Generate is clicked."/>
+                           Text="{lex:Loc PromptConverter.Info.Privacy}"/>
             </Grid>
         </Grid>
 
         <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-            <Button x:Name="GenerateButton" Width="120" Height="28" Margin="0,0,8,0" Click="GenerateButton_OnClick" Content="Generate"/>
-            <Button Width="120" Height="28" Margin="0,0,8,0" Click="CopyPositiveButton_OnClick" Content="Copy Positive"/>
-            <Button Width="90" Height="28" Margin="0,0,8,0" Click="CopyButton_OnClick" Content="Copy All"/>
-            <Button Width="90" Height="28" Click="CloseButton_OnClick" Content="Close"/>
+            <Button x:Name="GenerateButton" Width="120" Height="28" Margin="0,0,8,0" Click="GenerateButton_OnClick" Content="{lex:Loc PromptConverter.Generate}"/>
+            <Button Width="120" Height="28" Margin="0,0,8,0" Click="CopyPositiveButton_OnClick" Content="{lex:Loc MetadataPanel.Buttons.CopyPositive}"/>
+            <Button Width="90" Height="28" Margin="0,0,8,0" Click="CopyButton_OnClick" Content="{lex:Loc Metadata.Buttons.CopyAll}"/>
+            <Button Width="90" Height="28" Click="CloseButton_OnClick" Content="{lex:Loc Common.Buttons.Close}"/>
         </StackPanel>
     </Grid>
 </local:BorderlessWindow>

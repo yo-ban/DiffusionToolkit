@@ -157,7 +157,7 @@
                         <StackPanel Orientation="Vertical" Margin="0,10,0,0">
                             <!--<CheckBox IsChecked="{Binding RecurseFolders}" Margin="0,0,0,10"  VerticalContentAlignment="Center" ToolTip="{lex:Loc Settings.General.Recursive.ToolTip}" Content="{lex:Loc Settings.General.Recursive}"></CheckBox>
                             <CheckBox x:Name="WatchFolders" IsChecked="{Binding WatchFolders}" Margin="0,0,0,10"  ToolTip="{lex:Loc Settings.General.WatchFolders.ToolTip}" Content="{lex:Loc Settings.General.WatchFolders}"></CheckBox>-->
-                            <CheckBox IsChecked="{Binding AutoRefresh}" Margin="0,0,0,10" ToolTip="{lex:Loc Settings.General.General.ToolTip}"  Content="{lex:Loc Settings.General.AutoRefresh}"></CheckBox>
+                            <CheckBox IsChecked="{Binding AutoRefresh}" Margin="0,0,0,10" ToolTip="{lex:Loc Settings.General.AutoRefresh.ToolTip}"  Content="{lex:Loc Settings.General.AutoRefresh}"></CheckBox>
                             <CheckBox IsChecked="{Binding ScanForNewImagesOnStartup}" Margin="0,0,0,10" Content="{lex:Loc Settings.Images.ScanForNewImagesOnStartup}"></CheckBox>
                         </StackPanel>
                         <!--<Label Content="{lex:Loc Settings.General.ExcludedFolders}"></Label>
@@ -281,15 +281,15 @@
                     <TextBlock Foreground="{DynamicResource ForegroundBrush}" Margin="0,10,0,0" TextWrapping="Wrap" Text="{lex:Loc Settings.Metadata.Warning}"></TextBlock>
                 </StackPanel>
             </TabItem>
-            <TabItem Header="Prompt Converter">
+            <TabItem Header="{lex:Loc Settings.PromptConverter}">
                 <StackPanel Width="800" HorizontalAlignment="Left" Margin="10">
-                    <Label Content="OpenAI-compatible endpoint"></Label>
+                    <Label Content="{lex:Loc Settings.PromptConverter.Endpoint}"></Label>
                     <TextBox Height="26" VerticalContentAlignment="Center" Text="{Binding LlmBaseUrl, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10"></TextBox>
 
-                    <Label Content="Model"></Label>
+                    <Label Content="{lex:Loc Settings.PromptConverter.Model}"></Label>
                     <TextBox Height="26" VerticalContentAlignment="Center" Text="{Binding LlmModel, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10"></TextBox>
 
-                    <Label Content="API key"></Label>
+                    <Label Content="{lex:Loc Settings.PromptConverter.ApiKey}"></Label>
                     <PasswordBox x:Name="LlmApiKeyBox" Height="26" VerticalContentAlignment="Center" PasswordChanged="LlmApiKeyBox_OnPasswordChanged" Margin="0,0,0,10"></PasswordBox>
 
                     <TextBlock Foreground="{DynamicResource ForegroundBrush}" Margin="0,10,0,0" TextWrapping="Wrap">
@@ -301,7 +301,7 @@
                 <StackPanel Width="400" HorizontalAlignment="Left" Margin="10">
                     <Label Content="{lex:Loc Settings.NSFW.NSFWTags}"></Label>
                     <TextBox Padding="5" Text="{Binding NSFWTags, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" Margin="0,10,0,10" Height="200"></TextBox>
-                    <CheckBox IsChecked="{Binding AutoTagNSFW}" ToolTip="Automatically tag added images as NSFW" Content="{lex:Loc Settings.NSFW.AutoTagNSFW}"></CheckBox>
+                    <CheckBox IsChecked="{Binding AutoTagNSFW}" ToolTip="{lex:Loc Settings.NSFW.AutoTagNSFW.ToolTip}" Content="{lex:Loc Settings.NSFW.AutoTagNSFW}"></CheckBox>
                 </StackPanel>
             </TabItem>
             <TabItem Header="{lex:Loc Settings.Themes}">

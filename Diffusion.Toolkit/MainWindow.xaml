@@ -339,11 +339,11 @@
                             </fa:ImageAwesome>
                         </Button>
                         <Button Margin="0,0,15,0" Style="{DynamicResource BorderlessButton}" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Command="{Binding TogglePreview}">
-                            <fa:ImageAwesome ToolTip="Show/Hide Preview" Icon="Solid_Columns" Width="16"  Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <fa:ImageAwesome ToolTip="{lex:Loc MainWindow.View.ShowHidePreview.ToolTip}" Icon="Solid_Columns" Width="16"  Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
                             </fa:ImageAwesome>
                         </Button>
                         <Button Margin="0,0,0,0" Style="{DynamicResource BorderlessButton}" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Command="{Binding PoputPreview}">
-                            <fa:ImageAwesome ToolTip="Pop out Preview" Icon="Solid_WindowRestore" Width="16"  Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <fa:ImageAwesome ToolTip="{lex:Loc MainWindow.View.PopoutPreview.ToolTip}" Icon="Solid_WindowRestore" Width="16"  Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
                             </fa:ImageAwesome>
                         </Button>
                     </StackPanel>
@@ -368,7 +368,7 @@
                 <MenuItem Header="{lex:Loc Menu.View.Refresh}" Command="{Binding Refresh}" InputGestureText="F5"/>
                 <MenuItem Header="{lex:Loc Menu.View.AutoRefresh}" IsChecked="{Binding AutoRefresh}" Command="{Binding ToggleAutoRefresh}"/>
                 <Separator/>
-                <MenuItem Header="Thumbnails">
+                <MenuItem Header="{lex:Loc Menu.View.Thumbnails}">
                     <MenuItem Header="128x128" IsChecked="{Binding ThumbnailSize, Converter={StaticResource thumbSizeChecked}, ConverterParameter=128}" Command="{Binding SetThumbnailSize}" CommandParameter="128"/>
                     <MenuItem Header="192x192" IsChecked="{Binding ThumbnailSize, Converter={StaticResource thumbSizeChecked}, ConverterParameter=192}" Command="{Binding SetThumbnailSize}" CommandParameter="192"/>
                     <MenuItem Header="256x256" IsChecked="{Binding ThumbnailSize, Converter={StaticResource thumbSizeChecked}, ConverterParameter=256}" Command="{Binding SetThumbnailSize}" CommandParameter="256"/>
@@ -452,52 +452,52 @@
                         <Button Margin="0,5,0,10" Height="16" Width="24" 
                                 behaviors:DTBehaviors.IsSelected="{Binding ActiveView, Converter={StaticResource StringMatchConverter}, ConverterParameter=Folders}"
                                 Style="{StaticResource BorderlessToolbarButton}" Command="{Binding GotoUrl}" CommandParameter="search/#folders">
-                            <fa:ImageAwesome ToolTip="Folders (Ctrl+1)" Icon="Solid_FolderOpen" Width="16" Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <fa:ImageAwesome ToolTip="{lex:Loc MainWindow.Nav.Folders.ToolTip}" Icon="Solid_FolderOpen" Width="16" Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
                             </fa:ImageAwesome>
                         </Button>
                         <Button Margin="0,5,0,10" Height="16" Width="24" 
                                 behaviors:DTBehaviors.IsSelected="{Binding ActiveView, Converter={StaticResource StringMatchConverter}, ConverterParameter=Diffusions}"
                                 Style="{StaticResource BorderlessToolbarButton}" Command="{Binding GotoUrl}" CommandParameter="search/#images">
-                            <fa:ImageAwesome ToolTip="Search (Ctrl+2)" Icon="Solid_Search" Width="16" Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <fa:ImageAwesome ToolTip="{lex:Loc MainWindow.Nav.Search.ToolTip}" Icon="Solid_Search" Width="16" Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
                             </fa:ImageAwesome>
                         </Button>
                         <Button Margin="0,5,0,10" Height="16" Width="24" 
                                 behaviors:DTBehaviors.IsSelected="{Binding ActiveView, Converter={StaticResource StringMatchConverter}, ConverterParameter=Favorites}"
                                 Style="{StaticResource BorderlessToolbarButton}" Command="{Binding GotoUrl}" CommandParameter="search/#favorites">
-                            <fa:ImageAwesome ToolTip="Favorites (Ctrl+3)" Icon="Regular_Heart" Width="16" Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <fa:ImageAwesome ToolTip="{lex:Loc MainWindow.Nav.Favorites.ToolTip}" Icon="Regular_Heart" Width="16" Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
                             </fa:ImageAwesome>
                         </Button>
                         <Button Margin="0,5,0,10" Height="16" Width="24" 
                                 behaviors:DTBehaviors.IsSelected="{Binding ActiveView, Converter={StaticResource StringMatchConverter}, ConverterParameter=For Deletion}"
                                 Style="{StaticResource BorderlessToolbarButton}" Command="{Binding GotoUrl}" CommandParameter="search/#deleted">
-                            <fa:ImageAwesome ToolTip="For Deletion (Ctrl+4)" Icon="Regular_TrashAlt" Width="16" Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <fa:ImageAwesome ToolTip="{lex:Loc MainWindow.Nav.ForDeletion.ToolTip}" Icon="Regular_TrashAlt" Width="16" Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
                             </fa:ImageAwesome>
                         </Button>
                         <Separator BorderThickness="1" BorderBrush="{DynamicResource SecondaryBrush}"></Separator>
                         <Button Margin="0,5,0,10" Height="16" Width="24" 
                                 behaviors:DTBehaviors.IsSelected="{Binding ActiveView, Converter={StaticResource StringMatchConverter}, ConverterParameter=Prompts}"
                                 Style="{StaticResource BorderlessToolbarButton}" Command="{Binding GotoUrl}" CommandParameter="prompts">
-                            <fa:ImageAwesome ToolTip="Prompts" Icon="Regular_FileAlt" Width="16" Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <fa:ImageAwesome ToolTip="{lex:Loc MainWindow.Nav.Prompts.ToolTip}" Icon="Regular_FileAlt" Width="16" Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
                             </fa:ImageAwesome>
                         </Button>
                         <Button Margin="0,5,0,10" Height="16" Width="24" 
                                 behaviors:DTBehaviors.IsSelected="{Binding ActiveView, Converter={StaticResource StringMatchConverter}, ConverterParameter=Models}"
                                 Style="{StaticResource BorderlessToolbarButton}" Command="{Binding GotoUrl}" CommandParameter="models">
-                            <fa:ImageAwesome ToolTip="Models" Icon="Solid_PuzzlePiece" Width="16" Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <fa:ImageAwesome ToolTip="{lex:Loc MainWindow.Nav.Models.ToolTip}" Icon="Solid_PuzzlePiece" Width="16" Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
                             </fa:ImageAwesome>
                         </Button>
                         <Grid>
                             <Button Margin="0,5,0,10" Height="16" Width="24" 
                                     behaviors:DTBehaviors.IsSelected="{Binding ActiveView, Converter={StaticResource StringMatchConverter}, ConverterParameter=Settings}"
                                     Style="{StaticResource BorderlessToolbarButton}" Command="{Binding GotoUrl}" CommandParameter="settings">
-                                <fa:ImageAwesome ToolTip="Settings" Icon="Solid_Cog" Width="16" Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <fa:ImageAwesome ToolTip="{lex:Loc QueryBar.Settings.ToolTip}" Icon="Solid_Cog" Width="16" Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 </fa:ImageAwesome>
                             </Button>
                             <Ellipse Fill="Red" Width="8" Height="8" Margin="15,0,0,15" Visibility="{Binding IsSettingsDirty, Converter={StaticResource boolToVisCol}}"></Ellipse>
                         </Grid>
                         <Separator BorderThickness="1" BorderBrush="{DynamicResource SecondaryBrush}"></Separator>
                         <Button Margin="0,5,0,10" Height="16" Width="24" Style="{StaticResource BorderlessToolbarButton}" Command="{Binding Rescan}">
-                            <fa:ImageAwesome ToolTip="Scan folders for new images (Ctrl+R)" Icon="Solid_Sync" Width="16" Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <fa:ImageAwesome ToolTip="{lex:Loc MainWindow.Nav.Scan.ToolTip}" Icon="Solid_Sync" Width="16" Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
                             </fa:ImageAwesome>
                         </Button>
                     </StackPanel>
