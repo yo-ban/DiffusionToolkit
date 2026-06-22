@@ -4,12 +4,12 @@ namespace Diffusion.ComfyUI;
 
 public class NodePropertyCache : INodePropertyCache
 {
-    private Dictionary<string, List<string>> _cache;
+    private Dictionary<string, List<string>> _cache = new();
 
     public void Load(string path)
     {
         var json = File.ReadAllText(path);
-        _cache = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(json);
+        _cache = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(json) ?? new Dictionary<string, List<string>>();
     }
 
     public Dictionary<string, List<string>> GetPropertiesLookup()

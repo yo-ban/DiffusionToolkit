@@ -27,6 +27,11 @@ public class SemanticVersion : IComparable<SemanticVersion>
     {
         var match = versionRegex.Match(text);
 
+        if (!match.Success)
+        {
+            throw new ArgumentException($"Invalid semantic version: '{text}'", nameof(text));
+        }
+
         var version = new SemanticVersion()
         {
             Major = int.Parse(match.Groups["major"].Value),
