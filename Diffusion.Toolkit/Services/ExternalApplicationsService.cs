@@ -51,7 +51,7 @@ public class ExternalApplicationsService
                     UseShellExecute = true
                 };
 
-                Process.Start(ps);
+                Process.Start(ps)?.Dispose();
 
                 if (sender is Window window)
                 {

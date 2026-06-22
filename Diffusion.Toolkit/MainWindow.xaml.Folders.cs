@@ -80,7 +80,7 @@ namespace Diffusion.Toolkit
                     }
 
                     await ServiceLocator.FolderService.LoadFolders();
-                });
+                }).FireAndForgetSafeAsync();
             });
 
             _model.ArchiveFolderRecursiveCommand = new RelayCommand<bool>((o) =>
@@ -95,7 +95,7 @@ namespace Diffusion.Toolkit
                     }
 
                     await ServiceLocator.FolderService.LoadFolders();
-                });
+                }).FireAndForgetSafeAsync();
             });
 
             _model.ExcludeFolderCommand = new RelayCommand<bool>((o) =>

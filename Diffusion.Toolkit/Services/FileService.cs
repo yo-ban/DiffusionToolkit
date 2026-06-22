@@ -346,7 +346,13 @@ public class FileService
                 catch (Exception e)
                 {
                     Logger.Log(e);
-                    MessageBox.Show(ServiceLocator.WindowService.CurrentWindow, $"An error occured while moving files: {e.Message}", "Moving Files", MessageBoxButton.OK, MessageBoxImage.Error);
+                    var message = $"An error occured while moving files: {e.Message}";
+                    // This catch runs on a thread-pool thread (Task.Run). MessageBox.Show
+                    // must be shown on the UI thread so it parented to the main window.
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        MessageBox.Show(ServiceLocator.WindowService.CurrentWindow, message, "Moving Files", MessageBoxButton.OK, MessageBoxImage.Error);
+                    });
                 }
                 finally
                 {

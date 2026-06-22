@@ -200,7 +200,7 @@ namespace Diffusion.Toolkit.Pages
 
         private void Open_DB_Folder(object sender, RoutedEventArgs e)
         {
-            Process.Start("explorer.exe", $"/select,\"{_dataStore.DatabasePath}\"");
+            Process.Start("explorer.exe", $"/select,\"{_dataStore.DatabasePath}\"")?.Dispose();
         }
 
         private void Backup_DB(object sender, RoutedEventArgs e)

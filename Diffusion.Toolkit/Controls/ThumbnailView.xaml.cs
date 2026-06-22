@@ -660,7 +660,7 @@ namespace Diffusion.Toolkit.Controls
                             }
                         }
 
-                    });
+                    }).FireAndForgetSafeAsync();
                 }
             }
         }
@@ -879,7 +879,7 @@ namespace Diffusion.Toolkit.Controls
                 UseShellExecute = true
             };
 
-            Process.Start(processInfo);
+            Process.Start(processInfo)?.Dispose();
 
             //Process.Start("explorer.exe", $"/select,\"{p}\"");
         }

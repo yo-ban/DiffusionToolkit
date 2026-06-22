@@ -43,7 +43,7 @@ namespace Diffusion.Toolkit
                 };
 
 
-                Process.Start(pi);
+                Process.Start(pi)?.Dispose();
             }
             catch (Exception e)
             {

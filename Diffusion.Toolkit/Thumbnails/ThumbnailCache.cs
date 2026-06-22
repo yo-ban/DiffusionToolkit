@@ -198,12 +198,18 @@ public class ThumbnailCache
             if (data.Count > 0)
             {
                 var bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.StreamSource = new MemoryStream(data[0].Data);
-                result = true;
-                bitmap.EndInit();
+                // OnLoad reads the stream fully during EndInit so it can be disposed
+                // immediately and is not held for the bitmap's lifetime.
+                using (var stream = new MemoryStream(data[0].Data))
+                {
+                    bitmap.BeginInit();
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.StreamSource = stream;
+                    bitmap.EndInit();
+                }
                 bitmap.Freeze();
                 thumbnail = bitmap;
+                result = true;
             }
         }
        

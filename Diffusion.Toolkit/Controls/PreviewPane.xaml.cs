@@ -255,13 +255,24 @@ namespace Diffusion.Toolkit.Controls
             try
             {
                 Uri handIconUri = new Uri("pack://application:,,,/Icons/hand.cur", UriKind.RelativeOrAbsolute);
-                handCursor = new Cursor(Application.GetResourceStream(handIconUri).Stream);
+                var handResource = Application.GetResourceStream(handIconUri);
+                using (var handStream = handResource.Stream)
+                {
+                    handCursor = new Cursor(handStream);
+                }
+
                 Uri grabIconUri = new Uri("pack://application:,,,/Icons/grab.cur", UriKind.RelativeOrAbsolute);
-                grabCursor = new Cursor(Application.GetResourceStream(grabIconUri).Stream);
-                //Unloaded += OnUnloaded;
+                var grabResource = Application.GetResourceStream(grabIconUri);
+                using (var grabStream = grabResource.Stream)
+                {
+                    grabCursor = new Cursor(grabStream);
+                }
             }
             catch (Exception e)
             {
+                // Cursor(Stream) reads the stream during construction, so the stream
+                // can be disposed once the cursor is created (done in the using above).
+                Logger.Log($"Failed to load preview cursors: {e.Message}");
             }
         }
 

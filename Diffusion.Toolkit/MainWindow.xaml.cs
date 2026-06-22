@@ -234,7 +234,7 @@ namespace Diffusion.Toolkit
                 UseShellExecute = true
             };
 
-            Process.Start(processInfo);
+            Process.Start(processInfo)?.Dispose();
 
             //Process.Start("explorer.exe", $"/select,\"{p}\"");
         }
@@ -270,7 +270,7 @@ namespace Diffusion.Toolkit
                             ServiceLocator.ProgressService.SetStatus(GetLocalizedText("Actions.Scanning.Completed"));
                         }
                     }
-                });
+                }).FireAndForgetSafeAsync();
 
             }
 
@@ -772,7 +772,7 @@ namespace Diffusion.Toolkit
                         {
                             _search.SearchImages();
                         }
-                    });
+                    }).FireAndForgetSafeAsync();
 #pragma warning restore CS0162
 
                 }
@@ -849,7 +849,7 @@ namespace Diffusion.Toolkit
             {
                 _ = Task.Run(async () =>
                 {
-                    var checker = new UpdateChecker();
+                    using var checker = new UpdateChecker();
 
                     Logger.Log($"Checking for latest version");
                     try
@@ -910,13 +910,13 @@ namespace Diffusion.Toolkit
                     {
                         Logger.Log($"Scanning for new images");
 
-                        _ = Task.Run(async () =>
+                        Task.Run(async () =>
                         {
                             if (await ServiceLocator.ProgressService.TryStartTask())
                             {
                                 await ServiceLocator.ScanningService.ScanWatchedFolders(false, false, ServiceLocator.ProgressService.CancellationToken);
                             }
-                        });
+                        }).FireAndForgetSafeAsync();
                     }
                 }
             }
@@ -970,7 +970,7 @@ namespace Diffusion.Toolkit
 
                 try
                 {
-                    Process.Start(processInfo);
+                    Process.Start(processInfo)?.Dispose();
                 }
                 catch (Exception ex)
                 {
@@ -1009,7 +1009,7 @@ namespace Diffusion.Toolkit
 
                 try
                 {
-                    Process.Start(processInfo);
+                    Process.Start(processInfo)?.Dispose();
                 }
                 catch (Exception ex)
                 {

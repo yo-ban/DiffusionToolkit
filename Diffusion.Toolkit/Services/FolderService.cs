@@ -15,6 +15,7 @@ using Diffusion.Common;
 using Diffusion.Database;
 using Diffusion.Database.Models;
 using Diffusion.IO;
+using Diffusion.Toolkit.Classes;
 using Diffusion.Toolkit.Common;
 using Diffusion.Toolkit.Configuration;
 using Diffusion.Toolkit.Localization;
@@ -818,7 +819,7 @@ namespace Diffusion.Toolkit.Services
                         {
                             ServiceLocator.ProgressService.StartTask().ContinueWith(t =>
                             {
-                                _ = ServiceLocator.MetadataScannerService.QueueAsync(e.FullPath, CancellationToken.None);
+                                ServiceLocator.MetadataScannerService.QueueAsync(e.FullPath, CancellationToken.None).FireAndForgetSafeAsync();
                             });
                         }
                     }
@@ -857,7 +858,7 @@ namespace Diffusion.Toolkit.Services
                     {
                         if (!IsExcludedOrArchivedFile(e.FullPath))
                         {
-                            ServiceLocator.ProgressService.StartTask().ContinueWith(t => { _ = ServiceLocator.MetadataScannerService.QueueAsync(e.FullPath, ServiceLocator.ProgressService.CancellationToken); });
+                            ServiceLocator.ProgressService.StartTask().ContinueWith(t => { ServiceLocator.MetadataScannerService.QueueAsync(e.FullPath, ServiceLocator.ProgressService.CancellationToken).FireAndForgetSafeAsync(); });
                         }
                     }
                 }
