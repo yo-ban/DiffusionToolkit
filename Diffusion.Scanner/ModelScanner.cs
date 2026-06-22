@@ -26,6 +26,7 @@ public class ModelScanner
                 }
                 catch (Exception e)
                 {
+                    Logger.Log($"Failed to calculate hash for model '{file}': {e.Message}");
                 }
 
                 yield return new Model()

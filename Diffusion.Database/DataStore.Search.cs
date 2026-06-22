@@ -419,8 +419,10 @@ namespace Diffusion.Database
             //db.Close();
         }
 
-        private string lastPrompt;
+        private string? lastPrompt;
         private List<UsedPrompt>? allResults;
+        private string? lastNegativePrompt;
+        private List<UsedPrompt>? allNegativeResults;
 
         public IEnumerable<UsedPrompt> SearchPrompts(string? prompt, bool fullText, int distance)
         {
@@ -547,16 +549,16 @@ namespace Diffusion.Database
 
                 if (fullText)
                 {
-                    if (allResults == null || lastPrompt != prompt)
+                    if (allNegativeResults == null || lastNegativePrompt != prompt)
                     {
-                        allResults = db.Query<UsedPrompt>($"SELECT NegativePrompt AS Prompt, COUNT(*) AS Usage FROM Image GROUP BY NegativePrompt ORDER BY Usage DESC")
+                        allNegativeResults = db.Query<UsedPrompt>($"SELECT NegativePrompt AS Prompt, COUNT(*) AS Usage FROM Image GROUP BY NegativePrompt ORDER BY Usage DESC")
                             .ToList();
                     }
 
                     // TODO: Try converting the prompt into a list of numbers (vocabulary), then perform hamming on the numbers instead of the whole prompt
                     if (distance > 0)
                     {
-                        foreach (var result in allResults.Where(r => r.Prompt != null && r.Prompt.Length >= prompt.Length))
+                        foreach (var result in allNegativeResults.Where(r => r.Prompt != null && r.Prompt.Length >= prompt.Length))
                         {
                             if (HammingDistance(prompt, result.Prompt) <= distance)
                             {
@@ -591,7 +593,7 @@ namespace Diffusion.Database
             }
 
 
-            lastPrompt = prompt;
+            lastNegativePrompt = prompt;
         }
 
 

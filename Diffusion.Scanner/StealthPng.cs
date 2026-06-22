@@ -6,6 +6,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Diffusion.Common;
 
 namespace Diffusion.IO
 {
@@ -154,8 +155,9 @@ namespace Diffusion.IO
                             genInfo = Encoding.UTF8.GetString(byteData);
                         }
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
+                        Logger.Log($"Failed to decode stealth PNG generation info: {e.Message}");
                     }
                 }
 

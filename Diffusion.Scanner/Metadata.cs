@@ -24,11 +24,9 @@ public class Metadata
     public static List<string> GetDirectoryTextFileCache(string path)
     {
         var files = Dir.GetFiles(path, "*.txt").ToList();
-        // TODO: Fix possible duplicate path
-        return DirectoryTextFileCache.AddOrUpdate(path, files, (a, b) =>
-        {
-            return b.Concat(files).Distinct().ToList();
-        });
+        // Refresh the cache with the current on-disk contents so files that were
+        // deleted since the last scan no longer persist in the cache.
+        return DirectoryTextFileCache.AddOrUpdate(path, files, (_, _) => files);
     }
 
     public enum MetaFormat
@@ -223,10 +221,10 @@ public class Metadata
                                         switch (tag.Name)
                                         {
                                             case "Width":
-                                                headerWidth = int.Parse(tag.Description);
+                                                if (int.TryParse(tag.Description, NumberStyles.Integer, CultureInfo.InvariantCulture, out var widthValue)) headerWidth = widthValue;
                                                 break;
                                             case "Height":
-                                                headerHeight = int.Parse(tag.Description);
+                                                if (int.TryParse(tag.Description, NumberStyles.Integer, CultureInfo.InvariantCulture, out var heightValue)) headerHeight = heightValue;
                                                 break;
                                         }
                                     }
@@ -271,10 +269,10 @@ public class Metadata
                                         switch (tag.Name)
                                         {
                                             case "Image Width":
-                                                headerWidth = int.Parse(tag.Description);
+                                                if (int.TryParse(tag.Description, NumberStyles.Integer, CultureInfo.InvariantCulture, out var imgWidthValue)) headerWidth = imgWidthValue;
                                                 break;
                                             case "Image Height":
-                                                headerHeight = int.Parse(tag.Description);
+                                                if (int.TryParse(tag.Description, NumberStyles.Integer, CultureInfo.InvariantCulture, out var imgHeightValue)) headerHeight = imgHeightValue;
                                                 break;
                                         }
                                     }
@@ -446,11 +444,11 @@ public class Metadata
                             {
                                 if (tag.Name == "Image Width")
                                 {
-                                    fileParameters.Width = int.Parse(tag.Description);
+                                    if (int.TryParse(tag.Description, NumberStyles.Integer, CultureInfo.InvariantCulture, out var widthValue)) fileParameters.Width = widthValue;
                                 }
                                 else if (tag.Name == "Image Height")
                                 {
-                                    fileParameters.Height = int.Parse(tag.Description);
+                                    if (int.TryParse(tag.Description, NumberStyles.Integer, CultureInfo.InvariantCulture, out var heightValue)) fileParameters.Height = heightValue;
                                 }
                             }
                         }
@@ -581,28 +579,34 @@ public class Metadata
                                            // The workflow is stored in the Make tag.
                                            if (!string.IsNullOrEmpty(tag.Description))
                                            {
-                                               try
+                                               var makeDescription = tag.Description.Trim();
+                                               // Only treat as a ComfyUI workflow when prefixed with "workflow:";
+                                               // a real camera Make (e.g. "Canon") must not throw here.
+                                               if (makeDescription.StartsWith("workflow:"))
                                                {
-                                                   // Check if it is JSON format
-                                                   var makeData = tag.Description.Trim().Substring("workflow:".Length);
-                                                   if (makeData.StartsWith("{"))
+                                                   try
                                                    {
-                                                       format = MetaFormat.ComfyUI;
-                                                       fileParameters ??= new FileParameters();
-                                                       fileParameters.Workflow = makeData;
+                                                       // Check if it is JSON format
+                                                       var makeData = makeDescription.Substring("workflow:".Length);
+                                                       if (makeData.StartsWith("{"))
+                                                       {
+                                                           format = MetaFormat.ComfyUI;
+                                                           fileParameters ??= new FileParameters();
+                                                           fileParameters.Workflow = makeData;
 
-                                                       var root = JsonDocument.Parse(makeData);
-                                                       fileParameters.WorkflowId = GetHashCode(root.RootElement).ToString("X");
+                                                           var root = JsonDocument.Parse(makeData);
+                                                           fileParameters.WorkflowId = GetHashCode(root.RootElement).ToString("X");
 
-                                                        var pnodes = parser.Parse(fileParameters.WorkflowId, fileParameters.Workflow);
-                                                       fileParameters.Nodes = pnodes;
-                                                        
-                                                       // Generate WorkflowId
+                                                            var pnodes = parser.Parse(fileParameters.WorkflowId, fileParameters.Workflow);
+                                                           fileParameters.Nodes = pnodes;
+
+                                                           // Generate WorkflowId
+                                                       }
                                                    }
-                                               }
-                                               catch (Exception e)
-                                               {
-                                                   Logger.Log($"Error parsing Make tag as ComfyUI workflow: {e.Message}");
+                                                   catch (Exception e)
+                                                   {
+                                                       Logger.Log($"Error parsing Make tag as ComfyUI workflow: {e.Message}");
+                                                   }
                                                }
                                            }
                                            break;
@@ -611,34 +615,40 @@ public class Metadata
                                             // The Model tag contains prompt data
                                             if (!string.IsNullOrEmpty(tag.Description))
                                             {
-                                                try
+                                                var modelDescription = tag.Description.Trim();
+                                                // Only treat as a ComfyUI prompt when prefixed with "prompt:";
+                                                // a real camera Model must not throw here.
+                                                if (modelDescription.StartsWith("prompt:"))
                                                 {
-                                                    // Check if it is JSON format
-                                                    var modelData = tag.Description.Trim().Substring("prompt:".Length);
-                                                    if (modelData.StartsWith("{"))
+                                                    try
                                                     {
-                                                        format = MetaFormat.ComfyUI;
-                                                        var tempParameters = ReadComfyUIParameters($"prompt: {modelData}", parser, false);
-                                                        
-                                                        if (fileParameters == null)
+                                                        // Check if it is JSON format
+                                                        var modelData = modelDescription.Substring("prompt:".Length);
+                                                        if (modelData.StartsWith("{"))
                                                         {
-                                                            fileParameters = tempParameters;
-                                                        }
-                                                        else
-                                                        {
-                                                            // If both workflow and prompt exist, the prompt information is merged.
-                                                            if (tempParameters.Nodes != null)
+                                                            format = MetaFormat.ComfyUI;
+                                                            var tempParameters = ReadComfyUIParameters($"prompt: {modelData}", parser, false);
+
+                                                            if (fileParameters == null)
                                                             {
-                                                                fileParameters.WorkflowId = tempParameters.WorkflowId;
-                                                                fileParameters.Workflow = tempParameters.Workflow;
-                                                                fileParameters.Nodes = tempParameters.Nodes;
+                                                                fileParameters = tempParameters;
+                                                            }
+                                                            else
+                                                            {
+                                                                // If both workflow and prompt exist, the prompt information is merged.
+                                                                if (tempParameters.Nodes != null)
+                                                                {
+                                                                    fileParameters.WorkflowId = tempParameters.WorkflowId;
+                                                                    fileParameters.Workflow = tempParameters.Workflow;
+                                                                    fileParameters.Nodes = tempParameters.Nodes;
+                                                                }
                                                             }
                                                         }
                                                     }
-                                                }
-                                                catch (Exception e)
-                                                {
-                                                    Logger.Log($"Error parsing Model tag as ComfyUI prompt: {e.Message}");
+                                                    catch (Exception e)
+                                                    {
+                                                        Logger.Log($"Error parsing Model tag as ComfyUI prompt: {e.Message}");
+                                                    }
                                                 }
                                             }
                                             break;
@@ -706,7 +716,25 @@ public class Metadata
                     var currPath = Path.GetDirectoryName(parameterFile);
                     var textFiles = GetDirectoryTextFileCache(currPath);
 
-                    var matchingFile = textFiles.FirstOrDefault(t => Path.GetFileNameWithoutExtension(parameterFile).StartsWith(Path.GetFileNameWithoutExtension(t)));
+                    var imageBaseName = Path.GetFileNameWithoutExtension(parameterFile);
+                    var matchingFile = textFiles.FirstOrDefault(t =>
+                    {
+                        var textBaseName = Path.GetFileNameWithoutExtension(t);
+                        if (string.IsNullOrEmpty(textBaseName))
+                        {
+                            return false;
+                        }
+                        if (!imageBaseName.StartsWith(textBaseName, StringComparison.OrdinalIgnoreCase))
+                        {
+                            return false;
+                        }
+                        // Require an exact name match, or a non-letter separator right after
+                        // the prefix. A digit (e.g. "photo1.png" from "photo.txt" batch output)
+                        // or an underscore counts as a separator, but a letter does not, so
+                        // that "photo.png" does not match "ph.txt".
+                        return imageBaseName.Length == textBaseName.Length
+                            || !char.IsLetter(imageBaseName[textBaseName.Length]);
+                    });
 
                     if (matchingFile != null)
                     {
@@ -1020,6 +1048,11 @@ public class Metadata
             else
             {
                 fp.Workflow = description;
+
+                // Compute WorkflowId the same way as the non-JSON branch so that
+                // identical workflows produce identical IDs (previously left null).
+                var root = JsonDocument.Parse(description);
+                fp.WorkflowId = GetHashCode(root.RootElement).ToString("X");
 
                 var pnodes = parser.Parse(fp.WorkflowId, fp.Workflow);
 
@@ -1608,9 +1641,9 @@ public class Metadata
                                     break;
                             }
                         }
-                        catch (Exception)
+                        catch (Exception e)
                         {
-
+                            Logger.Log($"Failed to parse metadata key-value '{keyValue}': {e.Message}");
                         }
 
                     }
