@@ -694,7 +694,7 @@ public class Metadata
             try
             {
                 // Check if there is a .TXT metadata file (Automatic1111)
-                var parameterFile = file.Replace(ext, ".txt", StringComparison.InvariantCultureIgnoreCase);
+                var parameterFile = Path.ChangeExtension(file, ".txt");
 
                 if (File.Exists(parameterFile))
                 {
@@ -891,7 +891,7 @@ public class Metadata
                 workflowBuilder.AppendLine(tag.Description);
                 var value = tag.Description.Substring($"{key}: ".Length);
 
-                return float.Parse(value);
+                return float.Parse(value, CultureInfo.InvariantCulture);
             }
 
             return 0f;
@@ -904,7 +904,7 @@ public class Metadata
                 workflowBuilder.AppendLine(tag.Description);
                 var value = tag.Description.Substring($"{key}: ".Length);
 
-                return decimal.Parse(value);
+                return decimal.Parse(value, CultureInfo.InvariantCulture);
             }
 
             return 0m;
@@ -917,7 +917,7 @@ public class Metadata
                 workflowBuilder.AppendLine(tag.Description);
                 var value = tag.Description.Substring($"{key}: ".Length);
 
-                return long.Parse(value);
+                return long.Parse(value, CultureInfo.InvariantCulture);
             }
 
             return 0;
@@ -930,7 +930,7 @@ public class Metadata
                 workflowBuilder.AppendLine(tag.Description);
                 var value = tag.Description.Substring($"{key}: ".Length);
 
-                return int.Parse(value);
+                return int.Parse(value, CultureInfo.InvariantCulture);
             }
 
             return 0;
@@ -1049,10 +1049,12 @@ public class Metadata
         if (prompt.ValueKind == JsonValueKind.Array)
         {
             var promptArrayEnumerator = prompt.EnumerateArray();
-            promptArrayEnumerator.MoveNext();
-            var promptObject = promptArrayEnumerator.Current;
-            fp.Prompt = promptObject.GetProperty("prompt").GetString();
-            fp.PromptStrength = promptObject.GetProperty("weight").GetDecimal();
+            if (promptArrayEnumerator.MoveNext())
+            {
+                var promptObject = promptArrayEnumerator.Current;
+                fp.Prompt = promptObject.GetProperty("prompt").GetString();
+                fp.PromptStrength = promptObject.GetProperty("weight").GetDecimal();
+            }
         }
         else if (prompt.ValueKind == JsonValueKind.String)
         {
@@ -1685,7 +1687,7 @@ public class Metadata
 
         if (fileParameters == null)
         {
-            var parameterFile = file.Replace(ext, ".txt", StringComparison.InvariantCultureIgnoreCase);
+            var parameterFile = Path.ChangeExtension(file, ".txt");
 
             if (File.Exists(parameterFile))
             {
