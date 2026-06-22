@@ -440,15 +440,18 @@ public class Metadata
                     {
                         var imageMetaData = directories.FirstOrDefault(d => d.Name == "PNG-IHDR");
 
-                        foreach (var tag in imageMetaData.Tags)
+                        if (imageMetaData != null)
                         {
-                            if (tag.Name == "Image Width")
+                            foreach (var tag in imageMetaData.Tags)
                             {
-                                fileParameters.Width = int.Parse(tag.Description);
-                            }
-                            else if (tag.Name == "Image Height")
-                            {
-                                fileParameters.Height = int.Parse(tag.Description);
+                                if (tag.Name == "Image Width")
+                                {
+                                    fileParameters.Width = int.Parse(tag.Description);
+                                }
+                                else if (tag.Name == "Image Height")
+                                {
+                                    fileParameters.Height = int.Parse(tag.Description);
+                                }
                             }
                         }
                     }
@@ -761,6 +764,10 @@ public class Metadata
     public static (int width, int height) GetImageSize(Stream stream)
     {
         ImageInfo info = Image.Identify(stream);
+        if (info == null)
+        {
+            return (0, 0);
+        }
         return (info.Width, info.Height);
     }
 
@@ -791,7 +798,15 @@ public class Metadata
         fp.Workflow = command;
 
         var start = command.IndexOf("\"");
+        if (start < 0)
+        {
+            return fp;
+        }
         var end = command.IndexOf("\"", start + 1);
+        if (end < 0)
+        {
+            return fp;
+        }
         fp.Prompt = command.Substring(start + 1, end - start - 1);
         var others = command.Substring(end + 1);
         var args = others.Split(new char[] { ' ' });
@@ -801,28 +816,46 @@ public class Metadata
             switch (arg)
             {
                 case "-s":
-                    fp.Steps = int.Parse(args[index + 1], CultureInfo.InvariantCulture);
-                    index++;
+                    if (index + 1 < args.Length)
+                    {
+                        fp.Steps = int.Parse(args[index + 1], CultureInfo.InvariantCulture);
+                        index++;
+                    }
                     break;
                 case "-S":
-                    fp.Seed = long.Parse(args[index + 1], CultureInfo.InvariantCulture);
-                    index++;
+                    if (index + 1 < args.Length)
+                    {
+                        fp.Seed = long.Parse(args[index + 1], CultureInfo.InvariantCulture);
+                        index++;
+                    }
                     break;
                 case "-W":
-                    fp.Width = int.Parse(args[index + 1], CultureInfo.InvariantCulture);
-                    index++;
+                    if (index + 1 < args.Length)
+                    {
+                        fp.Width = int.Parse(args[index + 1], CultureInfo.InvariantCulture);
+                        index++;
+                    }
                     break;
                 case "-H":
-                    fp.Height = int.Parse(args[index + 1], CultureInfo.InvariantCulture);
-                    index++;
+                    if (index + 1 < args.Length)
+                    {
+                        fp.Height = int.Parse(args[index + 1], CultureInfo.InvariantCulture);
+                        index++;
+                    }
                     break;
                 case "-C":
-                    fp.CFGScale = decimal.Parse(args[index + 1], CultureInfo.InvariantCulture);
-                    index++;
+                    if (index + 1 < args.Length)
+                    {
+                        fp.CFGScale = decimal.Parse(args[index + 1], CultureInfo.InvariantCulture);
+                        index++;
+                    }
                     break;
                 case "-A":
-                    fp.Sampler = args[index + 1];
-                    index++;
+                    if (index + 1 < args.Length)
+                    {
+                        fp.Sampler = args[index + 1];
+                        index++;
+                    }
                     break;
             }
         }
