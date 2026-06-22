@@ -60,19 +60,10 @@ public class CivitaiClient : IDisposable
         T? results = null;
         try
         {
-            var response = await client.GetAsync(url, token);
+            using var response = await client.GetAsync(url, token);
 
             if (response.IsSuccessStatusCode)
             {
-                //var options = new JsonSerializerOptions
-                //{
-                //    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                //    Converters =
-                //    {
-                //        new JsonStringEnumConverter()
-                //    }
-                //};
-
                 var options = new JsonSerializerOptions();
                 options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                 options.Converters.Add(new JsonStringEnumConverterWithAttributeSupport());
@@ -94,20 +85,27 @@ public class CivitaiClient : IDisposable
                     if (document.RootElement.ValueKind == JsonValueKind.Array)
                     {
                         var arr = document.RootElement.EnumerateArray();
-                        var err = arr.First();
-                        string path = null;
-
-                        if (err.TryGetProperty("message", out var messageElement))
+                        if (arr.MoveNext())
                         {
-                            message = messageElement.GetString();
-                        }
+                            var err = arr.Current;
+                            string path = null;
 
-                        if (err.TryGetProperty("path", out var pathElement))
+                            if (err.TryGetProperty("message", out var messageElement))
+                            {
+                                message = messageElement.GetString();
+                            }
+
+                            if (err.TryGetProperty("path", out var pathElement))
+                            {
+                                path = string.Join("/", pathElement.EnumerateArray().Select(p => p.GetString()));
+                            }
+
+                            throw new CivitaiRequestException(message, path, body, response.StatusCode);
+                        }
+                        else
                         {
-                            path = string.Join("/", pathElement.EnumerateArray().Select(p => p.GetString()));
+                            throw new CivitaiRequestException(message, body, response.StatusCode);
                         }
-
-                        throw new CivitaiRequestException(message, path, body, response.StatusCode);
                     }
                     else
                     {
@@ -121,8 +119,9 @@ public class CivitaiClient : IDisposable
             }
 
         }
-        catch (TaskCanceledException)
+        catch (TaskCanceledException ex)
         {
+            System.Diagnostics.Debug.WriteLine($"CivitaiClient request canceled: {ex.Message}");
         }
 
         return results;
@@ -145,9 +144,9 @@ public class CivitaiClient : IDisposable
 
                 if (value is IEnumerable listValue)
                 {
-                    var objectList = listValue.Cast<object>();
+                    var objectList = listValue.Cast<object>().ToList();
 
-                    if (objectList.First() is Enum)
+                    if (objectList.Count > 0 && objectList[0] is Enum)
                     {
                         var enumList = listValue.Cast<Enum>().Select(enumValue => $"{propertyName}={EnumToString(enumValue)}");
                         queryString.Append($"{string.Join("&", enumList)}&");
@@ -182,6 +181,7 @@ public class CivitaiClient : IDisposable
 
     public static string ToCamelCase(string name)
     {
+        if (string.IsNullOrEmpty(name)) return name;
         return name[..1].ToLower() + name[1..];
     }
 
