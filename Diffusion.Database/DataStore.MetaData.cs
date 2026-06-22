@@ -128,6 +128,7 @@ namespace Diffusion.Database
             var command = db.CreateCommand(query);
 
             command.Bind("@Rating", rating);
+            command.Bind("@Date", DateTime.Now);
             command.Bind("@Id", id);
 
 
