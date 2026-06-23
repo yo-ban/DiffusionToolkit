@@ -479,7 +479,7 @@
                         </Button>
                     </StackPanel>
                 </Grid>
-                <ContentControl x:Name="Frame" Content="{Binding Page}"></ContentControl>
+                <Frame x:Name="Frame" Content="{Binding Page}" NavigationUIVisibility="Hidden"></Frame>
             </DockPanel>
         </Grid>
 
