@@ -331,6 +331,36 @@
                     </Grid>
                 </StackPanel>
             </TabItem>
+            <TabItem Header="{lex:Loc Settings.NavigationBar}">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="{lex:Loc Settings.NavigationBar.Description}" TextWrapping="Wrap" Margin="0,0,0,10" Foreground="{DynamicResource DisabledForegroundBrush}"/>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="250"/>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <ListBox Grid.Column="0" ItemsSource="{Binding NavEditItems}" SelectedItem="{Binding SelectedNavEditItem}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <CheckBox IsChecked="{Binding Visible}" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                        <TextBlock Text="{Binding DisplayName}" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                            <Button Height="26" Margin="0,0,0,10" IsEnabled="{Binding SelectedNavEditItem, Converter={StaticResource NotNullConverter}}" Click="MoveNavItemUp_OnClick" Content="{lex:Loc Settings.NavigationBar.MoveUp}"/>
+                            <Button Height="26" IsEnabled="{Binding SelectedNavEditItem, Converter={StaticResource NotNullConverter}}" Click="MoveNavItemDown_OnClick" Content="{lex:Loc Settings.NavigationBar.MoveDown}"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </TabItem>
             <TabItem x:Name="ExternalApplicationsTab" Header="{lex:Loc Settings.ExternalApplications}">
                 <Grid Margin="10">
                     <Grid Grid.Row="0">

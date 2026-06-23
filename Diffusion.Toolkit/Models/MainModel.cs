@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using Diffusion.Database;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
@@ -7,6 +9,8 @@ using System.Windows.Input;
 using Diffusion.Toolkit.Classes;
 using Diffusion.Toolkit.Configuration;
 using Diffusion.Toolkit.Controls;
+using Diffusion.Toolkit.Localization;
+using Diffusion.Toolkit.Services;
 using Diffusion.Common.Query;
 
 namespace Diffusion.Toolkit.Models;
@@ -643,6 +647,18 @@ public class MainModel : BaseNotify
     public string ActiveView
     {
         get;
+        set
+        {
+            if (SetField(ref field, value))
+            {
+                UpdateNavSelection();
+            }
+        }
+    }
+
+    public ObservableCollection<NavItemViewModel> NavItems
+    {
+        get;
         set => SetField(ref field, value);
     }
 
@@ -769,4 +785,45 @@ public class MainModel : BaseNotify
     public ICommand FocusSearch { get; set; }
     public ICommand RefreshFolderCommand { get; set; }
     public bool IsPreviewOpen { get; set; }
+
+    private string GetLocalizedText(string key)
+    {
+        return (string)JsonLocalizationProvider.Instance.GetLocalizedObject(key, null, CultureInfo.InvariantCulture);
+    }
+
+    /// <summary>
+    /// Rebuilds the sidebar <see cref="NavItems"/> from the persisted
+    /// <c>Settings.NavigationBar</c> (order + visibility) joined with the static
+    /// master definition table. Called on startup and whenever the user applies
+    /// navigation settings.
+    /// </summary>
+    public void RefreshNavItems()
+    {
+        var settings = ServiceLocator.Settings;
+        var entries = settings?.NavigationBar?.Items ?? new List<NavEntry>();
+
+        var ordered = entries
+            .Where(e => e != null && e.Visible && NavItemViewModel.Master.ContainsKey(e.Key))
+            .Select(e =>
+            {
+                var def = NavItemViewModel.Master[e.Key];
+                return new NavItemViewModel(e.Key, def.Url, def.ActiveView, def.Icon, GetLocalizedText(def.ToolTipKey));
+            })
+            .ToList();
+
+        NavItems = new ObservableCollection<NavItemViewModel>(ordered);
+
+        UpdateNavSelection();
+    }
+
+    /// <summary>Sets <see cref="NavItemViewModel.IsCurrent"/> on the item matching <see cref="ActiveView"/>.</summary>
+    private void UpdateNavSelection()
+    {
+        if (NavItems == null) return;
+
+        foreach (var item in NavItems)
+        {
+            item.IsCurrent = item.ActiveView == ActiveView;
+        }
+    }
 }

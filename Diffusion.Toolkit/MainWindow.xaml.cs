@@ -536,6 +536,8 @@ namespace Diffusion.Toolkit
 
                     _settings.MetadataSection.Attach(_settings);
                     _settings.NavigationSection.Attach(_settings);
+                    _settings.NavigationBar.Attach(_settings);
+                    _settings.NavigationBar.Normalize();
                     _settings.UseBuiltInViewer ??= true;
                     _settings.SortAlbumsBy ??= "Name";
                     _settings.Theme ??= "System";
@@ -672,6 +674,9 @@ namespace Diffusion.Toolkit
             LocationChanged += OnLocationChanged;
 
             ServiceLocator.SetSettings(_settings);
+
+            // Build the data-driven sidebar from persisted navigation settings.
+            _model.RefreshNavItems();
 
             Logger.Log($"Initializing pages");
 

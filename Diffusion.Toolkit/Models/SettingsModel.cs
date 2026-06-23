@@ -21,6 +21,7 @@ public class SettingsModel : BaseNotify
         SelectedIndex = -1;
         ExcludedSelectedIndex = -1;
         ExternalApplications = new ObservableCollection<ExternalApplicationModel>();
+        NavEditItems = new ObservableCollection<NavEditItem>();
         //ExternalApplications.CollectionChanged += ExternalApplicationsOnCollectionChanged;
 
         PropertyChanged += OnPropertyChanged;
@@ -270,6 +271,16 @@ public class SettingsModel : BaseNotify
         }
     }
 
+    public ObservableCollection<NavEditItem> NavEditItems
+    {
+        get;
+        set
+        {
+            SetField(ref field, value);
+            RegisterObservableChanges(field);
+        }
+    }
+
     public bool SoftwareOnly
     {
         get;
@@ -277,6 +288,12 @@ public class SettingsModel : BaseNotify
     }
 
     public ExternalApplicationModel? SelectedApplication
+    {
+        get;
+        set => SetField(ref field, value, false);
+    }
+
+    public NavEditItem? SelectedNavEditItem
     {
         get;
         set => SetField(ref field, value, false);

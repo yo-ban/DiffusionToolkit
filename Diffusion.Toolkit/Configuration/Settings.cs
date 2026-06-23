@@ -68,6 +68,9 @@ public class Settings : SettingsContainer, IScanOptions
 
         NavigationSection = new NavigationSectionSettings();
         NavigationSection.Attach(this);
+
+        NavigationBar = new NavigationBarSettings();
+        NavigationBar.Attach(this);
         PreviewWindowState = new PreviewWindowState();
 
         //if (initialize)
@@ -331,6 +334,8 @@ public class Settings : SettingsContainer, IScanOptions
     public MetadataSectionSettings MetadataSection { get; set; }
 
     public NavigationSectionSettings NavigationSection { get; set; }
+
+    public NavigationBarSettings NavigationBar { get; set; }
 
     public bool ActualSize
     {

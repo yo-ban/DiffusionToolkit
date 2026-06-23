@@ -43,6 +43,11 @@ namespace Diffusion.Toolkit.Pages
             return (string)JsonLocalizationProvider.Instance.GetLocalizedObject(key, null, CultureInfo.InvariantCulture);
         }
 
+        private static string CapitalizeKey(string key)
+        {
+            return string.IsNullOrEmpty(key) ? key : char.ToUpperInvariant(key[0]) + key.Substring(1);
+        }
+
         public Settings(Window window) : base("settings")
         {
             _window = window;
@@ -113,6 +118,14 @@ namespace Diffusion.Toolkit.Pages
                 Name = d.Name,
                 Path = d.Path
             }));
+
+            _model.NavEditItems = new ObservableCollection<NavEditItem>(
+                _settings.NavigationBar.Items
+                    .Where(e => NavItemViewModel.Master.ContainsKey(e.Key))
+                    .Select(e => new NavEditItem(
+                        e.Key,
+                        GetLocalizedText("Settings.NavigationBar.Item." + CapitalizeKey(e.Key)),
+                        e.Visible)));
 
             _model.Theme = _settings.Theme;
             _model.Culture = _settings.Culture;
@@ -345,6 +358,32 @@ namespace Diffusion.Toolkit.Pages
             }
         }
 
+        private void MoveNavItemUp_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (_model.SelectedNavEditItem != null)
+            {
+                var index = _model.NavEditItems.IndexOf(_model.SelectedNavEditItem);
+
+                if (index > 0)
+                {
+                    _model.NavEditItems.Move(index, index - 1);
+                }
+            }
+        }
+
+        private void MoveNavItemDown_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (_model.SelectedNavEditItem != null)
+            {
+                var index = _model.NavEditItems.IndexOf(_model.SelectedNavEditItem);
+
+                if (index < _model.NavEditItems.Count - 1)
+                {
+                    _model.NavEditItems.Move(index, index + 1);
+                }
+            }
+        }
+
         private void ApplyChanges_OnClick(object sender, RoutedEventArgs e)
         {
             ApplySettings();
@@ -404,6 +443,11 @@ namespace Diffusion.Toolkit.Pages
                     Name = d.Name,
                     Path = d.Path
                 }).ToList();
+
+                _settings.NavigationBar.Items = _model.NavEditItems
+                    .Select(e => new NavEntry { Key = e.Key, Visible = e.Visible })
+                    .ToList();
+                ServiceLocator.MainModel?.RefreshNavItems();
 
                 _settings.Culture = _model.Culture;
 
