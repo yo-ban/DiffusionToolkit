@@ -216,6 +216,17 @@
     <EmbeddedResource Include="SearchHelp.md">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="SearchHelp.jaJP.md">
+      <!--
+        The file is named SearchHelp.jaJP.md (not .ja-JP.md) on purpose: the
+        .NET SDK treats a file named <basename>.<culture>.<ext> as a satellite
+        (culture) resource and banishes it to a ja-JP\<Assembly>.resources.dll,
+        out of the main assembly. The dotless "jaJP" segment is not a valid
+        culture, so the file embeds into the main assembly like SearchHelp.md
+        and is reachable via GetManifestResourceStream at runtime.
+      -->
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Tips.md">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>

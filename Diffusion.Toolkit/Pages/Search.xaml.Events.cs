@@ -1,9 +1,11 @@
-﻿using Diffusion.Toolkit.MdStyles;
+﻿using Diffusion.Toolkit.Configuration;
+using Diffusion.Toolkit.MdStyles;
 using Diffusion.Toolkit.Models;
 using Diffusion.Toolkit.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -161,7 +163,26 @@ namespace Diffusion.Toolkit.Pages
 
         public void OpenSearchHelp()
         {
-            _model.SearchHelpMarkdown = ResourceHelper.GetString("Diffusion.Toolkit.SearchHelp.md");
+            // Pick the localized SearchHelp markdown for the active culture, falling
+            // back to the default (English) resource when a localized one is absent.
+            // The resource files use a dotless culture suffix (e.g. jaJP) because
+            // <basename>.<culture>.<ext> would be treated as a satellite resource.
+            var culture = Diffusion.Toolkit.Configuration.Settings.Instance?.Culture;
+            var assembly = Assembly.GetExecutingAssembly();
+            string resourceName = null;
+            if (!string.IsNullOrEmpty(culture))
+            {
+                var dotless = culture.Replace("-", "");
+                resourceName = $"Diffusion.Toolkit.SearchHelp.{dotless}.md";
+            }
+
+            if (resourceName == null ||
+                assembly.GetManifestResourceStream(resourceName) == null)
+            {
+                resourceName = "Diffusion.Toolkit.SearchHelp.md";
+            }
+
+            _model.SearchHelpMarkdown = ResourceHelper.GetString(resourceName);
             _model.SearchHelpStyle = CustomStyles.BetterGithub;
             _model.IsSearchHelpVisible = true;
         }

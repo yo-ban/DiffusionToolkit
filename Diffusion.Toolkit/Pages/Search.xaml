@@ -1102,7 +1102,7 @@
                         <RowDefinition Height="30"/>
                     </Grid.RowDefinitions>
                     <StackPanel>
-                        <Label FontSize="20" Margin="0,0,0,10">Search Settings</Label>
+                        <Label FontSize="20" Margin="0,0,0,10" Content="{lex:Loc Search.SearchSettings.Title}"></Label>
                         <Grid Margin="0,0,0,10">
                             <Grid>
                                 <Grid.RowDefinitions>
@@ -1112,10 +1112,10 @@
                                     <RowDefinition Height="24"/>
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
-                                <CheckBox IsChecked="{Binding SearchRawData}">Search in raw metadata (can be very slow)</CheckBox>
-                                <RadioButton Grid.Row="1" IsChecked="{Binding SearchNoProperties}">Do not search ComfyUI properties</RadioButton>
-                                <RadioButton Grid.Row="2" IsChecked="{Binding SearchAllProperties}">Search in all ComfyUI properties</RadioButton>
-                                <RadioButton Grid.Row="3" IsChecked="{Binding SearchNodes}">Search in specific ComfyUI Properties (one property per line)</RadioButton>
+                                <CheckBox IsChecked="{Binding SearchRawData}" Content="{lex:Loc Search.SearchSettings.SearchRawData}"></CheckBox>
+                                <RadioButton Grid.Row="1" IsChecked="{Binding SearchNoProperties}" Content="{lex:Loc Search.SearchSettings.SearchNoProperties}"></RadioButton>
+                                <RadioButton Grid.Row="2" IsChecked="{Binding SearchAllProperties}" Content="{lex:Loc Search.SearchSettings.SearchAllProperties}"></RadioButton>
+                                <RadioButton Grid.Row="3" IsChecked="{Binding SearchNodes}" Content="{lex:Loc Search.SearchSettings.SearchNodes}"></RadioButton>
                                 <TextBox Padding="5" FontFamily="Consolas" Grid.Row="4" Text="{Binding IncludeNodeProperties}" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"></TextBox>
                             </Grid>
                         </Grid>
@@ -1127,7 +1127,7 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="1" Height="30" Click="HideSearchSettings_OnClick">Close</Button>
+                        <Button Grid.Column="1" Height="30" Click="HideSearchSettings_OnClick" Content="{lex:Loc Common.Buttons.Close}"></Button>
                     </Grid>
                 </Grid>
             </Border>
@@ -1171,7 +1171,7 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="1" Height="30" Click="HideSearchHelp_OnClick">Close</Button>
+                        <Button Grid.Column="1" Height="30" Click="HideSearchHelp_OnClick" Content="{lex:Loc Common.Buttons.Close}"></Button>
                     </Grid>
                 </Grid>
             </Border>
