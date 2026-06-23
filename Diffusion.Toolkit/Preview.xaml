@@ -225,10 +225,10 @@
                                     <Setter Property="Opacity" Value="0.25"></Setter>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding IsFullScreen, RelativeSource={RelativeSource AncestorType=local:BorderlessWindow}}" Value="True">
-                                            <Setter Property="Icon" Value="Compress"></Setter>
+                                            <Setter Property="Icon" Value="Solid_Compress"></Setter>
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding IsFullScreen, RelativeSource={RelativeSource AncestorType=local:BorderlessWindow}}" Value="False">
-                                            <Setter Property="Icon" Value="Expand"></Setter>
+                                            <Setter Property="Icon" Value="Solid_Expand"></Setter>
                                         </DataTrigger>
                                         <Trigger Property="IsMouseOver" Value="True">
                                             <Setter Property="Opacity" Value="1.0"></Setter>
